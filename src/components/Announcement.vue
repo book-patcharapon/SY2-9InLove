@@ -6,17 +6,22 @@ import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js"
 const announcements = ref([])
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone
 
+
 onBeforeMount(async () => {
     announcements.value = await getAnnouncement()
+    if(!announcements.value){
+        announcements.value =[]
+    }
+
 })
 </script>
  
 <template>
     <div class="w-full">
         <h1 class="text-4xl font-bold flex justify-center">SIT Announcement System (SAS)</h1>
-        <div v-if="!announcements">No Announcement</div>
+        <p class="text-xl"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
+        <div v-if="announcements.length === 0">No Announcement</div>
         <div v-else class="relative overflow-x-auto">
-            <p class="text-xl"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
             <table class="w-full text-center text-gray-500 dark:text-gray-400">
                 <thead class="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
