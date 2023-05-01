@@ -1,25 +1,24 @@
-import { ref } from "vue"
-import router from "../router"
+import router from "../router";
+
 const API_HOST = import.meta.env.VITE_BASE_URL
-const announcement = ref([])
 
 const getInformation = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`)
+    const res = await fetch(${API_HOST}/${id});
     if (res.ok) {
-      announcement.value = await res.json()
-      return announcement.value
+      const announcement = await res.json();
+      return announcement;
+    } else if (res.status === 400 || res.status === 404) {
+      alert(`The request page is not available`);
+      const announcement = await res.json()
+      router.push("/admin/announcement");
+      return announcement
     } else {
-      alert(`The request page is not available`)
-      router.push("/admin/announcement")
-      announcement.value = await res.json()
-      return announcement.value
-
-      
+      throw new Error(`No Announcement`);
     }
   } catch (error) {
-    console.log(`ERROR: can't read data, ${error}`)
+    console.log(`ERROR: can't read data, ${error}`);
   }
 };
 
-export { getInformation, announcement }
+export { getInformation };
