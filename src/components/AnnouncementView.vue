@@ -5,11 +5,12 @@ import { changeDateTimeFormat } from '../composable/changeDateTimeFormat.js'
 import { getInformation, announcement } from '../composable/getAnnouncementbyId.js'
 
 const haveInfo = ref()
+const announcementDetail = ref([])
 const { params } = useRoute()
 
 onBeforeMount(async () => {
-    await getInformation(params.id)
-    if (announcement) {
+    announcementDetail.value = await getInformation(params.id)
+    if (announcementDetail) {
         haveInfo.value = true
     }
 })
@@ -30,12 +31,12 @@ onBeforeMount(async () => {
                     </tr>
                 </tbody>
             </table> -->
-            <p><b>Title:</b> <span class="ann-title">{{ announcement.announcementTitle }}</span></p>
-            <p><b>Category:</b> <span class="ann-category">{{ announcement.announcementCategory }}</span></p>
-            <p><b>Description:</b> <span class="ann-description">{{ announcement.announcementDescription }}</span></p>
-            <p><b>PublishDate:</b> <span class="ann-publish-date">{{ changeDateTimeFormat(announcement.publishDate) }}</span></p>
-            <p><b>CloseDate:</b> <span class="ann-close-date">{{ changeDateTimeFormat(announcement.closeDate) }}</span></p>
-            <p><b>Display:</b> <span class="ann-display">{{ announcement.announcementDisplay }}</span></p>
+            <p><b>Title:</b> <span class="ann-title">{{ announcementDetail.announcementTitle }}</span></p>
+            <p><b>Category:</b> <span class="ann-category">{{ announcementDetail.announcementCategory }}</span></p>
+            <p><b>Description:</b> <span class="ann-description">{{ announcementDetail.announcementDescription }}</span></p>
+            <p><b>PublishDate:</b> <span class="ann-publish-date">{{ changeDateTimeFormat(announcementDetail.publishDate) }}</span></p>
+            <p><b>CloseDate:</b> <span class="ann-close-date">{{ changeDateTimeFormat(announcementDetail.closeDate) }}</span></p>
+            <p><b>Display:</b> <span class="ann-display">{{ announcementDetail.announcementDisplay }}</span></p>
         </div>
         <RouterLink :to="{ name: 'Announcement' }" class="ann-button">
                 <button  class="my-2">
