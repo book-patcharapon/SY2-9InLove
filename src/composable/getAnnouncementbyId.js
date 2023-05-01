@@ -11,8 +11,10 @@ const getInformation = async (id) => {
       return announcement.value
     } else {
       alert(`The request page is not available`)
-      router.push("/admin/announcement");
-      throw new Error(`No Announcement`)
+      router.push("/admin/announcement")
+      announcement.value = await res.json()
+      return announcement.value
+
       
     }
   } catch (error) {
