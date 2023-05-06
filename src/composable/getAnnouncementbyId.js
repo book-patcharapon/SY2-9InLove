@@ -1,6 +1,6 @@
 import router from "../router";
 
-const API_HOST = import.meta.env.VITE_BASE_URL
+const API_HOST = import.meta.env.VITE_BASE_URL;
 
 const getInformation = async (id) => {
   try {
@@ -10,9 +10,9 @@ const getInformation = async (id) => {
       return announcement;
     } else if (res.status === 400 || res.status === 404) {
       alert(`The request page is not available`);
-      const announcement = await res.json()
+      const announcement = await res.json();
       router.push("/admin/announcement");
-      return announcement
+      return announcement;
     } else {
       throw new Error(`No Announcement`);
     }

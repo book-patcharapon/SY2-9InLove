@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from "vue"
 import { getAnnouncement } from "../composable/getAnnouncement.js"
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js"
+import { deleteAnn } from "../composable/createAnnouncement.js"
 
 const announcements = ref([])
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -9,10 +10,9 @@ const time = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 onBeforeMount(async () => {
     announcements.value = await getAnnouncement()
-    if(!announcements.value){
-        announcements.value =[]
-    }
-
+    // if (!announcements.value) {
+    //     announcements.value = []
+    // }
 })
 </script>
  
@@ -20,6 +20,12 @@ onBeforeMount(async () => {
     <div class="w-full">
         <h1 class="text-4xl font-bold flex justify-center">SIT Announcement System (SAS)</h1>
         <p class="text-xl"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
+        <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button absolute top-8 right-0">
+            <button>
+                Add Announcement
+            </button>
+        </RouterLink>
+
         <div v-if="announcements.length === 0">No Announcement</div>
         <div v-else class="relative overflow-x-auto">
             <table class="w-full text-center text-gray-500 dark:text-gray-400">
@@ -36,8 +42,9 @@ onBeforeMount(async () => {
                 </thead>
 
                 <tbody>
-                    <tr class="ann-item  bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="(ann, index) in announcements" :key="index">
-                        <th>{{ index+1 }}</th>
+                    <tr class="ann-item  bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        v-for="(ann, index) in announcements" :key="index">
+                        <th>{{ index + 1 }}</th>
                         <td class="ann-title">{{ ann.announcementTitle }}</td>
                         <td class="ann-category">{{ ann.announcementCategory }}</td>
                         <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
@@ -49,6 +56,9 @@ onBeforeMount(async () => {
                                     view
                                 </button>
                             </RouterLink>
+                            <button @click="deleteAnn(ann.id)">
+                                delete
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -70,6 +80,7 @@ button {
     padding-left: 5px;
     padding-right: 5px;
 }
+
 th {
     padding: 0.5em;
 }

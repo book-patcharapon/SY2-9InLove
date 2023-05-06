@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/SY2/",
     "preview": "vite preview",
     "backend": "json-server --watch ./data/db.json --port 5000",
     "cypress:open": "cypress open"
