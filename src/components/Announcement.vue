@@ -4,9 +4,12 @@ import { getAnnouncement } from "../composable/getAnnouncement.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 
 const API_HOST = import.meta.env.VITE_BASE_URL;
-
 const announcements = ref([]);
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+onBeforeMount(async () => {
+  announcements.value = await getAnnouncement();
+});
 
 const deleteAnn = async (annID) => {
   if (confirm("Do you want to delete")) {
@@ -27,10 +30,6 @@ const deleteAnn = async (annID) => {
     }
   }
 };
-
-onBeforeMount(async () => {
-  announcements.value = await getAnnouncement();
-});
 </script>
 
 <template>

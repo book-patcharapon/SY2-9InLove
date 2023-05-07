@@ -2,7 +2,7 @@
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { changeDateTimeFormat } from '../composable/changeDateTimeFormat.js'
-import { getInformation } from '../composable/getAnnouncementbyId.js'
+import { getInformation } from '../composable/getAnnouncement.js'
 
 const haveInfo = ref()
 const announcementDetail = ref([])

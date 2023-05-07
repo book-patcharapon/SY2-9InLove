@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 import { ref, onMounted, watch } from "vue";
 import { createAnnouncement } from "../composable/createAnnouncement.js";
 import { updateAnnouncement } from "../composable/editAnnouncement.js";
-import { getInformationForUpdate } from "../composable/getAnnouncementForUpdate.js";
+import { getInformationForUpdate } from "../composable/getAnnouncement.js";
 
 const { params } = useRoute();
 const newAnn = ref({});
@@ -11,6 +11,8 @@ const pubDate = ref();
 const pubTime = ref();
 const cloDate = ref();
 const cloTime = ref();
+
+const variablesToWatch = [pubDate, pubTime, cloDate, cloTime]; // List of variables to monitor
 let edited = -5;
 
 onMounted(async () => {
@@ -87,17 +89,22 @@ const editAnnouncement = (updateAnn) => {
 watch(
   [newAnn], async () => {
     edited++;
+    console.log(edited);
   },
   { deep: true }
 );
 
-const variablesToWatch = [pubDate, pubTime, cloDate, cloTime]; // List of variables to monitor
 variablesToWatch.forEach(variable => {
-  watch([variable], async () => {
-    edited++;
-  }, { deep: true });
+  console.log(pubDate.value, pubTime.value, cloDate.value, cloTime.value);
+  if (pubDate.value || pubTime.value || cloDate.value || cloTime.value) {
+    watch([variable], async () => {
+      edited++;
+      console.log(edited);
+    }, { deep: true });
+  } else {
+    edited = -1
+  }
 });
-
 </script>
 
 <template>
