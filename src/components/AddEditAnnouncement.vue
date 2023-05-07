@@ -11,9 +11,7 @@ const pubDate = ref();
 const pubTime = ref();
 const cloDate = ref();
 const cloTime = ref();
-
-const variablesToWatch = [pubDate, pubTime, cloDate, cloTime]; // List of variables to monitor
-let edited = -5;
+const edited = ref(false);
 
 onMounted(async () => {
   if (!params.id) {
@@ -29,9 +27,12 @@ onMounted(async () => {
     };
   } else {
     // Edit mode
+    
     newAnn.value = await getInformationForUpdate(params.id);
     if (newAnn.value.publishDate || newAnn.value.closeDate) {
       [pubDate.value, pubTime.value] = changeUTCtoLocalDatetime(newAnn.value.publishDate);
+      console.log(pubDate.value);
+      console.log(pubTime.value);
       [cloDate.value, cloTime.value] = changeUTCtoLocalDatetime(newAnn.value.closeDate);
     }
     if (newAnn.value.announcementDisplay === "Y") {
@@ -39,6 +40,13 @@ onMounted(async () => {
     } else {
       newAnn.value.announcementDisplay = false
     }
+
+  watch(
+  [newAnn,pubDate, pubTime, cloDate, cloTime], async () => {
+    edited.value = true;
+    console.log(edited);
+  },
+  { deep: true });
   }
 });
 
@@ -86,25 +94,7 @@ const editAnnouncement = (updateAnn) => {
   updateAnnouncement(params.id, updateAnn); // update to backend
 };
 
-watch(
-  [newAnn], async () => {
-    edited++;
-    console.log(edited);
-  },
-  { deep: true }
-);
 
-variablesToWatch.forEach(variable => {
-  console.log(pubDate.value, pubTime.value, cloDate.value, cloTime.value);
-  if (pubDate.value || pubTime.value || cloDate.value || cloTime.value) {
-    watch([variable], async () => {
-      edited++;
-      console.log(edited);
-    }, { deep: true });
-  } else {
-    edited = -1
-  }
-});
 </script>
 
 <template>
@@ -144,7 +134,7 @@ variablesToWatch.forEach(variable => {
         Submit
       </button>
 
-      <button @click="editAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="edited <= 0">
+      <button @click="editAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="!edited">
         Edit
       </button>
 
