@@ -20,6 +20,11 @@ const router = createRouter({
       path: "/admin/announcement/add",
       name: "AddAnnouncement",
       component: AddAnnouncement,
+    },
+    {
+      path: "/admin/announcement/:id/edit",
+      name: "UpdateAnnouncement",
+      component: AddAnnouncement,
     }
   ],
 })

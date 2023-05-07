@@ -21,16 +21,6 @@ onBeforeMount(async () => {
         <div v-if="haveInfo" class=" p-4">
             <h1 class="text-4xl p-4">Announcement Detail:</h1>
             <div class="border-4 p-8">
-                <!-- <table class="w-full text-medium text-left">
-                <tbody class="bg-white border-b text-purple-200 dark:bg-gray-800 dark:border-gray-700">
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
-                        <td>
-                            Title:
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table> -->
                 <p><b>Title:</b> <span class="ann-title">{{ announcementDetail.announcementTitle }}</span></p>
                 <p><b>Category:</b> <span class="ann-category">{{ announcementDetail.announcementCategory }}</span></p>
                 <p><b>Description:</b> <span class="ann-description">{{ announcementDetail.announcementDescription }}</span>
@@ -46,7 +36,13 @@ onBeforeMount(async () => {
                     Back
                 </button>
             </RouterLink>
+            <RouterLink :to="{name: 'UpdateAnnouncement' , params: { id: params.id }}" class="ann-button">
+                <button>
+                    Edit
+                </button>
+            </RouterLink>
         </div>
+
         <div v-else>
             <h1>The request page is not available</h1>
         </div>
@@ -60,6 +56,7 @@ button {
     color: black;
     font-weight: bold;
     padding: 5px;
+    margin-right: 5px;
 }
 
 .centerr {

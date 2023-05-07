@@ -2,17 +2,17 @@ import router from "../router";
 
 const API_HOST = import.meta.env.VITE_BASE_URL;
 
-const getInformation = async (id) => {
+const getInformationForUpdate = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`);
+    const res = await fetch(`${API_HOST}/update/${id}`);
     if (res.ok) {
       const announcement = await res.json();
       return announcement;
-    } else if (res.status === 400 || res.status === 404) {      
+    } else if (res.status === 400 || res.status === 404) {
       const announcement = await res.json();
-      alert(`The request page is not available`);     
+      alert(`The request page is not available`);
       router.push("/admin/announcement");
-      return announcement
+      return announcement;
     } else {
       throw new Error(`No Announcement`);
     }
@@ -21,4 +21,4 @@ const getInformation = async (id) => {
   }
 };
 
-export { getInformation };
+export { getInformationForUpdate };
