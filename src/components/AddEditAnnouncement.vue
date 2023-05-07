@@ -4,7 +4,7 @@ import { ref, onMounted, watch } from "vue";
 import { createAnnouncement } from "../composable/createAnnouncement.js";
 import { updateAnnouncement } from "../composable/editAnnouncement.js";
 import { getInformationForUpdate } from "../composable/getAnnouncement.js";
-
+//aaxx
 const { params } = useRoute();
 const newAnn = ref({});
 const pubDate = ref();
