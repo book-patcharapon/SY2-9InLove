@@ -39,10 +39,7 @@ onBeforeMount(async () => {
       SIT Announcement System (SAS)
     </h1>
     <p class="text-xl"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
-    <RouterLink
-      :to="{ name: 'AddAnnouncement' }"
-      class="ann-button absolute top-8 right-0"
-    >
+    <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button absolute top-8 right-0">
       <button>Add Announcement</button>
     </RouterLink>
 
@@ -62,11 +59,8 @@ onBeforeMount(async () => {
         </thead>
 
         <tbody>
-          <tr
-            class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-            v-for="(ann, index) in announcements"
-            :key="index"
-          >
+          <tr class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+            v-for="(ann, index) in announcements" :key="index">
             <th>{{ index + 1 }}</th>
             <td class="ann-title">{{ ann.announcementTitle }}</td>
             <td class="ann-category">{{ ann.announcementCategory }}</td>
@@ -105,6 +99,10 @@ button {
   font-weight: bold;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+button:hover {
+  background-color: grey;
 }
 
 th {

@@ -8,9 +8,9 @@ const getInformation = async (id) => {
     if (res.ok) {
       const announcement = await res.json();
       return announcement;
-    } else if (res.status === 400 || res.status === 404) {      
+    } else if (res.status === 400 || res.status === 404) {
       const announcement = await res.json();
-      alert(`The request page is not available`);     
+      alert(`The request page is not available`);
       router.push("/admin/announcement");
       return announcement
     } else {

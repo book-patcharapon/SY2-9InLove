@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import Announcement from "../components/Announcement.vue"
 import AnnouncementView from "../components/AnnouncementView.vue"
-import  AddAnnouncement  from "../components/AddAnnouncement.vue"
+import AddEditAnnouncement  from "../components/AddEditAnnouncement.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,12 +19,12 @@ const router = createRouter({
     {
       path: "/admin/announcement/add",
       name: "AddAnnouncement",
-      component: AddAnnouncement,
+      component: AddEditAnnouncement,
     },
     {
       path: "/admin/announcement/:id/edit",
       name: "UpdateAnnouncement",
-      component: AddAnnouncement,
+      component: AddEditAnnouncement,
     }
   ],
 })

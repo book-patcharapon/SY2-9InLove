@@ -36,7 +36,7 @@ onBeforeMount(async () => {
                     Back
                 </button>
             </RouterLink>
-            <RouterLink :to="{name: 'UpdateAnnouncement' , params: { id: params.id }}" class="ann-button">
+            <RouterLink :to="{ name: 'UpdateAnnouncement', params: { id: params.id } }" class="ann-button">
                 <button>
                     Edit
                 </button>

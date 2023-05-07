@@ -18,7 +18,7 @@ const updateAnnouncement = async (id, announcement) => {
       alert('The request page is not available')
       router.push("/admin/announcement");
       return updatedAnnouncement
-    }else {
+    } else {
       throw new Error("Can not edit");
     }
   } catch (error) {

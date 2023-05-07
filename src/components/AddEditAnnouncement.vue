@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { ref, onMounted, watch } from "vue";
 import { createAnnouncement } from "../composable/createAnnouncement.js";
 import { updateAnnouncement } from "../composable/editAnnouncement.js";
@@ -105,13 +105,8 @@ variablesToWatch.forEach(variable => {
     <h1 class="text-4xl font-bold flex justify-center">Announcement Detail:</h1>
     <div class="middle">
       <!-- <div class="ann-title"> -->
-        <p>Title</p>
-        <input
-          type="text"
-          v-model="newAnn.announcementTitle"
-          class="ann-title w-full"
-          placeholder="Enter a title"
-        /><br />
+      <p>Title</p>
+      <input type="text" v-model="newAnn.announcementTitle" class="ann-title w-full" placeholder="Enter a title" /><br />
       <!-- </div> -->
 
       <p>Category</p>
@@ -119,16 +114,12 @@ variablesToWatch.forEach(variable => {
         <option id="1" value="1">ทั่วไป</option>
         <option id="2" value="2">ทุนการศึกษา</option>
         <option id="3" value="3">หางาน</option>
-        <option id="4" value="4">ฝึกงาน</option></select
-      ><br />
+        <option id="4" value="4">ฝึกงาน</option>
+      </select><br />
 
       <p>Description</p>
-      <textarea
-        v-model="newAnn.announcementDescription"
-        class="ann-description w-full h-36"
-        name="description"
-        placeholder="Enter description"
-      ></textarea>
+      <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description"
+        placeholder="Enter description"></textarea>
 
       <p>Publish Date</p>
       <input v-model="pubDate" type="date" class="ann-publish-date" />
@@ -139,33 +130,18 @@ variablesToWatch.forEach(variable => {
       <input v-model="cloTime" type="time" class="ann-close-time" /><br />
 
       <p>Display</p>
-      <input
-        v-model="newAnn.announcementDisplay"
-        type="checkbox"
-        name="Display"
-        id="Display"
-        class="ann-display"
-      />
+      <input v-model="newAnn.announcementDisplay" type="checkbox" name="Display" id="Display" class="ann-display" />
       <label for="Display">Check to show this announcement</label><br />
 
-      <button
-        @click="addNewAnnouncement(newAnn)"
-        v-if="!params.id"
-        class="ann-button"
-      >
+      <button @click="addNewAnnouncement(newAnn)" v-if="!params.id" class="ann-button">
         Submit
       </button>
 
-      <button
-        @click="editAnnouncement(newAnn)"
-        v-if="params.id"
-        class="ann-button"
-        :disabled="edited <= 0"
-      >
+      <button @click="editAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="edited <= 0">
         Edit
       </button>
 
-      <button @click="$router.go(-1)" class="ann-button my-2">Cancel</button>
+      <button @click="$router.push('/admin/announcement')" class="ann-button my-2">Cancel</button>
     </div>
   </div>
 </template>
@@ -176,14 +152,15 @@ textarea,
 input {
   border: 1px solid grey;
   margin: 0.5%;
-  /* padding: %; */
   border-radius: 5px;
 }
 
 button {
-  border: 0.5px solid grey;
-  padding: 1.5px;
+  border: 2px solid grey;
+  background-color: grey;
+  padding: 8px;
   margin: 2px;
+  margin-right: 5px;
   border-radius: 5px;
 }
 

@@ -1,10 +1,10 @@
 const options = {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: false,
 };
 
 const changeDateTimeFormat = (date) => {
