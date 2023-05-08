@@ -83,10 +83,6 @@ const deleteAnn = async (annID) => {
         </tbody>
       </table>
     </div>
-
-    <!-- <div>
-            <AnnouncementView />
-        </div> -->
   </div>
 </template>
 

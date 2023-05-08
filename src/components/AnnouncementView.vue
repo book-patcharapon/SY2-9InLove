@@ -18,7 +18,12 @@ onBeforeMount(async () => {
  
 <template>
     <div class="w-full centerr">
-        <div v-if="haveInfo" class=" p-4">
+
+        <div v-if="!haveInfo">
+            <h1>The request page is not available</h1>
+        </div>
+
+        <div v-else class=" p-4">
             <h1 class="text-4xl p-4">Announcement Detail:</h1>
             <div class="border-4 p-8">
                 <p><b>Title:</b> <span class="ann-title">{{ announcementDetail.announcementTitle }}</span></p>
@@ -41,10 +46,6 @@ onBeforeMount(async () => {
                     Edit
                 </button>
             </RouterLink>
-        </div>
-
-        <div v-else>
-            <h1>The request page is not available</h1>
         </div>
     </div>
 </template>
