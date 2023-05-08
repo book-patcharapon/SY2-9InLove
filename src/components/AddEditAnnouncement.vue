@@ -12,12 +12,13 @@ const pubTime = ref();
 const cloDate = ref();
 const cloTime = ref();
 const edited = ref(false);
-const haveInfo = ref(false);
+const haveInfo = ref(false)
 
 onMounted(async () => {
   if (!params.id) {
     // Add mode
     // Default value
+    haveInfo.value = true
     newAnn.value = {
       announcementTitle: "",
       announcementDescription: "",
@@ -91,9 +92,7 @@ const addNewAnnouncement = (newAnn) => {
 const editAnnouncement = (updateAnn) => {
   newAnn.value.publishDate = changeDateTimeToUTC(pubDate, pubTime);
   newAnn.value.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  newAnn.value.announcementDisplay = !newAnn.value.announcementDisplay
-    ? "N"
-    : "Y";
+  newAnn.value.announcementDisplay = !newAnn.value.announcementDisplay? "N" : "Y";
   updateAnnouncement(params.id, updateAnn); // update to backend
 };
 </script>

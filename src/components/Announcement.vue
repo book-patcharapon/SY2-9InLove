@@ -3,7 +3,7 @@ import { ref, onBeforeMount } from "vue";
 import { getAnnouncement } from "../composable/getAnnouncement.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 
-const API_HOST = import.meta.env.VITE_BASE_URL;
+const API_HOST = import.meta.env.VITE_BASE_URL+"/api/announcements";
 const announcements = ref([]);
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 

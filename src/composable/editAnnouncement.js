@@ -27,16 +27,3 @@ const updateAnnouncement = async (id, announcement) => {
 };
 
 export { updateAnnouncement }
-
-// update frontend
-// announcementDetail.value.map((ann) => {
-//   if (ann.id === updatedAnnouncement.id) {
-//     ann.announcementTitle = updatedAnnouncement.announcementTitle;
-//     ann.announcementCategory = updatedAnnouncement.announcementCategory;
-//     ann.announcementDescription = updatedAnnouncement.announcementDescription;
-//     ann.publishDate = updatedAnnouncement.publishDate;
-//     ann.closeDate = updatedAnnouncement.closeDate;
-//     ann.announcementDisplay = updatedAnnouncement.announcementDisplay;
-//   }
-//   return ann;
-// });
