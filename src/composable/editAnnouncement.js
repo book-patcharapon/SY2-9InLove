@@ -1,6 +1,6 @@
 import router from "../router";
 
-const API_HOST = import.meta.env.VITE_BASE_URL+"/api/announcements";
+const API_HOST = import.meta.env.VITE_BASE_URL;
 
 const updateAnnouncement = async (id, announcement) => {
   try {

@@ -1,10 +1,10 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, onMounted, watch } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { createAnnouncement } from "../composable/createAnnouncement.js";
 import { updateAnnouncement } from "../composable/editAnnouncement.js";
 import { getInformationForUpdate } from "../composable/getAnnouncement.js";
-//aaxx
+
 const { params } = useRoute();
 const newAnn = ref({});
 const pubDate = ref();
@@ -14,7 +14,7 @@ const cloTime = ref();
 const edited = ref(false);
 const haveInfo = ref(false)
 
-onMounted(async () => {
+onBeforeMount(async () => {
   if (!params.id) {
     // Add mode
     // Default value
@@ -85,14 +85,14 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
 const addNewAnnouncement = (newAnn) => {
   newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
   newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  newAnn.announcementDisplay = !newAnn.announcementDisplay ? "N" : "Y";
+  newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
   createAnnouncement(newAnn); //add to backend
 };
 
 const editAnnouncement = (updateAnn) => {
   newAnn.value.publishDate = changeDateTimeToUTC(pubDate, pubTime);
   newAnn.value.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  newAnn.value.announcementDisplay = !newAnn.value.announcementDisplay? "N" : "Y";
+  newAnn.value.announcementDisplay = newAnn.value.announcementDisplay? "Y" : "N";
   updateAnnouncement(params.id, updateAnn); // update to backend
 };
 </script>
@@ -147,8 +147,6 @@ const editAnnouncement = (updateAnn) => {
         </button>
       </div>
     </div>
-
-
   </div>
 </template>
 
