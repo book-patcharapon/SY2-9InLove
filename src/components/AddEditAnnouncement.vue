@@ -83,17 +83,26 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
 };
 
 const addNewAnnouncement = (newAnn) => {
-  newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
-  newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
-  createAnnouncement(newAnn); //add to backend
+  if (newAnn.announcementTitle !== "" && newAnn.announcementDescription !== "") {
+    newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
+    newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
+    newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
+    createAnnouncement(newAnn); //add to backend
+  } else {
+    alert(`Please enter title and description`)
+  }
+
 };
 
 const editAnnouncement = (updateAnn) => {
-  newAnn.value.publishDate = changeDateTimeToUTC(pubDate, pubTime);
-  newAnn.value.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  newAnn.value.announcementDisplay = newAnn.value.announcementDisplay? "Y" : "N";
-  updateAnnouncement(params.id, updateAnn); // update to backend
+  if (updateAnn.announcementTitle !== "" && updateAnn.announcementDescription !== "") {
+    updateAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
+    updateAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
+    updateAnn.announcementDisplay = updateAnn.announcementDisplay ? "Y" : "N";
+    updateAnnouncement(params.id, updateAnn); // update to backend
+  } else {
+    alert(`Please enter title and description`)
+  }
 };
 </script>
 
@@ -107,15 +116,15 @@ const editAnnouncement = (updateAnn) => {
       <h1 class="text-4xl font-bold flex justify-center">Announcement Detail:</h1>
       <div class="middle">
         <p>Title</p>
-        <input type="text" v-model="newAnn.announcementTitle" class="ann-title w-full"
+        <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full" required
           placeholder="Enter a title" /><br />
 
         <p>Category</p>
         <select v-model="newAnn.categoryId" class="ann-category">
-          <option id="1" value="1">ทั่วไป</option>
-          <option id="2" value="2">ทุนการศึกษา</option>
-          <option id="3" value="3">หางาน</option>
-          <option id="4" value="4">ฝึกงาน</option>
+          <option id="1" :value=1>ทั่วไป</option>
+          <option id="2" :value=2>ทุนการศึกษา</option>
+          <option id="3" :value=3>หางาน</option>
+          <option id="4" :value=4>ฝึกงาน</option>
         </select><br />
 
         <p>Description</p>

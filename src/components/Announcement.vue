@@ -16,17 +16,16 @@ const deleteAnn = async (annID) => {
     try {
       const res = await fetch(`${API_HOST}/${annID}`,
         { method: "DELETE" }
-      ); //Delete backend
+      ); //Delete to backend
       if (res.status === 200) {
-        announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete frontend
-        alert(`Delete successful`)
+        announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete to frontend
       } else if (res.status === 400) {
         alert('Not have this announcement')
       } else {
         throw new Error(`Cannot delete`);
       }
-    } catch (err) {
-      alert(`Error: ${err}`);
+    } catch (error) {
+      alert(`Error: ${error}`);
     }
   }
 };
