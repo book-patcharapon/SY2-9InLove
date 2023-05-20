@@ -5,14 +5,14 @@ const options = {
   hour: "numeric",
   minute: "numeric",
   hour12: false,
-};
+}
 
 const changeDateTimeFormat = (date) => {
   const dateTime = new Date(date);
   if (dateTime.getFullYear() > 1970) {
-    return dateTime.toLocaleDateString("en-GB", options);
+    return dateTime.toLocaleDateString("en-GB", options)
   } else {
-    return "-";
+    return "-"
   }
 };
 

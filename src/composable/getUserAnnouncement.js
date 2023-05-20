@@ -1,5 +1,7 @@
 import router from "../router";
+
 const API_HOST = import.meta.env.VITE_BASE_URL
+
 const getPage = async (page) => {
   try {
     const res = await fetch(`${API_HOST}/pages?page=${page}`);
@@ -10,7 +12,7 @@ const getPage = async (page) => {
   } catch (error) {
     console.log(`ERROR cannot read data: ${error}`);
   }
-};
+}
 
 const annUserId = async (id) => {
   try {
@@ -27,11 +29,11 @@ const annUserId = async (id) => {
   } catch (error) {
     console.log(`ERROR cannot read data: ${error}`);
   }
-};
+}
 
-const getActive = async (page) => {
+const getActive = async (page, categoryId) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active`);
+    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`);
     if (res.ok) {
       const ann = await res.json();
       return ann;
@@ -39,19 +41,18 @@ const getActive = async (page) => {
   } catch (error) {
     console.log(`ERROR cannot read data: ${error}`);
   }
-};
+}
 
-const getClose = async (page) => {
+const getClose = async (page, categoryId) => {
   try {
-
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close`);
+    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`)
     if (res.ok) {
       const ann = await res.json();
       return ann;
     }
   } catch (error) {
-    console.log(`ERROR cannot read data: ${error}`);
+    console.log(`ERROR cannot read data: ${error}`)
   }
-};
+}
 
-export { getPage, annUserId, getActive, getClose };
+export { getPage, annUserId, getActive, getClose }

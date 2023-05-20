@@ -9,14 +9,14 @@ const haveInfo = ref()
 const { params } = useRoute();
 const AnnDetail = ref([]);
 const modeStore = useModeStore()
-const checkMode =ref(modeStore.ActiveCloseBut);
+const checkMode = ref(modeStore.ActiveCloseBut);
 
 onBeforeMount(async () => {
   AnnDetail.value = await annUserId(params.id)
   if (AnnDetail) {
     haveInfo.value = true
   }
-});
+})
 </script>
  
 <template>
@@ -32,7 +32,8 @@ onBeforeMount(async () => {
           <h1 class="ann-title">
             {{ AnnDetail.announcementTitle }}<br />
             <span class="ann-category">{{ AnnDetail.announcementCategory }}</span><br>
-            <span class="ann-close-date" v-if="checkMode === true">Closed On: {{ changeDateTimeFormat(AnnDetail.closeDate) }}</span>
+            <span class="ann-close-date" v-if="checkMode === true">Closed On: {{ changeDateTimeFormat(AnnDetail.closeDate)
+            }}</span>
           </h1>
           <hr style="border: 0.1px solid lightgray" />
           <div style="width: 100%">
@@ -42,7 +43,9 @@ onBeforeMount(async () => {
             </p>
           </div>
         </div>
+
         <hr style="border: 0.1px solid lightgray" />
+        
         <div class="butClass">
           <RouterLink :to="{ name: 'UserAnnouncement' }">
             <button class="ann-button mt-2 p-2">Back</button>
@@ -58,9 +61,9 @@ onBeforeMount(async () => {
   background-color: gray;
   border-radius: 5px;
 }
-.big{
+
+.big {
   display: block;
   justify-content: center;
 }
-
 </style>

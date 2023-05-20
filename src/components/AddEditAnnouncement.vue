@@ -15,19 +15,7 @@ const edited = ref(false);
 const haveInfo = ref(false)
 
 onBeforeMount(async () => {
-  if (!params.id) {
-    // Add mode
-    // Default value
-    haveInfo.value = true
-    newAnn.value = {
-      announcementTitle: "",
-      announcementDescription: "",
-      publishDate: null,
-      closeDate: null,
-      announcementDisplay: false,
-      categoryId: 1,
-    };
-  } else {
+  if (params.id) {
     // Edit mode
     newAnn.value = await getInformationForUpdate(params.id);
 
@@ -49,7 +37,19 @@ onBeforeMount(async () => {
         edited.value = true;
       },
       { deep: true }
-    );
+    )
+  } else {
+    // Add mode
+    // Default value
+    haveInfo.value = true
+    newAnn.value = {
+      announcementTitle: "",
+      announcementDescription: "",
+      publishDate: null,
+      closeDate: null,
+      announcementDisplay: false,
+      categoryId: 1,
+    };
   }
 });
 
@@ -82,42 +82,29 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
   }
 };
 
-const addNewAnnouncement = (newAnn) => {
-  if (newAnn.announcementTitle !== "" && newAnn.announcementDescription !== "") {
+const addEditNewAnnouncement = (newAnn) => {
+  if (newAnn.announcementTitle && newAnn.announcementDescription) {
     newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
     newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
     newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
-    createAnnouncement(newAnn); //add to backend
+    if (params.id) {
+      updateAnnouncement(params.id, newAnn) //update to backend
+    } else {
+      createAnnouncement(newAnn); //add to backend
+    }
   } else {
     alert(`Please enter title and description`)
   }
-
-};
-
-const editAnnouncement = (updateAnn) => {
-  if (updateAnn.announcementTitle !== "" && updateAnn.announcementDescription !== "") {
-    updateAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
-    updateAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-    updateAnn.announcementDisplay = updateAnn.announcementDisplay ? "Y" : "N";
-    updateAnnouncement(params.id, updateAnn); // update to backend
-  } else {
-    alert(`Please enter title and description`)
-  }
-};
+}
 </script>
 
 <template>
   <div class="w-full">
-    <div v-if="!haveInfo">
-      <h1>The request page is not available</h1>
-    </div>
-
-    <div v-else>
+    <div v-if="haveInfo">
       <h1 class="text-4xl font-bold flex justify-center">Announcement Detail:</h1>
       <div class="middle">
-        <p>Title</p>
-        <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full" required
-          placeholder="Enter a title" /><br />
+        <p class="font-bold text-2xl">Title</p>
+        <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full" placeholder="Enter a title" :maxlength="200"/><br />
 
         <p>Category</p>
         <select v-model="newAnn.categoryId" class="ann-category">
@@ -128,7 +115,7 @@ const editAnnouncement = (updateAnn) => {
         </select><br />
 
         <p>Description</p>
-        <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description"
+        <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description" :maxlength="10000"
           placeholder="Enter description"></textarea>
 
         <p>Publish Date</p>
@@ -143,18 +130,22 @@ const editAnnouncement = (updateAnn) => {
         <input v-model="newAnn.announcementDisplay" type="checkbox" name="Display" id="Display" class="ann-display" />
         <label for="Display">Check to show this announcement</label><br />
 
-        <button @click="addNewAnnouncement(newAnn)" v-if="!params.id" class="ann-button">
+        <button @click="addEditNewAnnouncement(newAnn)" v-if="!params.id" class="ann-button">
           Submit
         </button>
 
-        <button @click="editAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="!edited">
+        <button @click="addEditNewAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="!edited">
           Edit
         </button>
 
-        <button @click="$router.push('/admin/announcement')" class="ann-button my-2">
+        <button @click="$router.push('/admin/announcement')" class="ann-button">
           Cancel
         </button>
       </div>
+    </div>
+
+    <div v-else>
+      <h1>The request page is not available</h1>
     </div>
   </div>
 </template>
@@ -163,25 +154,36 @@ const editAnnouncement = (updateAnn) => {
 select,
 textarea,
 input {
-  border: 1px solid grey;
+  border: 1px solid black;
   margin: 0.5%;
   border-radius: 5px;
 }
 
+p {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 button {
-  border: 2px solid grey;
-  background-color: grey;
+  border: 2px solid black;
+  background-color: lightgrey;
+  font-weight: bold;
   padding: 8px;
-  margin: 2px;
+  margin-top: 10px;
   margin-right: 5px;
   border-radius: 5px;
 }
 
+button:hover {
+  background-color: black;
+  color: white;
+}
+
 .middle {
-  margin: 1%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin: 1% 20%;
   padding: 1%;
-  border: 1px solid black;
+  border: 3px solid black;
+  border-radius: 8px;
 }
 </style>

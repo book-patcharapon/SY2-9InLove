@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 // import { useLocalStorage } from '@vueuse/core'
 import { ref } from 'vue';
+
 export const useModeStore = defineStore('mode', () => {
     const ActiveCloseBut = ref(false)
 
@@ -8,8 +9,5 @@ export const useModeStore = defineStore('mode', () => {
         ActiveCloseBut.value = mode;
     };
 
-    return {
-        ActiveCloseBut,
-        setMode
-    }
+    return {ActiveCloseBut, setMode}
   })
