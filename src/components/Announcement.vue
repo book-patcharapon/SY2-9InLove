@@ -98,7 +98,7 @@ button {
   border-radius: 5px;
 }
 
-button:hover {
+button:enabled:hover {
   background-color: black;
   color: white;
 }

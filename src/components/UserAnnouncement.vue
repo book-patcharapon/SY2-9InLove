@@ -256,7 +256,7 @@ const changeCategory = async () => {
   padding: 10px;
 }
 
-button:hover {
+button:enabled:hover {
   background-color: black;
   color: white;
   font-weight: bold;
