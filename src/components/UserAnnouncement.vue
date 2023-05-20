@@ -133,11 +133,8 @@ const AnnDetail = (viewId) => {
 }
 
 onBeforeMount(async () => {
-
-
   announcementActivepage.value = await getActive(Page.value, categoryId.value)
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
-
   announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
 })
@@ -145,7 +142,6 @@ onBeforeMount(async () => {
 const changeCategory = async () => {
   announcementActivepage.value = await getActive(Page.value, categoryId.value)
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
-
   announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
 }
@@ -156,14 +152,12 @@ const changeCategory = async () => {
     <h1 class="text-4xl font-bold flex justify-center font-style: sans-serif">
       SIT Announcement System (SAS)
     </h1>
-    <div>
+    <div class="">
       <h1 class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
       <button @click="activebutton = !activebutton; Page = 0; PageClose = 0" class="ann-button float-right mb-2 mr-1">
         {{ activetext(activebutton) }}
       </button>
-    </div>
 
-    <div v-if="announcementActivepage || announcementClosepage" class="relative overflow-x-auto">
       <select @change="changeCategory()" v-model="categoryId">
         <option id="0" :value=0>ทั้งหมด</option>
         <option id="1" :value=1>ทั่วไป</option>
@@ -171,7 +165,9 @@ const changeCategory = async () => {
         <option id="3" :value=3>หางาน</option>
         <option id="4" :value=4>ฝึกงาน</option>
       </select>
+    </div>
 
+    <div class="relative overflow-x-auto">
       <table v-if="activebutton === true" class="w-full text-center text-gray-500 dark:text-gray-400">
         <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <th class="trHead">No.</th>
@@ -206,7 +202,6 @@ const changeCategory = async () => {
         </tr>
       </table>
 
-
       <div class="butAcDiv ml-4 mt-4" v-if="PageNum.length >= 2 && activebutton === false">
         <button class="ann-page-prev p-2" @click="prevPage" :disabled="disablePrev">Prev</button>
         <!-- <button v-for="(ann, index) in PageNum" class="butPage p-2" :key="index" :id="getClass(index)" @click="changePage(index)">{{ index +1 }}</button> -->
@@ -232,12 +227,6 @@ const changeCategory = async () => {
           class="butPage">{{ page }}</button> -->
         <button class="ann-page-next p-2" @click="nextClosePage" :disabled="disableNext">Next</button>
       </div>
-
-
-    </div>
-
-    <div v-else>
-      No Announcement
     </div>
   </div>
 </template>
