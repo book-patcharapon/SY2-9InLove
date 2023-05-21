@@ -2,7 +2,6 @@
 import { ref, onBeforeMount, computed } from "vue";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 import { getActive, getClose } from "../composable/getUserAnnouncement";
-import { getAnnouncement } from "../composable/getAnnouncement.js";
 import { useRouter } from "vue-router";
 import { usePageStore } from '../stores/page.js'
 import { useModeStore } from '../stores/mode.js'

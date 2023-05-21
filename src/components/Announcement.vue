@@ -35,7 +35,7 @@ const deleteAnn = async (annID) => {
       SIT Announcement System (SAS)
     </h1>
     
-    <div v-if="announcements" class="w-full flex justify-center ">
+    <div v-if="announcements" class="w-full flex justify-center">
       <div class="flex flex-col w-4/6">
         <div class="my-2">
           <p class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>

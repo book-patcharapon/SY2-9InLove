@@ -40,8 +40,8 @@ onBeforeMount(async () => {
     )
   } else {
     // Add mode
-    // Default value
     haveInfo.value = true
+    // Default value
     newAnn.value = {
       announcementTitle: "",
       announcementDescription: "",
@@ -80,7 +80,7 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
   } else {
     return [null, null];
   }
-};
+}
 
 const addEditNewAnnouncement = (newAnn) => {
   if (newAnn.announcementTitle && newAnn.announcementDescription) {
