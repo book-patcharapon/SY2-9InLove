@@ -22,7 +22,7 @@ const updateAnnouncement = async (id, announcement) => {
       throw new Error("Can not edit");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

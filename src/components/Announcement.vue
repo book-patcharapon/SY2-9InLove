@@ -23,7 +23,7 @@ const deleteAnn = async (annID) => {
         throw new Error(`Cannot delete`)
       }
     } catch (error) {
-      alert(`Error: ${error}`)
+      console.error(`Error: ${error}`)
     }
   }
 }
@@ -63,12 +63,8 @@ const deleteAnn = async (annID) => {
               <th>{{ index + 1 }}</th>
               <td class="ann-title">{{ ann.announcementTitle }}</td>
               <td class="ann-category">{{ ann.announcementCategory }}</td>
-              <td class="ann-publish-date">
-                {{ changeDateTimeFormat(ann.publishDate) }}
-              </td>
-              <td class="ann-close-date">
-                {{ changeDateTimeFormat(ann.closeDate) }}
-              </td>
+              <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
+              <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
               <td class="ann-display">{{ ann.announcementDisplay }}</td>
               <td>
                 <RouterLink :to="{ name: 'AnnouncementView', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">

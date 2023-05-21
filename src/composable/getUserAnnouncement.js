@@ -10,7 +10,7 @@ const getPage = async (page) => {
       return ann;
     }
   } catch (error) {
-    console.log(`ERROR cannot read data: ${error}`);
+    console.error(`ERROR: ${error}`);
   }
 }
 
@@ -27,7 +27,7 @@ const annUserId = async (id) => {
       return announcement;
     }
   } catch (error) {
-    console.log(`ERROR cannot read data: ${error}`);
+    console.error(`ERROR: ${error}`);
   }
 }
 
@@ -39,7 +39,7 @@ const getActive = async (page, categoryId) => {
       return ann;
     }
   } catch (error) {
-    console.log(`ERROR cannot read data: ${error}`);
+    console.error(`ERROR: ${error}`);
   }
 }
 
@@ -51,7 +51,7 @@ const getClose = async (page, categoryId) => {
       return ann;
     }
   } catch (error) {
-    console.log(`ERROR cannot read data: ${error}`)
+    console.error(`ERROR: ${error}`)
   }
 }
 

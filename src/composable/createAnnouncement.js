@@ -17,11 +17,10 @@ const createAnnouncement = async (newAnnouncement) => {
       alert(`There is an error`)
       router.push("/admin/announcement")
     } else {
-      throw new Error("Can not add")
+      throw new Error('Cannot add')
     }
   } catch (error) {
-    alert(`ERROR: can't read data, ${error}`)
-    console.log(`ERROR: can't read data, ${error}`)
+    console.error(`ERROR: ${error.message}`)
   }
 };
 

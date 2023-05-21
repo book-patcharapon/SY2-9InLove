@@ -151,80 +151,82 @@ const changeCategory = async () => {
     <h1 class="text-4xl font-bold flex justify-center font-style: sans-serif">
       SIT Announcement System (SAS)
     </h1>
-    <div class="">
-      <h1 class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
-      <button @click="activebutton = !activebutton; Page = 0; PageClose = 0" class="ann-button float-right mb-2 mr-1">
-        {{ activetext(activebutton) }}
-      </button>
 
-      <select @change="changeCategory()" v-model="categoryId">
-        <option id="0" :value=0>ทั้งหมด</option>
-        <option id="1" :value=1>ทั่วไป</option>
-        <option id="2" :value=2>ทุนการศึกษา</option>
-        <option id="3" :value=3>หางาน</option>
-        <option id="4" :value=4>ฝึกงาน</option>
-      </select>
-    </div>
+    <div class="w-full flex justify-center">
+      <div class="w-4/6 flex flex-col">
+        <div class="mt-1">
+          <h1 class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
+          <select @change="changeCategory()" v-model="categoryId">
+            <option id="0" :value=0>ทั้งหมด</option>
+            <option id="1" :value=1>ทั่วไป</option>
+            <option id="2" :value=2>ทุนการศึกษา</option>
+            <option id="3" :value=3>หางาน</option>
+            <option id="4" :value=4>ฝึกงาน</option>
+          </select>
+          <button @click="activebutton = !activebutton; Page = 0; PageClose = 0" class="ann-button float-right mb-2 mr-1">
+            {{ activetext(activebutton) }}
+          </button>
+        </div>
 
-    <div class="relative overflow-x-auto">
-      <table v-if="activebutton === true" class="w-full text-center text-gray-500 dark:text-gray-400">
-        <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <th class="trHead">No.</th>
-          <th class="trHead">Title</th>
-          <th class="trHead">Close Date</th>
-          <th class="trHead">Category</th>
-        </tr>
-        <tr v-for="(ann, index) in announcementClosepage.content" :key="index"
-          class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <td>{{ index + 1 + (announcementClosepage.size * announcementClosepage.page) }}</td>
-          <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
-            <p>{{ ann.announcementTitle }}</p>
-          </td>
-          <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
-          <td class="ann-category">{{ ann.announcementCategory }}</td>
-        </tr>
-      </table>
+        <table v-if="activebutton === true" class="w-full text-center text-gray-500 dark:text-gray-400">
+          <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <th class="trHead">No.</th>
+            <th class="trHead">Title</th>
+            <th class="trHead">Close Date</th>
+            <th class="trHead">Category</th>
+          </tr>
+          <tr v-for="(ann, index) in announcementClosepage.content" :key="index"
+            class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td>{{ index + 1 + (announcementClosepage.size * announcementClosepage.page) }}</td>
+            <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
+              <p>{{ ann.announcementTitle }}</p>
+            </td>
+            <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
+            <td class="ann-category">{{ ann.announcementCategory }}</td>
+          </tr>
+        </table>
 
-      <table v-if="activebutton === false" class="w-full text-center text-gray-500 dark:text-gray-400">
-        <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <th class="trHead">No.</th>
-          <th class="trHead">Title</th>
-          <th class="trHead">Category</th>
-        </tr>
-        <tr v-for="(ann, index) in announcementActivepage.content" :key="index"
-          class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700 p-10">
-          <td>{{ index + 1 + (announcementActivepage.size * announcementActivepage.page) }}</td>
-          <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
-            <p>{{ ann.announcementTitle }}</p>
-          </td>
-          <td class="ann-category">{{ ann.announcementCategory }}</td>
-        </tr>
-      </table>
+        <table v-if="activebutton === false" class="w-full text-center text-gray-500 dark:text-gray-400">
+          <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <th class="trHead">No.</th>
+            <th class="trHead">Title</th>
+            <th class="trHead">Category</th>
+          </tr>
+          <tr v-for="(ann, index) in announcementActivepage.content" :key="index"
+            class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700 p-10">
+            <td>{{ index + 1 + (announcementActivepage.size * announcementActivepage.page) }}</td>
+            <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
+              <p>{{ ann.announcementTitle }}</p>
+            </td>
+            <td class="ann-category">{{ ann.announcementCategory }}</td>
+          </tr>
+        </table>
 
-      <div class="butAcDiv ml-4 mt-4" v-if="PageNum.length >= 2 && activebutton === false">
-        <button class="ann-page-prev p-2" @click="prevPage" :disabled="disablePrev">Prev</button>
-        <!-- <button v-for="(ann, index) in PageNum" class="butPage p-2" :key="index" :id="getClass(index)" @click="changePage(index)">{{ index +1 }}</button> -->
-        <button v-for="(page, index) in paginationButton" :key="index"
-          :style="[page === Page + 1 ? 'background-color: black; color: white;' : '']" :class="['ann-page-' + index]"
-          @click="changePage(page)" class="butPage p-2 rounded-lg">
-          {{ page }}
-        </button>
-        <!-- <button v-for="page in visibleButton" :key="page" :class="getClass(page)" @click="changePage(page)"
+        <div class="butAcDiv ml-4 mt-4" v-if="PageNum.length >= 2 && activebutton === false">
+          <button class="ann-page-prev p-2" @click="prevPage" :disabled="disablePrev">Prev</button>
+          <!-- <button v-for="(ann, index) in PageNum" class="butPage p-2" :key="index" :id="getClass(index)" @click="changePage(index)">{{ index +1 }}</button> -->
+          <button v-for="(page, index) in paginationButton" :key="index"
+            :style="[page === Page + 1 ? 'background-color: black; color: white;' : '']" :class="['ann-page-' + index]"
+            @click="changePage(page)" class="butPage p-2 rounded-lg">
+            {{ page }}
+          </button>
+          <!-- <button v-for="page in visibleButton" :key="page" :class="getClass(page)" @click="changePage(page)"
           class="butPage">{{ page }}</button> -->
-        <button class="ann-page-next p-2" @click="nextPage" :disabled="disableNext">Next</button>
-      </div>
+          <button class="ann-page-next p-2" @click="nextPage" :disabled="disableNext">Next</button>
+        </div>
 
-      <div class="butCloseDiv ml-4 mt-4" v-if="ClosePageNum.length >= 2 && activebutton === true">
-        <button class="ann-page-prev p-2" @click="prevClosePage" :disabled="disablePrev">Prev</button>
-        <!-- <button v-for="(ann, index) in ClosePageNum" class="butPage p-2" :key="index" :id="getClass(index)" @click="changePage(index)">{{ index +1 }}</button> -->
-        <button v-for="(page, index) in paginationCloseButton" :key="index"
-          :style="[page === PageClose + 1 ? 'background-color: black; color: white;' : '']" :class="['ann-page-' + index]"
-          @click="changeClosePage(page)" class="butPage">
-          {{ page }}
-        </button>
-        <!-- <button v-for="page in visibleButton" :key="page" :class="getClass(page)" @click="changePage(page)"
+        <div class="butCloseDiv ml-4 mt-4" v-if="ClosePageNum.length >= 2 && activebutton === true">
+          <button class="ann-page-prev p-2" @click="prevClosePage" :disabled="disablePrev">Prev</button>
+          <!-- <button v-for="(ann, index) in ClosePageNum" class="butPage p-2" :key="index" :id="getClass(index)" @click="changePage(index)">{{ index +1 }}</button> -->
+          <button v-for="(page, index) in paginationCloseButton" :key="index"
+            :style="[page === PageClose + 1 ? 'background-color: black; color: white;' : '']"
+            :class="['ann-page-' + index]" @click="changeClosePage(page)" class="butPage">
+            {{ page }}
+          </button>
+          <!-- <button v-for="page in visibleButton" :key="page" :class="getClass(page)" @click="changePage(page)"
           class="butPage">{{ page }}</button> -->
-        <button class="ann-page-next p-2" @click="nextClosePage" :disabled="disableNext">Next</button>
+          <button class="ann-page-next p-2" @click="nextClosePage" :disabled="disableNext">Next</button>
+        </div>
       </div>
     </div>
   </div>
@@ -234,7 +236,9 @@ const changeCategory = async () => {
 /* .ann-page-prev,
 .ann-page-next,
 .ann-button */
- .butPage, .ann-page-prev, .ann-page-next {
+.butPage,
+.ann-page-prev,
+.ann-page-next {
   border: 2px solid black;
   /* background-color: lightgrey; */
   border-radius: 5px;
@@ -243,7 +247,8 @@ const changeCategory = async () => {
   width: 80px;
 }
 
-.ann-page-prev, .ann-page-next {
+.ann-page-prev,
+.ann-page-next {
   background-color: grey;
 }
 
@@ -252,7 +257,7 @@ const changeCategory = async () => {
   background-color: lightgrey;
   border-radius: 5px;
   font-weight: bold;
-  padding: 10px;
+  padding: 5px;
 }
 
 button:enabled:hover {

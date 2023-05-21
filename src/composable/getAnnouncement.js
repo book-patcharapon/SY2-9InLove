@@ -12,7 +12,7 @@ const getAnnouncement = async () => {
       throw new Error(`No Announcement`)
     }
   } catch (error) {
-    console.log(`ERROR: can't read data, ${error}`)
+    console.error(`ERROR: ${error}`)
   }
 }
 
@@ -31,7 +31,7 @@ const getInformation = async (id) => {
       throw new Error(`No Announcement`);
     }
   } catch (error) {
-    console.log(`ERROR: can't read data, ${error}`);
+    console.error(`ERROR: ${error}`);
   }
 };
 
@@ -50,7 +50,7 @@ const getInformationForUpdate = async (id) => {
       throw new Error(`No Announcement`);
     }
   } catch (error) {
-    console.log(`ERROR: can't read data, ${error}`);
+    console.error(`ERROR: ${error}`);
   }
 };
 

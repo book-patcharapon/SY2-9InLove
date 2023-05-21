@@ -83,6 +83,15 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
 }
 
 const addEditNewAnnouncement = (newAnn) => {
+  // newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
+  // newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
+  // newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
+  // if (params.id) {
+  //   updateAnnouncement(params.id, newAnn) //update to backend
+  // } else {
+  //   createAnnouncement(newAnn); //add to backend
+  // }
+
   if (newAnn.announcementTitle && newAnn.announcementDescription) {
     newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
     newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
@@ -101,10 +110,12 @@ const addEditNewAnnouncement = (newAnn) => {
 <template>
   <div class="w-full">
     <div v-if="haveInfo">
-      <h1 class="text-4xl font-bold flex justify-center">Announcement Detail:</h1>
+      <h1 v-if="params.id"  class="text-4xl font-bold flex justify-center">Edit Announcement:</h1>
+      <h1 v-else class="text-4xl font-bold flex justify-center">Add Announcement:</h1>
       <div class="middle">
         <p class="font-bold text-2xl">Title</p>
-        <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full" placeholder="Enter a title" :maxlength="200"/><br />
+        <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full"
+          placeholder="Enter a title" :maxlength="200" /><br />
 
         <p>Category</p>
         <select v-model="newAnn.categoryId" class="ann-category">
@@ -115,8 +126,8 @@ const addEditNewAnnouncement = (newAnn) => {
         </select><br />
 
         <p>Description</p>
-        <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description" :maxlength="10000"
-          placeholder="Enter description"></textarea>
+        <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description"
+          :maxlength="10000" placeholder="Enter description"></textarea>
 
         <p>Publish Date</p>
         <input v-model="pubDate" type="date" class="ann-publish-date" />
@@ -160,7 +171,7 @@ input {
 }
 
 p {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.5rem;
   line-height: 2rem;
 }
