@@ -156,7 +156,7 @@ const changeCategory = async () => {
       <div class="w-4/6 flex flex-col">
         <div class="mt-1">
           <h1 class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
-          <select @change="changeCategory()" v-model="categoryId">
+          <select @change="changeCategory()" v-model="categoryId" class="ann-category-filter">
             <option id="0" :value=0>ทั้งหมด</option>
             <option id="1" :value=1>ทั่วไป</option>
             <option id="2" :value=2>ทุนการศึกษา</option>
@@ -168,7 +168,7 @@ const changeCategory = async () => {
           </button>
         </div>
 
-        <table v-if="activebutton === true" class="w-full text-center text-gray-500 dark:text-gray-400">
+        <table v-if="activebutton === true && announcementClosepage.totalElements != 0" class="w-full text-center text-gray-500 dark:text-gray-400">
           <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <th class="trHead">No.</th>
             <th class="trHead">Title</th>
@@ -185,8 +185,9 @@ const changeCategory = async () => {
             <td class="ann-category">{{ ann.announcementCategory }}</td>
           </tr>
         </table>
+        <h1 v-if="activebutton === true && announcementClosepage.totalElements == 0" class="w-full flex justify-center">No Announcement</h1>
 
-        <table v-if="activebutton === false" class="w-full text-center text-gray-500 dark:text-gray-400">
+        <table v-if="activebutton === false && announcementActivepage.totalElements != 0" class="w-full text-center text-gray-500 dark:text-gray-400">
           <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <th class="trHead">No.</th>
             <th class="trHead">Title</th>
@@ -201,6 +202,7 @@ const changeCategory = async () => {
             <td class="ann-category">{{ ann.announcementCategory }}</td>
           </tr>
         </table>
+        <h1 v-if="activebutton === false && announcementActivepage.totalElements == 0" class="w-full flex justify-center">No Announcement</h1>
 
         <div class="butAcDiv ml-4 mt-4" v-if="PageNum.length >= 2 && activebutton === false">
           <button class="ann-page-prev p-2" @click="prevPage" :disabled="disablePrev">Prev</button>
@@ -233,14 +235,10 @@ const changeCategory = async () => {
 </template>
  
 <style scoped>
-/* .ann-page-prev,
-.ann-page-next,
-.ann-button */
 .butPage,
 .ann-page-prev,
 .ann-page-next {
   border: 2px solid black;
-  /* background-color: lightgrey; */
   border-radius: 5px;
   font-weight: bold;
   margin-right: 5px;

@@ -16,11 +16,12 @@ const createAnnouncement = async (newAnnouncement) => {
     } else if (res.status === 500) {
       alert(`There is an error`)
       router.push("/admin/announcement")
-    } else {
+    }
+     else {
       throw new Error('Cannot add')
     }
   } catch (error) {
-    console.error(`ERROR: ${error.message}`)
+    console.error(`ERROR: ${error}`)
   }
 };
 
