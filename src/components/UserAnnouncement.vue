@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, watchEffect} from "vue";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 import { getActive, getClose } from "../composable/getUserAnnouncement";
 import { useRouter } from "vue-router";
@@ -43,8 +43,10 @@ const nextClosePage = async () => {
 }
 
 const prevPage = async () => {
-  Page.value -= 1
+  if (Page.value > 0) {
+    Page.value -= 1
   announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  }
   if (announcementActivepage.value.first === true) { disablePrev.value = true }
   else (disablePrev.value = false)
   if (announcementActivepage.value.last === true) { disableNext.value = true }
@@ -136,11 +138,22 @@ onBeforeMount(async () => {
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
   announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
+  watchEffect(() => {
+  if (announcementActivepage.value.first === true) {
+    disablePrev.value = true
+  }
+})
 })
 
 const changeCategory = async () => {
+  Page.value = 0
+  PageClose.value = 0
+  pageStore.setPage(Page.value)
+  pageStore.setClosePage(PageClose.value)
   announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  // console.log(announcementActivepage.value);
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
+  // console.log(announcementClosepage.value);
   announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
 }
