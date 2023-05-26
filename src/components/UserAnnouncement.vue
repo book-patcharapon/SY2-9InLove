@@ -154,14 +154,11 @@ const changeCategory = async () => {
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
   announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
-  if (Page.value === 0) { disablePrev.value = true }
+  if (Page.value === 0 ) { disablePrev.value = true }
   else (disablePrev.value = false)
   if (Page.value === announcementActivepage.value.totalPages - 1) { disableNext.value = true }
   else (disableNext.value = false)
-  if (PageClose.value === 0) { disablePrev.value = true }
-  else (disablePrev.value = false)
-  if (PageClose.value === announcementClosepage.value.totalPages - 1) { disableNext.value = true }
-  else (disableNext.value = false)
+  
 }
 </script>
  
