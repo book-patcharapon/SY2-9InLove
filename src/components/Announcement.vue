@@ -68,9 +68,9 @@ const deleteAnn = async (annID) => {
               <td class="ann-display">{{ ann.announcementDisplay }}</td>
               <td>
                 <RouterLink :to="{ name: 'AnnouncementView', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">
-                  <button>View</button>
+                  <button>VIEW</button>
                 </RouterLink>
-                <button class="ann-button" @click="deleteAnn(ann.id)">Delete</button>
+                <button class="ann-button" @click="deleteAnn(ann.id)">DELETE</button>
               </td>
             </tr>
           </tbody>
