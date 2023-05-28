@@ -47,13 +47,13 @@ const deleteAnn = async (annID) => {
         <table class="w-full text-center text-gray-500 dark:text-gray-400 ">
           <thead class="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th>No.</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Publish Date</th>
-              <th>Close date</th>
-              <th>Display</th>
-              <th>Action</th>
+              <th>NO.</th>
+              <th>TITLE</th>
+              <th>CATEGORY</th>
+              <th>PUBLISF DATE</th>
+              <th>CLOSE DATE</th>
+              <th>DISPLAY</th>
+              <th>ACTION</th>
             </tr>
           </thead>
 
@@ -79,7 +79,7 @@ const deleteAnn = async (annID) => {
     </div>
 
     <div v-else>
-      <h1>No Anouncement</h1>
+      <h1>NO ANNOUNCEMENT</h1>
     </div>
   </div>
 </template>
