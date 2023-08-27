@@ -1,10 +1,10 @@
 // import router from "../router";
 
-// const URL_USER = import.meta.env.URL_USER
+const URL_USER = import.meta.env.URL_USER
 
 const getUsers = async () => {
     try {
-        const res = await fetch(`http://localhost:8080/api/users`)
+        const res = await fetch(`${URL_USER}`)
         if (res.ok) {
             const alluser = await res.json()
             return alluser

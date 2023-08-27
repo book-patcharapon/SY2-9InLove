@@ -2,7 +2,7 @@
 import { ref, onBeforeMount } from "vue";
 import { getUsers } from "../composable/doUser.js"
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
-
+const URL_USER = import.meta.env.URL_USER
 const users = ref([])
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -13,7 +13,7 @@ onBeforeMount(async () => {
 const deleteUser = async (userId) => {
   if (confirm("Do you want to delete?")) {
     try {
-      const res = await fetch(`http://localhost:8080/api/users/${userId}`, { method: "DELETE" }) //Delete to backend
+      const res = await fetch(`${URL_USER}${userId}`, { method: "DELETE" }) //Delete to backend
       if (res.status === 200) {
         users.value = users.value.filter((usr) => usr.id !== userId); //Delete to frontend
       } else if (res.status === 400) {

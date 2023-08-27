@@ -1,10 +1,10 @@
 import router from "../router";
 
-// const API_HOST = import.meta.env.VITE_BASE_URL;
+const URL_USER = import.meta.env.URL_USER
 
 const createUser = async (User) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/users`, {
+      const res = await fetch(`${URL_USER}`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(User),
@@ -27,7 +27,7 @@ const createUser = async (User) => {
 
 const updateUser = async (id, User) => {
   try {
-    const res = await fetch(`http://localhost:8080/api/users/${id}`, {
+    const res = await fetch(`${URL_USER}${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(User),
@@ -50,7 +50,7 @@ const updateUser = async (id, User) => {
 };
 const getUserInformationForUpdate = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/users/${id}`);
+      const res = await fetch(`${URL_USER}${id}`);
       if (res.ok) {
         const user = await res.json();
         return user;
