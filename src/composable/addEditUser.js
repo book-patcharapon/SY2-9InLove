@@ -4,7 +4,7 @@ const API_HOST = import.meta.env.VITE_BASE_URL;
 
 const createUser = async (User) => {
     try {
-      const res = await fetch(`${API_HOST}`, {
+      const res = await fetch(`${API_HOST}/users`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(User),
@@ -27,7 +27,7 @@ const createUser = async (User) => {
 
 const updateUser = async (id, User) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`, {
+    const res = await fetch(`${API_HOST}/users/${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(User),

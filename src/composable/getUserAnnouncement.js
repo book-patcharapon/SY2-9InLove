@@ -4,7 +4,7 @@ const API_HOST = import.meta.env.VITE_BASE_URL
 
 const getPage = async (page) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}`);
+    const res = await fetch(`${API_HOST}/announcements/pages?page=${page}`);
     if (res.ok) {
       const ann = await res.json();
       return ann;
@@ -16,7 +16,7 @@ const getPage = async (page) => {
 
 const annUserId = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`);
+    const res = await fetch(`${API_HOST}/announcements/${id}`);
     if (res.ok) {
       const annDetail = await res.json();
       return annDetail;
@@ -33,7 +33,7 @@ const annUserId = async (id) => {
 
 const getActive = async (page, categoryId) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`);
+    const res = await fetch(`${API_HOST}/announcements/pages?page=${page}&mode=active&category=${categoryId}`);
     if (res.ok) {
       const ann = await res.json();
       return ann;
@@ -45,7 +45,7 @@ const getActive = async (page, categoryId) => {
 
 const getClose = async (page, categoryId) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`)
+    const res = await fetch(`${API_HOST}/announcements/pages?page=${page}&mode=close&category=${categoryId}`)
     if (res.ok) {
       const ann = await res.json();
       return ann;

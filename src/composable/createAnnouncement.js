@@ -4,7 +4,7 @@ const API_HOST = import.meta.env.VITE_BASE_URL;
 
 const createAnnouncement = async (newAnnouncement) => {
   try {
-    const res = await fetch(`${API_HOST}`, {
+    const res = await fetch(`${API_HOST}/announcements`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newAnnouncement),

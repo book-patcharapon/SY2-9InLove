@@ -4,7 +4,7 @@ const API_HOST = import.meta.env.VITE_BASE_URL;
 
 const updateAnnouncement = async (id, announcement) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`, {
+    const res = await fetch(`${API_HOST}/announcements/${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(announcement),

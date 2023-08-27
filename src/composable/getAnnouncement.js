@@ -4,7 +4,7 @@ const API_HOST = import.meta.env.VITE_BASE_URL
 
 const getAnnouncement = async () => {
   try {
-    const res = await fetch(`${API_HOST}`)
+    const res = await fetch(`${API_HOST}/announcements`)
     if (res.ok) {
       const allannouncement = await res.json()
       return allannouncement
@@ -18,7 +18,7 @@ const getAnnouncement = async () => {
 
 const getInformation = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`);
+    const res = await fetch(`${API_HOST}/announcements/${id}`);
     if (res.ok) {
       const announcement = await res.json();
       return announcement;
@@ -37,7 +37,7 @@ const getInformation = async (id) => {
 
 const getInformationForUpdate = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/update/${id}`);
+    const res = await fetch(`${API_HOST}/announcements/update/${id}`);
     if (res.ok) {
       const announcement = await res.json();
       return announcement;

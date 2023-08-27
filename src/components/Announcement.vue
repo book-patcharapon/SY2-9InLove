@@ -14,7 +14,7 @@ onBeforeMount(async () => {
 const deleteAnn = async (annID) => {
   if (confirm("Do you want to delete?")) {
     try {
-      const res = await fetch(`${API_HOST}/${annID}`, { method: "DELETE" }) //Delete to backend
+      const res = await fetch(`${API_HOST}/announcements/${annID}`, { method: "DELETE" }) //Delete to backend
       if (res.status === 200) {
         announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete to frontend
       } else if (res.status === 400) {
