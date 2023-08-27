@@ -31,12 +31,12 @@ const deleteAnn = async (annID) => {
 
 <template>
   <div class="w-full flex flex-col">
-    <h1 class="text-4xl font-bold flex justify-center font-style: sans-serif">
+    <h1 class="text-4xl font-bold flex justify-center font-style:sans-serif">
       SIT Announcement System (SAS)
     </h1>
     
     <div v-if="announcements" class="w-full flex justify-center">
-      <div class="flex flex-col w-4/6">
+      <div class="flex flex-col w-5/6">
         <div class="my-2">
           <p class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
           <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button float-right">
@@ -44,23 +44,23 @@ const deleteAnn = async (annID) => {
           </RouterLink>
         </div>
 
-        <table class="w-full text-center text-gray-500 dark:text-gray-400 ">
-          <thead class="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-center text-gray-400">
+          <thead class="text-xl uppercase bg-gray-700 text-gray-400 ">
             <tr>
               <th>No.</th>
               <th>Title</th>
               <th>Category</th>
               <th>Publish Date</th>
-              <th>Close date</th>
+              <th>Close Date</th>
               <th>Display</th>
               <th>Action</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+            <tr class="ann-item bg-gray-800 border-gray-700"
               v-for="(ann, index) in announcements" :key="index">
-              <th>{{ index + 1 }}</th>
+              <td>{{ index + 1 }}</td>
               <td class="ann-title">{{ ann.announcementTitle }}</td>
               <td class="ann-category">{{ ann.announcementCategory }}</td>
               <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
@@ -68,9 +68,11 @@ const deleteAnn = async (annID) => {
               <td class="ann-display">{{ ann.announcementDisplay }}</td>
               <td>
                 <RouterLink :to="{ name: 'AnnouncementView', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">
-                  <button>View</button>
+                  <button>VIEW</button>
                 </RouterLink>
-                <button class="ann-button" @click="deleteAnn(ann.id)">Delete</button>
+                <button class="ann-button" @click="deleteAnn(ann.id)">
+                  DELETE
+                </button>
               </td>
             </tr>
           </tbody>
@@ -79,7 +81,7 @@ const deleteAnn = async (annID) => {
     </div>
 
     <div v-else>
-      <h1>No Anouncement</h1>
+      <h1>NO ANNOUNCEMENT</h1>
     </div>
   </div>
 </template>

@@ -83,15 +83,6 @@ const changeUTCtoLocalDatetime = (utcDatetime) => {
 }
 
 const addEditNewAnnouncement = (newAnn) => {
-  // newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
-  // newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
-  // newAnn.announcementDisplay = newAnn.announcementDisplay ? "Y" : "N";
-  // if (params.id) {
-  //   updateAnnouncement(params.id, newAnn) //update to backend
-  // } else {
-  //   createAnnouncement(newAnn); //add to backend
-  // }
-
   if (newAnn.announcementTitle && newAnn.announcementDescription) {
     newAnn.publishDate = changeDateTimeToUTC(pubDate, pubTime);
     newAnn.closeDate = changeDateTimeToUTC(cloDate, cloTime);
@@ -110,14 +101,14 @@ const addEditNewAnnouncement = (newAnn) => {
 <template>
   <div class="w-full">
     <div v-if="haveInfo">
-      <h1 v-if="params.id"  class="text-4xl font-bold flex justify-center">Edit Announcement:</h1>
+      <h1 v-if="params.id" class="text-4xl font-bold flex justify-center">Edit Announcement:</h1>
       <h1 v-else class="text-4xl font-bold flex justify-center">Add Announcement:</h1>
       <div class="middle">
-        <p class="font-bold text-2xl">Title</p>
+        <p class="font-bold text-2xl">TITLE</p>
         <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full"
           placeholder="Enter a title" :maxlength="200" /><br />
 
-        <p>Category</p>
+        <p>CATEGORY</p>
         <select v-model="newAnn.categoryId" class="ann-category">
           <option id="1" :value=1>ทั่วไป</option>
           <option id="2" :value=2>ทุนการศึกษา</option>
@@ -125,32 +116,32 @@ const addEditNewAnnouncement = (newAnn) => {
           <option id="4" :value=4>ฝึกงาน</option>
         </select><br />
 
-        <p>Description</p>
+        <p>DESCRIPTION</p>
         <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description"
           :maxlength="10000" placeholder="Enter description"></textarea>
 
-        <p>Publish Date</p>
+        <p>PUBLISH DATE</p>
         <input v-model="pubDate" type="date" class="ann-publish-date" />
         <input v-model="pubTime" type="time" class="ann-publish-time" /><br />
 
-        <p>Close Date</p>
+        <p>CLOSE DATE</p>
         <input v-model="cloDate" type="date" class="ann-close-date" />
         <input v-model="cloTime" type="time" class="ann-close-time" /><br />
 
-        <p>Display</p>
+        <p>DISPLAY</p>
         <input v-model="newAnn.announcementDisplay" type="checkbox" name="Display" id="Display" class="ann-display" />
         <label for="Display">Check to show this announcement</label><br />
 
         <button @click="addEditNewAnnouncement(newAnn)" v-if="!params.id" class="ann-button">
-          Submit
+          SUBMIT
         </button>
 
         <button @click="addEditNewAnnouncement(newAnn)" v-if="params.id" class="ann-button" :disabled="!edited">
-          Edit
+          EDIT
         </button>
 
         <button @click="$router.push('/admin/announcement')" class="ann-button">
-          Cancel
+          CANCEL
         </button>
       </div>
     </div>

@@ -21,20 +21,20 @@ onBeforeMount(async () => {
         <div v-if="haveInfo" class="flex flex-col p-4 w-3/6">
             <h1 class="text-4xl p-4 font-bold">Announcement Detail:</h1>
             <div class="content text-xl">
-                <p class="ann-title"><b>Title:</b> {{ announcementDetail.announcementTitle }}</p>
-                <p class="ann-category"><b>Category:</b> {{ announcementDetail.announcementCategory }}</p>
-                <p class="ann-description"><b>Description:</b> {{ announcementDetail.announcementDescription }}</p>
-                <p class="ann-publish-date"><b>PublishDate:</b> {{ changeDateTimeFormat(announcementDetail.publishDate) }}</p>
-                <p class="ann-close-date"><b>CloseDate:</b> {{ changeDateTimeFormat(announcementDetail.closeDate) }}</p>
-                <p class="ann-display"><b>Display:</b> {{ announcementDetail.announcementDisplay }}</p>
+                <p class="ann-title"><b>TITLE:</b> {{ announcementDetail.announcementTitle }}</p>
+                <p class="ann-category"><b>CATEGORY:</b> {{ announcementDetail.announcementCategory }}</p>
+                <p class="ann-description"><b>DESCRIPTION:</b> {{ announcementDetail.announcementDescription }}</p>
+                <p class="ann-publish-date"><b>PUBLISH DATEe:</b> {{ changeDateTimeFormat(announcementDetail.publishDate) }}</p>
+                <p class="ann-close-date"><b>ClOSE DATE:</b> {{ changeDateTimeFormat(announcementDetail.closeDate) }}</p>
+                <p class="ann-display"><b>DISPLAY:</b> {{ announcementDetail.announcementDisplay }}</p>
             </div>
             <div class="flex my-2">
                 <RouterLink :to="{ name: 'Announcement' }" class="ann-button">
-                    <button>Back</button>
+                    <button>BACK</button>
                 </RouterLink>
 
                 <RouterLink :to="{ name: 'UpdateAnnouncement', params: { id: params.id } }" class="ann-button">
-                    <button>Edit</button>
+                    <button>EDIT</button>
                 </RouterLink>
             </div>
         </div>
