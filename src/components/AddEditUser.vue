@@ -22,7 +22,9 @@ const changeddata = () => {
         edited.value = false;
     }
     console.log(user.value);
-};
+}
+
+// check password and re-password
 const checkpassword = () => {
     if (JSON.stringify(checkpass.value) === JSON.stringify(user.value.password)) {
         return "password match"
@@ -35,10 +37,8 @@ onBeforeMount(async () => {
     if (params.id) {
         haveInfo.value = true
         // Edit mode
-        user.value = await getUserDetailForUpdate(params.id);
+        user.value = await getUserDetailForUpdate(params.id)
         checkuser.value = Object.assign({}, user.value)
-
-        console.log(user.value.role);
         if (user.value) {
             haveInfo.value = true
 

@@ -5,7 +5,7 @@ import { checkPassword } from "../composable/doUser.js"
 
 const userLogin = ref({})
 const status = ref()
-const errorMessage = ref()
+const errorDetail = ref()
 
 onBeforeMount(async () => {
   userLogin.value = {
@@ -14,22 +14,21 @@ onBeforeMount(async () => {
   }
 })
 
-const matchPassword = (user) => {
-  checkPassword(user)
-  status.value = checkPassword(user)
+const matchPassword = async (user) => {
+  status.value = await checkPassword(user)
 }
 </script>
 
 <template>
   <div class="w-full flex flex-col justify-center items-center">
       <div class="w-3/6 flex flex-col mt-8">
-        <div v-if="status=200" class="green-bord">
+        <div v-if="status==200" class="green-bord">
             <h3>Password Matched</h3>
         </div>
-        <div v-if="status=401" class="red-bord">
+        <div v-if="status==401" class="red-bord">
             <h3>Password NOT Matched</h3>
         </div>
-        <div v-if="status=404" class="red-bord">
+        <div v-if="status==404" class="red-bord">
             <h3>The specified username DOES NOT exist</h3>
         </div>
       </div>

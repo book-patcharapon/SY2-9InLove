@@ -86,28 +86,10 @@ const checkPassword = async (user) => {
             headers: { "content-type": "application/json" },
             body: JSON.stringify(user),
         })
-        if (response.ok) {
-            const checkUser = await response.json()
-            console.log(response.detail.errorMessage)
-            return checkUser
-        } else if (response.status == 404) {
-            const checkUser = await response.json()
-            console.log(checkUser.detail)
-            return checkUser.detail
-        } else if (response.status == 401) {
-            const checkUser = await response.json()
-            console.log(checkPassword.status)
-            return checkUser.status
-        }
-        throw new Error(`Cannot check`)
+        return response.status
     } catch (error) {
-        for (let index = 0; index < detail.length; index++) {
-            // const element = array[index];
-            console.log(response.detail[index].errorMessage)
-        }
         console.error(`ERROR: ${error}`)
     }
 }
-
 
 export { getUsers, createUser, updateUser, getUserDetailForUpdate, checkPassword }
