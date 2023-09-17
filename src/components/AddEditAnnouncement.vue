@@ -1,9 +1,9 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onBeforeMount, watch } from "vue";
-import { createAnnouncement } from "../composable/createAnnouncement.js";
-import { updateAnnouncement } from "../composable/editAnnouncement.js";
-import { getInformationForUpdate } from "../composable/getAnnouncement.js";
+import { createAnnouncement, updateAnnouncement, getInformationForUpdate } from "../composable/doAnnouncement.js";
+// import { updateAnnouncement } from "../composable/editAnnouncement.js";
+// import { getInformationForUpdate } from "../composable/getAnnouncement.js";
 
 const { params } = useRoute();
 const newAnn = ref({});

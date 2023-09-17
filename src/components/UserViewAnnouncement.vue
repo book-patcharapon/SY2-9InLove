@@ -2,7 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 import { useRoute, RouterLink } from "vue-router";
-import { annUserId } from "../composable/getUserAnnouncement";
+import { annUserId } from "../composable/doAnnouncement";
 import { useModeStore } from '../stores/mode.js'
 
 const haveInfo = ref()

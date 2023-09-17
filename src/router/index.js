@@ -6,6 +6,7 @@ import UserAnnouncement from "../components/UserAnnouncement.vue"
 import UserViewAnnouncement from "../components/UserViewAnnouncement.vue"
 import AdminUser from "../components/AdminUser.vue"
 import AddEditUser from "../components/AddEditUser.vue"
+import MatchPassword from "../components/MatchPassword.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +55,11 @@ const router = createRouter({
       path: '/admin/user/:id/edit',
       name: 'EditUser',
       component: AddEditUser,
+    },
+    {
+      path: '/admin/user/match',
+      name: 'MatchPassword',
+      component: MatchPassword,
     }
   ],
 })

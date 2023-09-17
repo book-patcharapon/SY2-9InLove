@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, computed, watchEffect} from "vue";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
-import { getActive, getClose } from "../composable/getUserAnnouncement";
+import { getAnnouncementActive, getAnnouncementClose } from "../composable/doAnnouncement.js";
 import { useRouter } from "vue-router";
 import { usePageStore } from '../stores/page.js'
 import { useModeStore } from '../stores/mode.js'
@@ -25,7 +25,7 @@ const categoryId = ref(0)
 const nextPage = async () => {
   Page.value += 1
   Page.value === announcementActivepage.value.totalPages ? disableNext.value = true : Page.value
-  announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  announcementActivepage.value = await getAnnouncementActive(Page.value, categoryId.value)
   if (announcementActivepage.value.last === true) { disableNext.value = true }
   else (disableNext.value = false)
   if (announcementActivepage.value.first === true) { disablePrev.value = true }
@@ -35,7 +35,7 @@ const nextPage = async () => {
 const nextClosePage = async () => {
   PageClose.value += 1
   PageClose.value === announcementClosepage.value.totalPages ? disableNext.value = true : PageClose.value
-  announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
+  announcementClosepage.value = await getAnnouncementClose(PageClose.value, categoryId.value)
   if (announcementActivepage.value.last === true) { disableNext.value = true }
   else (disableNext.value = false)
   if (announcementActivepage.value.first === true) { disablePrev.value = true }
@@ -45,7 +45,7 @@ const nextClosePage = async () => {
 const prevPage = async () => {
   if (Page.value > 0) {
     Page.value -= 1
-  announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  announcementActivepage.value = await getAnnouncementActive(Page.value, categoryId.value)
   }
   if (announcementActivepage.value.first === true) { disablePrev.value = true }
   else (disablePrev.value = false)
@@ -55,7 +55,7 @@ const prevPage = async () => {
 
 const prevClosePage = async () => {
   PageClose.value -= 1
-  announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
+  announcementClosepage.value = await getAnnouncementClose(PageClose.value, categoryId.value)
   if (announcementClosepage.value.first === true) { disablePrev.value = true }
   else (disablePrev.value = false)
   if (announcementClosepage.value.last === true) { disableNext.value = true }
@@ -64,7 +64,7 @@ const prevClosePage = async () => {
 
 const changePage = async (page) => {
   Page.value = page - 1
-  announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  announcementActivepage.value = await getAnnouncementActive(Page.value, categoryId.value)
   pageStore.setPage(Page.value)
   if (Page.value === 0) { disablePrev.value = true }
   else (disablePrev.value = false)
@@ -74,7 +74,7 @@ const changePage = async (page) => {
 
 const changeClosePage = async (page) => {
   PageClose.value = page - 1
-  announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
+  announcementClosepage.value = await getAnnouncementClose(PageClose.value, categoryId.value)
   pageStore.setClosePage(PageClose.value)
   if (PageClose.value === 0) { disablePrev.value = true }
   else (disablePrev.value = false)
@@ -134,9 +134,9 @@ const AnnDetail = (viewId) => {
 }
 
 onBeforeMount(async () => {
-  announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  announcementActivepage.value = await getAnnouncementActive(Page.value, categoryId.value)
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
-  announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
+  announcementClosepage.value = await getAnnouncementClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
   watchEffect(() => {
   if (announcementActivepage.value.first === true) {
@@ -150,9 +150,9 @@ const changeCategory = async () => {
   PageClose.value = 0
   pageStore.setPage(Page.value)
   pageStore.setClosePage(PageClose.value)
-  announcementActivepage.value = await getActive(Page.value, categoryId.value)
+  announcementActivepage.value = await getAnnouncementActive(Page.value, categoryId.value)
   PageNum.value = Array.from({ length: announcementActivepage.value.totalPages }, (_, i) => i + 1)
-  announcementClosepage.value = await getClose(PageClose.value, categoryId.value)
+  announcementClosepage.value = await getAnnouncementClose(PageClose.value, categoryId.value)
   ClosePageNum.value = Array.from({ length: announcementClosepage.value.totalPages }, (_, i) => i + 1)
   if (Page.value === 0 ) { disablePrev.value = true }
   else (disablePrev.value = false)

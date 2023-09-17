@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import { getAnnouncement } from "../composable/getAnnouncement.js";
+import { getAnnouncement } from "../composable/doAnnouncement.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 
 const API_HOST = import.meta.env.VITE_BASE_URL;

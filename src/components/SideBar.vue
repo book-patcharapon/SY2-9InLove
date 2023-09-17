@@ -8,11 +8,15 @@ import { RouterLink } from "vue-router";
     <div class="linkbox">
       <hr/>
       <RouterLink :to="{ name: 'Announcement' }" class="ann-menu">
-        <button class="li ">Announcement</button>
+        <button class="li">Announcement</button>
       </RouterLink>
       <hr/>
       <RouterLink :to="{ name: 'AdminUser' }" class="ann-menu">
         <button class="li">User</button>
+      </RouterLink>
+      <hr/>
+      <RouterLink :to="{ name: 'MatchPassword' }" class="ann-menu">
+        <button class="li">Match Password</button>
       </RouterLink>
       <hr/>
     </div>
