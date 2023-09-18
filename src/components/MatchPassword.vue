@@ -22,13 +22,13 @@ const matchPassword = async (user) => {
 <template>
   <div class="w-full flex flex-col justify-center items-center">
       <div class="w-3/6 flex flex-col mt-8">
-        <div v-if="status==200" class="green-bord">
+        <div v-if="status==200" class="ann-message green-bord">
             <h3>Password Matched</h3>
         </div>
-        <div v-if="status==401" class="red-bord">
+        <div v-if="status==401" class="ann-message red-bord">
             <h3>Password NOT Matched</h3>
         </div>
-        <div v-if="status==404" class="red-bord">
+        <div v-if="status==404" class="ann-message red-bord">
             <h3>The specified username DOES NOT exist</h3>
         </div>
       </div>

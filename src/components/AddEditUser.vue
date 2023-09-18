@@ -14,22 +14,23 @@ const edited = ref(true);
 const haveInfo = ref(false);
 const checkuser = ref({});
 const checkpass = ref();
+const errortr =ref([]);
 
-const changeddata = () => {
-    if (JSON.stringify(checkuser.value) === JSON.stringify(user.value)) {
-        edited.value = true;
-    } else {
-        edited.value = false;
-    }
-    console.log(user.value);
-}
+// const changeddata = () => {
+//     if (JSON.stringify(checkuser.value) === JSON.stringify(user.value)) {
+//         edited.value = true;
+//     } else {
+//         edited.value = false;
+//     }
+//     console.log(user.value);
+// }
 
 // check password and re-password
 const checkpassword = () => {
     if (JSON.stringify(checkpass.value) === JSON.stringify(user.value.password)) {
         return "password match"
     } else {
-        return "password not match"
+        return "The password DOES NOT match"
     }
 
 };
@@ -63,12 +64,37 @@ onBeforeMount(async () => {
         };
     }
 });
-
+const fetchError = async(user) => {
+    try {
+        await createUser(user);
+    } catch (error) {
+        error.forEach(element => {
+            errortr.value[element.field] = element.errorMessage
+        });
+        
+        console.log(errortr.value);
+        
+    }
+    
+}
+const fetchErrorforUpdate = async(user) => {
+    try {
+        await updateUser(params.id, user)
+    } catch (error) {
+        error.forEach(element => {
+            errortr.value[element.field] = element.errorMessage
+        });
+        
+        console.log(errortr.value);
+        
+    }
+    
+}
 const addEditUser = (user) => {
     if (params.id) {
-        updateUser(params.id, user) //update to backend
+        fetchErrorforUpdate(user) //update to backend
     } else {
-        createUser(user); //add to backend
+        fetchError(user); //add to backend
     }
 }
 
@@ -116,24 +142,24 @@ function checkPasswordStrength(password) {
             <div v-if="haveInfo">
                 <h1 v-if="params.id" class="text-4xl font-bold flex justify-center">User Detail:</h1>
                 <h1 v-else class="text-4xl font-bold flex justify-center">User Detail:</h1>
-                <div class="middle">
-                    <p class="font-bold text-2xl">Username</p>
-                    <input type="text" id="title" v-model="user.username" v-on:input="changeddata"
-                        class="ann-username w-full" placeholder="" :maxlength="45" /><br />
+                <form @submit.prevent="addEditUser(user)"  class="middle">
+                    <p class="font-bold text-2xl">Username</p><span class="red" v-if="user.username?.length == 0">username is required</span><span v-if="errortr.username" class="ann-error-username red">{{ errortr.username }}</span>
+                    <input required type="text" id="title" v-model.trim="user.username" v-on:input="changeddata"
+                        class="ann-username w-full" placeholder="" minlength="1" maxlength="45" /><br />
                     <!-- pass -->
-                    <p v-if="!params.id" class="font-bold text-2xl" >Password</p><span v-if="!params.id" class="red">{{ checkPasswordStrength(user.password) }}</span>
-                    <input v-if="!params.id" type="password" id="password" v-model="user.password" v-on:input="checkPasswordStrength(user.password)" class="ann-password w-full" placeholder=""
-                        :maxlength="100" /><br v-if="!params.id"/>
-                    <p v-if="!params.id" class="font-bold text-2xl">Confirm password</p><span v-if="checkpass" class="red">{{ checkpassword() }}</span>
-                    <input v-if="!params.id" required type="password" id="confirmpassword" v-model="checkpass" v-on:input="checkpassword" class="ann-confirm-password w-full"
-                        placeholder="" :maxlength="100" /><br v-if="!params.id"/>
+                    <p v-if="!params.id" class="font-bold text-2xl" >Password</p><span v-if="!params.id" class="ann-error-password red">{{ errortr.password=="size must be between 8 and 14"?"Password size must be between 8 and 14":errortr.password }}</span>
+                    <input v-if="!params.id" required type="password" id="password" v-model.trim="user.password" v-on:input="checkPasswordStrength(user.password)" class="ann-password w-full" placeholder=""
+                        minlength="8" maxlength="14" /><br v-if="!params.id"/>
+                    <p v-if="!params.id" class="font-bold text-2xl">Confirm password</p><span v-if="checkpass" class="ann-error-password red">{{ checkpassword() }}</span>
+                    <input v-if="!params.id" required type="password" id="confirmpassword" v-model.trim="checkpass" v-on:input="checkpassword" class="ann-confirm-password w-full"
+                        placeholder="" minlength="8" maxlength="14" /><br v-if="!params.id"/>
                     <!-- pass -->
-                    <p class="font-bold text-2xl">Name</p>
-                    <input type="text" id="name" v-model="user.name" v-on:input="changeddata" class="ann-name w-full"
-                        placeholder="" :maxlength="100" />
-                    <p class="font-bold text-2xl">Email</p>
-                    <input type="text" id="email" v-model.trim="user.email" v-on:input="changeddata"
-                        class="ann-email w-full" placeholder="" :maxlength="150" />
+                    <p class="font-bold text-2xl">Name</p><span class="red" v-if="user.name?.length == 0">name is required</span><span v-if="errortr.name" class="ann-error-name red">{{ errortr.name }}</span>
+                    <input required type="text" id="name" v-model.trim="user.name" v-on:input="changeddata" class="ann-name w-full"
+                        placeholder="" minlength="1" maxlength="100" />
+                    <p class="font-bold text-2xl">Email</p><span class="red" v-if="user.email?.length == 0">email is required</span><span v-if="errortr.email" class="ann-error-email red">{{ errortr.email }}</span>
+                    <input required type="email" id="email" v-model.trim="user.email" v-on:input="changeddata"
+                        class="ann-email w-full" placeholder="" minlength="1" maxlength="150" />
                     <p>Role</p>
                     <select v-model.trim="user.role" v-on:change="changeddata" class="ann-role">
                         <option id="announcer" value='announcer'>announcer</option>
@@ -148,14 +174,14 @@ function checkPasswordStrength(password) {
                         Submit
                     </button> -->
                     <!-- :disabled="!edited" -->
-                    <button @click="addEditUser(user)" class="ann-button" :disabled="edited">
+                    <button  class="ann-button"  type="submit">
                         Save
                     </button>
 
                     <button @click="$router.push('/admin/User')" class="ann-button">
                         Cancel
                     </button>
-                </div>
+                </form>
             </div>
 
             <div v-else>
