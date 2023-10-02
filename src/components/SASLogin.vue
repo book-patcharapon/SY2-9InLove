@@ -3,7 +3,7 @@ import { useRoute } from "vue-router"
 import { ref, onBeforeMount } from "vue"
 import router from "../router";
 import { useTokenStore } from "../stores/token.js";
-
+const API_HOST = import.meta.env.VITE_BASE_URL;
 const userLogin = ref({})
 const status = ref()
 const tokenStore = useTokenStore();
@@ -18,7 +18,7 @@ onBeforeMount(async () => {
 
 const login = async (input) => {
   try {
-    const res = await fetch('http://localhost:8080/api/token' , {
+    const res = await fetch(`${API_HOST}/token` , {
       method: 'POST',
       headers: { "content-type": "application/json" },
       body : JSON.stringify({input}),
