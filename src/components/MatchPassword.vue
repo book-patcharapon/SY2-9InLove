@@ -21,48 +21,34 @@ const matchPassword = async (user) => {
 
 <template>
   <div class="w-full flex flex-col justify-center items-center">
-      <div class="w-3/6 flex flex-col mt-8">
-        <div v-if="status==200" class="ann-message green-bord">
-            <h3>Password Matched</h3>
-        </div>
-        <div v-if="status==401" class="ann-message red-bord">
-            <h3>Password NOT Matched</h3>
-        </div>
-        <div v-if="status==404" class="ann-message red-bord">
-            <h3>The specified username DOES NOT exist</h3>
-        </div>
+    <div class="w-3/6 flex flex-col mt-8">
+      <div v-if="status == 200" class="ann-message green-bord">
+        <h3>Password Matched</h3>
       </div>
-
-      <div class="w-3/6 flex flex-col mt-4 bord">
-        <h1 class="font-bold">Match Password</h1>
-        <br />
-
-        <h3 class="font-bold">Username</h3>
-        <input
-          type="text"
-          id="title"
-          v-model="userLogin.username"
-          v-on:input="changeddata"
-          class="ann-username w-full p-2"
-          placeholder="Enter your username"
-          :maxlength="45"
-        />
-        <!-- password -->
-        <h3 class="font-bold">Password</h3>
-        <input
-          type="password"
-          id="password"
-          v-model="userLogin.password"
-          class="ann-password w-full p-2"
-          placeholder="Please enter your password"
-          :minlength="8"
-          :maxlength="14"
-        /><br />
-        
-        <button @click="matchPassword(userLogin)" class="ann-button">
-          Match or not
-        </button>
+      <div v-if="status == 401" class="ann-message red-bord">
+        <h3>Password NOT Matched</h3>
       </div>
+      <div v-if="status == 404" class="ann-message red-bord">
+        <h3>The specified username DOES NOT exist</h3>
+      </div>
+    </div>
+
+    <div class="w-3/6 flex flex-col mt-4 bord">
+      <h1 class="font-bold">Match Password</h1>
+      <br />
+
+      <h3 class="font-bold">Username</h3>
+      <input type="text" id="title" v-model="userLogin.username" v-on:input="changeddata" class="ann-username w-full p-2"
+        placeholder="Enter your username" :maxlength="45" />
+      <!-- password -->
+      <h3 class="font-bold">Password</h3>
+      <input type="password" id="password" v-model="userLogin.password" class="ann-password w-full p-2"
+        placeholder="Please enter your password" :minlength="8" :maxlength="14" /><br />
+
+      <button @click="matchPassword(userLogin)" class="ann-button">
+        Match or not
+      </button>
+    </div>
   </div>
 </template>
 
@@ -105,17 +91,17 @@ button:enabled:hover {
 }
 
 .red-bord {
-    padding: 8px;
-    border: 2px solid red;
-    border-radius: 10px;
-    background-color: lightcoral;
+  padding: 8px;
+  border: 2px solid red;
+  border-radius: 10px;
+  background-color: lightcoral;
 }
 
 .green-bord {
-    padding: 8px;
-    border: 2px solid green;
-    border-radius: 10px;
-    background-color: lightgreen;
+  padding: 8px;
+  border: 2px solid green;
+  border-radius: 10px;
+  background-color: lightgreen;
 }
 
 h1 {

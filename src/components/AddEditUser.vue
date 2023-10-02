@@ -4,6 +4,7 @@ import { ref, onBeforeMount } from "vue";
 import { createUser, updateUser, getUserDetailForUpdate } from "../composable/doUser.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 
+
 const { params } = useRoute();
 const user = ref({});
 const username = ref();
@@ -33,7 +34,8 @@ const checkpassword = () => {
         return "The password DOES NOT match"
     }
 
-};
+}
+
 onBeforeMount(async () => {
     if (params.id) {
         haveInfo.value = true
@@ -63,7 +65,8 @@ onBeforeMount(async () => {
             role: "announcer",
         };
     }
-});
+})
+
 const fetchError = async(user) => {
     try {
         await createUser(user);
@@ -77,6 +80,7 @@ const fetchError = async(user) => {
     }
     
 }
+
 const fetchErrorforUpdate = async(user) => {
     try {
         await updateUser(params.id, user)
@@ -90,6 +94,7 @@ const fetchErrorforUpdate = async(user) => {
     }
     
 }
+
 const addEditUser = (user) => {
     if (params.id) {
         fetchErrorforUpdate(user) //update to backend
@@ -127,7 +132,6 @@ function checkPasswordStrength(password) {
   // If all conditions are met
   return "Password meets all the criteria.";
 }
-
 </script>
  
 <template>
@@ -143,9 +147,11 @@ function checkPasswordStrength(password) {
                 <h1 v-if="params.id" class="text-4xl font-bold flex justify-center">User Detail:</h1>
                 <h1 v-else class="text-4xl font-bold flex justify-center">User Detail:</h1>
                 <form @submit.prevent="addEditUser(user)"  class="middle">
+
                     <p class="font-bold text-2xl">Username</p><span class="red" v-if="user.username?.length == 0">username is required</span><span v-if="errortr.username" class="ann-error-username red">{{ errortr.username }}</span>
                     <input required type="text" id="title" v-model.trim="user.username" v-on:input="changeddata"
                         class="ann-username w-full" placeholder="" minlength="1" maxlength="45" /><br />
+                    
                     <!-- pass -->
                     <p v-if="!params.id" class="font-bold text-2xl" >Password</p><span v-if="!params.id" class="ann-error-password red">{{ errortr.password=="size must be between 8 and 14"?"Password size must be between 8 and 14":errortr.password }}</span>
                     <input v-if="!params.id" required type="password" id="password" v-model.trim="user.password" v-on:input="checkPasswordStrength(user.password)" class="ann-password w-full" placeholder=""
@@ -153,18 +159,22 @@ function checkPasswordStrength(password) {
                     <p v-if="!params.id" class="font-bold text-2xl">Confirm password</p><span v-if="checkpass" class="ann-error-password red">{{ checkpassword() }}</span>
                     <input v-if="!params.id" required type="password" id="confirmpassword" v-model.trim="checkpass" v-on:input="checkpassword" class="ann-confirm-password w-full"
                         placeholder="" minlength="8" maxlength="14" /><br v-if="!params.id"/>
+                    
                     <!-- pass -->
                     <p class="font-bold text-2xl">Name</p><span class="red" v-if="user.name?.length == 0">name is required</span><span v-if="errortr.name" class="ann-error-name red">{{ errortr.name }}</span>
                     <input required type="text" id="name" v-model.trim="user.name" v-on:input="changeddata" class="ann-name w-full"
                         placeholder="" minlength="1" maxlength="100" />
+                    
                     <p class="font-bold text-2xl">Email</p><span class="red" v-if="user.email?.length == 0">email is required</span><span v-if="errortr.email" class="ann-error-email red">{{ errortr.email }}</span>
                     <input required type="email" id="email" v-model.trim="user.email" v-on:input="changeddata"
                         class="ann-email w-full" placeholder="" minlength="1" maxlength="150" />
+                    
                     <p>Role</p>
                     <select v-model.trim="user.role" v-on:change="changeddata" class="ann-role">
                         <option id="announcer" value='announcer'>announcer</option>
                         <option id="admin" value='admin'>admin</option>
                     </select><br />
+                    
                     <div v-if="params.id">
                         <b class="ann-created-on">Created On {{ changeDateTimeFormat(user.createdOn) }}</b>&nbsp;&nbsp;
                         <b class="ann-updated-on">Updated On {{ changeDateTimeFormat(user.updatedOn) }}</b>
@@ -178,7 +188,7 @@ function checkPasswordStrength(password) {
                         Save
                     </button>
 
-                    <button @click="$router.push('/admin/User')" class="ann-button">
+                    <button @click="$router.push('/admin/user')" class="ann-button">
                         Cancel
                     </button>
                 </form>
@@ -227,7 +237,7 @@ button:enabled:hover {
     border: 3px solid black;
     border-radius: 8px;
 }
-.red{
+.red {
     color: red;
 }
 </style>

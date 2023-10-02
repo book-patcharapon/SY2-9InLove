@@ -1,14 +1,25 @@
 import router from "../router";
+import { reqAccessToken } from "./doToken.js"
+import { useTokenStore  } from "../stores/token.js"
 
 const API_HOST = import.meta.env.VITE_BASE_URL + `/announcements`
+const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
 
 const getAnnouncement = async () => {
   try {
-    const res = await fetch(`${API_HOST}`)
+    const res = await fetch(`${API_HOST}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
       const allannouncement = await res.json()
       return allannouncement
-    } else {
+    } else if (res.status === 401){
+      const reqAccess = await reqAccessToken()
+      return reqAccess
+    }
+    else{
       throw new Error(`No Announcement`)
     }
   } catch (error) {
@@ -18,7 +29,10 @@ const getAnnouncement = async () => {
 
 const getInformation = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`)
+    const res = await fetch(`${API_HOST}/${id}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
       const announcement = await res.json()
       return announcement
@@ -27,6 +41,9 @@ const getInformation = async (id) => {
       alert(`The request page is not available`)
       router.push("/admin/announcement")
       return announcement
+    } else if (res.status === 401){
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     } else {
       throw new Error(`No Announcement`)
     }
@@ -37,7 +54,10 @@ const getInformation = async (id) => {
 
 const getInformationForUpdate = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/update/${id}`)
+    const res = await fetch(`${API_HOST}/update/${id}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
       const announcement = await res.json()
       return announcement
@@ -46,6 +66,9 @@ const getInformationForUpdate = async (id) => {
       alert(`The request page is not available`)
       router.push("/admin/announcement")
       return announcement
+    } else if (res.status === 401){
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     } else {
       throw new Error(`No Announcement`)
     }
@@ -58,7 +81,7 @@ const createAnnouncement = async (newAnnouncement) => {
   try {
     const res = await fetch(`${API_HOST}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken.value }`},
       body: JSON.stringify(newAnnouncement),
     })
     if (res.status === 200) {
@@ -68,6 +91,9 @@ const createAnnouncement = async (newAnnouncement) => {
     } else if (res.status === 500) {
       alert(`There is an error`)
       router.push("/admin/announcement")
+    } else if (res.status === 401){
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     }
     else {
       throw new Error('Cannot add')
@@ -81,7 +107,7 @@ const updateAnnouncement = async (id, announcement) => {
   try {
     const res = await fetch(`${API_HOST}/${id}`, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken.value }` },
       body: JSON.stringify(announcement),
     })
     if (res.status === 200) {
@@ -93,6 +119,9 @@ const updateAnnouncement = async (id, announcement) => {
       alert('The request page is not available')
       router.push("/admin/announcement")
       return updatedAnnouncement
+    } else if (res.status === 401){
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     } else {
       throw new Error("Can not edit")
     }
@@ -103,10 +132,16 @@ const updateAnnouncement = async (id, announcement) => {
 
 const getPage = async (page) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}`)
+    const res = await fetch(`${API_HOST}/pages?page=${page}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
       const ann = await res.json()
       return ann
+    }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)
@@ -115,7 +150,10 @@ const getPage = async (page) => {
 
 const annUserId = async (id) => {
   try {
-    const res = await fetch(`${API_HOST}/${id}`)
+    const res = await fetch(`${API_HOST}/${id}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
       const annDetail = await res.json()
       return annDetail
@@ -124,6 +162,9 @@ const annUserId = async (id) => {
       alert(`The request page is not available`)
       router.push("/announcement")
       return announcement
+    }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)
@@ -132,10 +173,16 @@ const annUserId = async (id) => {
 
 const getAnnouncementActive = async (page, categoryId) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`)
+    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
-      const ann = await res.json()
-      return ann
+      const announcement = await res.json()
+      return announcement
+    }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)
@@ -144,10 +191,16 @@ const getAnnouncementActive = async (page, categoryId) => {
 
 const getAnnouncementClose = async (page, categoryId) => {
   try {
-    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`)
+    const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`,{
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
     if (res.ok) {
-      const ann = await res.json()
-      return ann;
+      const announcement = await res.json()
+      return announcement;
+    }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)

@@ -7,7 +7,7 @@ import UserViewAnnouncement from "../components/UserViewAnnouncement.vue"
 import AdminUser from "../components/AdminUser.vue"
 import AddEditUser from "../components/AddEditUser.vue"
 import MatchPassword from "../components/MatchPassword.vue"
-
+import SASLogin from "../components/SASLogin.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -42,9 +42,9 @@ const router = createRouter({
       component: UserViewAnnouncement,
     },
     {
-      path: '/admin/User',
-      name: 'AdminUser',
-      component: AdminUser,
+      path: '/admin/user',
+      name: 'User',
+      component: User,
     },
     {
       path: '/admin/user/add',
@@ -60,6 +60,11 @@ const router = createRouter({
       path: '/admin/user/match',
       name: 'MatchPassword',
       component: MatchPassword,
+    },
+    {
+      path: '/login',
+      name: 'SASLogin',
+      component: SASLogin,
     }
   ],
 })

@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router";
 import { ref, onBeforeMount, watch } from "vue";
 import { createAnnouncement, updateAnnouncement, getInformationForUpdate } from "../composable/doAnnouncement.js";
+import router from "../router";
 // import { updateAnnouncement } from "../composable/editAnnouncement.js";
 // import { getInformationForUpdate } from "../composable/getAnnouncement.js";
 
@@ -18,7 +19,7 @@ onBeforeMount(async () => {
   if (params.id) {
     // Edit mode
     newAnn.value = await getInformationForUpdate(params.id);
-
+    
     if (newAnn.value) {
       haveInfo.value = true
     }
