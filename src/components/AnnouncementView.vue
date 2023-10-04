@@ -9,7 +9,17 @@ const announcementDetail = ref([])
 const { params } = useRoute()
 
 onBeforeMount(async () => {
-    announcementDetail.value = await getInformation(params.id)
+    const checkToken = await getInformation(params.id);
+    if (typeof checkToken === "object") {
+        announcementDetail.value = checkToken
+    }
+    if (!announcementDetail.value) {
+        announcementDetail.value = [];
+    }
+    else if (checkToken === 'Applied new token') {
+        announcementDetail.value = await getInformation(params.id);
+    }
+    // announcementDetail.value = await getInformation(params.id)
     if (announcementDetail) {
         haveInfo.value = true
     }

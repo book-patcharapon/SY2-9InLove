@@ -8,6 +8,8 @@ const userLogin = ref({})
 const status = ref()
 const tokenStore = useTokenStore();
 const accessToken = ref(tokenStore.accessToken);
+const username = ref("");
+const password = ref("");
 
 onBeforeMount(async () => {
   userLogin.value = {
@@ -18,21 +20,27 @@ onBeforeMount(async () => {
 
 const login = async (input) => {
   try {
-    const res = await fetch(`${API_HOST}/token` , {
+    const res = await fetch("http://localhost:8080/api/token", {
       method: 'POST',
       headers: { "content-type": "application/json" },
-      body : JSON.stringify({input}),
+      body: JSON.stringify(input),
     });
+    status.value = res.status;
     if (res.status == 200) {
       const response = await res.json();
-      localStorage.setItem('accessToken', response.AcessToken);
-      localStorage.setItem('refreshToken', response.refleshToken);
-      setTimeout(function() {
+      
+      console.log(response);
+      tokenStore.setAccessToken(response.token);
+      tokenStore.setRefreshToken(response.refreshToken);
+
+      setTimeout(function () {
         router.push('/admin/announcement');
       }, 1500);
-    } else {
-      alert ('Error refreshing access token');
-      router.push('/login');
+    }
+     else {
+      // alert('Error refreshing access token');
+      // router.push('/login');
+      throw new Error(`No `)
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)
@@ -44,7 +52,7 @@ const submit = () => {
     username: username.value,
     password: password.value,
   };
-
+  console.log(userLogin.value);
   login(userLogin.value);
 };
 
@@ -73,7 +81,7 @@ const submit = () => {
 </script>
  
 <template>
-<div class="w-full flex flex-col justify-center items-center">
+  <div class="w-full flex flex-col justify-center items-center">
     <div class="w-3/6 flex flex-col mt-8">
       <div v-if="status == 200" class="ann-message green-bord">
         <h3>Login Successful</h3>
@@ -90,19 +98,19 @@ const submit = () => {
       <br />
 
       <h3 class="font-bold">Username</h3>
-      <input type="text" id="title" v-model="userLogin.username" v-on:input="changeddata" class="ann-username w-full p-2"
+      <input type="text" id="title" v-model="username" v-on:input="changeddata" class="ann-username w-full p-2"
         placeholder="Enter your username" :maxlength="45" />
 
       <!-- password -->
       <h3 class="font-bold">Password</h3>
-      <input type="password" id="password" v-model="userLogin.password" class="ann-password w-full p-2"
+      <input type="password" id="password" v-model="password" class="ann-password w-full p-2"
         placeholder="Please enter your password" :minlength="8" :maxlength="14" /><br />
 
-      <button  class="ann-button">
+      <button class="ann-button">
         LOGIN
       </button>
     </form>
-</div>
+  </div>
 </template>
  
 <style scoped>

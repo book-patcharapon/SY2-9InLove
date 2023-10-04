@@ -18,8 +18,14 @@ const haveInfo = ref(false)
 onBeforeMount(async () => {
   if (params.id) {
     // Edit mode
-    newAnn.value = await getInformationForUpdate(params.id);
-    
+    const checkToken = await getInformationForUpdate(params.id);
+    if (typeof checkToken === "object") {
+      newAnn.value = checkToken
+    } if (!newAnn.value) {
+      newAnn.value = {};
+    } else if (checkToken === 'Applied new token') {
+      newAnn.value = await getInformationForUpdate(params.id);
+    }
     if (newAnn.value) {
       haveInfo.value = true
     }

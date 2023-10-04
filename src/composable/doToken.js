@@ -1,7 +1,7 @@
 import router from "../router";
 import { useTokenStore } from "../stores/token";
 
-const API_HOST = import.meta.env.VITE_BASE_URL + `/announcements`;
+const API_HOST = import.meta.env.VITE_BASE_URL + `/token`;
 // const tokenStore = useTokenStore();
 
 const reqAccessToken = async () => {

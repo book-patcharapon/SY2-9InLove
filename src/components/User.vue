@@ -5,20 +5,36 @@ import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL
 const users = ref([])
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
+import { useTokenStore } from '../stores/token.js'
+import { reqAccessToken } from "../composable/doUser"
 
 onBeforeMount(async () => {
-    users.value = await getUsers()
+    const checkToken = await getUsers();
+    if (typeof checkToken === "object") {
+      users.value = checkToken
+    }
+    if (!users.value) {
+      users.value = [];
+    }
+    else if (checkToken === 'Applied new token') {
+    users.value = await getUsers();}
 })
 
 const deleteUser = async (userId) => {
   if (confirm("Do you want to delete?")) {
     try {
-      const res = await fetch(`${VITE_BASE_URL}/users/${userId}`, { method: "DELETE" }) //Delete to backend
+      const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
+      const res = await fetch(`${VITE_BASE_URL}/users/${userId}`, { method: "DELETE" ,
+      headers: { Authorization: `Bearer ${accessToken}` }, }) //Delete to backend
       if (res.status === 200) {
         users.value = users.value.filter((usr) => usr.id !== userId); //Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
-      } else {
+      }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
+    } else {
         throw new Error(`Cannot delete`)
       }
     } catch (error) {
@@ -69,7 +85,7 @@ const deleteUser = async (userId) => {
                         <td class="ann-created-on">{{ changeDateTimeFormat(user.createdOn) }}</td>
                         <td class="ann-updated-on">{{ changeDateTimeFormat(user.updatedOn) }}</td>
                         <td>
-                            <RouterLink :to="{ name: 'EditUser', params: { id: user.id } }" class="ann-button mr-3 rounded-sm">
+                            <RouterLink :to="{ name: 'EditUser', params: { id: user?.id } }" class="ann-button mr-3 rounded-sm">
                                 <button>edit</button>
                             </RouterLink>
                             <button class="ann-button" @click="deleteUser(user.id)">

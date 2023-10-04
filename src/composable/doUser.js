@@ -1,17 +1,16 @@
 import router from "../router";
-import { reqAccessToken } from './doToken.js'
+// import { reqAccessToken } from './doToken.js'
 import { useTokenStore } from '../stores/token.js'
 
-const API_HOST = import.meta.env.VITE_BASE_URL + `/users`;
-const useTokenStore = useModeStore()
-const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
+const API_HOST = import.meta.env.VITE_BASE_URL ;
+// const useTokenStore = useModeStore()
+
 
 const getUsers = async () => {
   try {
     const tokenStore = useTokenStore()
     const accessToken = tokenStore.accessToken
-    const response = await fetch(`${API_HOST}`,{
+    const response = await fetch(`${API_HOST}/users`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -31,13 +30,13 @@ const reqAccessToken = async() => {
   try {
     const tokenStore = useTokenStore()
     const refreshToken = tokenStore.refreshToken
-    const response = await fetch(`${API_HOST}`, {
+    const response = await fetch(`${API_HOST}/token`, {
       method: "GET",
       headers: { Authorization: `Bearer ${refreshToken}` },
     });
     if (response.ok) {
-      const response = await response.json();
-      tokenStore.setAccessToken(response.token)
+      const res = await response.json();
+      tokenStore.setAccessToken(res.token)
       return 'Applied new token'
     } else if (response.status === 401) {
       router.push("/login")
@@ -50,7 +49,9 @@ const reqAccessToken = async() => {
 
 const createUser = async (user) => {
   try {
-    const response = await fetch(`${API_HOST}`, {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
+    const response = await fetch(`${API_HOST}/users`, {
       method: "POST",
       headers: { "content-type": "application/json", Authorization: `Bearer ${accessToken}` },
       body: JSON.stringify(user),
@@ -72,7 +73,9 @@ const createUser = async (user) => {
 
 const updateUser = async (id, user) => {
   try {
-    const response = await fetch(`${API_HOST}/${id}`, {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
+    const response = await fetch(`${API_HOST}/users/${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json", Authorization: `Bearer ${accessToken}` },
       body: JSON.stringify(user),
@@ -100,7 +103,9 @@ const updateUser = async (id, user) => {
 
 const getUserDetailForUpdate = async (id) => {
   try {
-    const response = await fetch(`${API_HOST}/${id}`,{
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
+    const response = await fetch(`${API_HOST}/users/${id}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -125,7 +130,9 @@ const getUserDetailForUpdate = async (id) => {
 
 const checkPassword = async (user) => {
   try {
-    const response = await fetch(`${API_HOST}/match`, {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
+    const response = await fetch(`${API_HOST}/users/match`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),

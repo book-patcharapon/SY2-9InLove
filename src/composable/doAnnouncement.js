@@ -1,13 +1,14 @@
 import router from "../router";
-import { reqAccessToken } from "./doToken.js"
+import { reqAccessToken } from "../composable/doUser"
 import { useTokenStore  } from "../stores/token.js"
 
 const API_HOST = import.meta.env.VITE_BASE_URL + `/announcements`
-const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
+
 
 const getAnnouncement = async () => {
   try {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -29,6 +30,8 @@ const getAnnouncement = async () => {
 
 const getInformation = async (id) => {
   try {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/${id}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -54,6 +57,8 @@ const getInformation = async (id) => {
 
 const getInformationForUpdate = async (id) => {
   try {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/update/${id}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -79,9 +84,11 @@ const getInformationForUpdate = async (id) => {
 
 const createAnnouncement = async (newAnnouncement) => {
   try {
+    const tokenStore = useTokenStore()
+const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}`, {
       method: "POST",
-      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken.value }`},
+      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken}`},
       body: JSON.stringify(newAnnouncement),
     })
     if (res.status === 200) {
@@ -105,9 +112,11 @@ const createAnnouncement = async (newAnnouncement) => {
 
 const updateAnnouncement = async (id, announcement) => {
   try {
+    const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/${id}`, {
       method: "PUT",
-      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken.value }` },
+      headers: { "content-type": "application/json",Authorization: `Bearer ${accessToken }` },
       body: JSON.stringify(announcement),
     })
     if (res.status === 200) {
@@ -132,6 +141,8 @@ const updateAnnouncement = async (id, announcement) => {
 
 const getPage = async (page) => {
   try {
+    const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/pages?page=${page}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -150,6 +161,8 @@ const getPage = async (page) => {
 
 const annUserId = async (id) => {
   try {
+    const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/${id}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -173,6 +186,8 @@ const annUserId = async (id) => {
 
 const getAnnouncementActive = async (page, categoryId) => {
   try {
+    const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -191,6 +206,8 @@ const getAnnouncementActive = async (page, categoryId) => {
 
 const getAnnouncementClose = async (page, categoryId) => {
   try {
+    const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
     const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`,{
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },

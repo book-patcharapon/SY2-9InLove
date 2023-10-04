@@ -19,7 +19,7 @@ const signout = () => {
         <button class="li">Announcement</button>
       </RouterLink>
       <hr />
-      <RouterLink :to="{ name: 'AdminUser' }" class="ann-menu">
+      <RouterLink :to="{ name: 'User' }" class="ann-menu">
         <button class="li">User</button>
       </RouterLink>
       <hr />

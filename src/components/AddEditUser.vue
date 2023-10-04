@@ -40,7 +40,14 @@ onBeforeMount(async () => {
     if (params.id) {
         haveInfo.value = true
         // Edit mode
-        user.value = await getUserDetailForUpdate(params.id)
+        const checkToken = await getUserDetailForUpdate(params.id);
+        if (typeof checkToken === "object") {
+          user.value = checkToken
+    }if (!user.value) {
+      user.value = {};
+    }else if (checkToken === 'Applied new token') {
+        user.value = await getUserDetailForUpdate(params.id);}
+        // user.value = await getUserDetailForUpdate(params.id)
         checkuser.value = Object.assign({}, user.value)
         if (user.value) {
             haveInfo.value = true
@@ -74,9 +81,7 @@ const fetchError = async(user) => {
         error.forEach(element => {
             errortr.value[element.field] = element.errorMessage
         });
-        
         console.log(errortr.value);
-        
     }
     
 }

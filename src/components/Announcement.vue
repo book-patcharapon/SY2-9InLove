@@ -2,24 +2,41 @@
 import { ref, onBeforeMount } from "vue";
 import { getAnnouncement } from "../composable/doAnnouncement.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
-
+import { useTokenStore } from '../stores/token.js'
+import { reqAccessToken } from "../composable/doUser"
 const API_HOST = import.meta.env.VITE_BASE_URL;
 const announcements = ref([]);
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+
 onBeforeMount(async () => {
-  announcements.value = await getAnnouncement()
+  // announcements.value = await getAnnouncement()
+  const checkToken = await getAnnouncement();
+    if (typeof checkToken === "object") {
+      announcements.value = checkToken
+    }
+    if (!announcements.value) {
+      announcements.value = [];
+    }
+    else if (checkToken === 'Applied new token') {
+      announcements.value = await getAnnouncement();}
 })
 
 const deleteAnn = async (annID) => {
   if (confirm("Do you want to delete?")) {
     try {
-      const res = await fetch(`${API_HOST}/announcements/${annID}`, { method: "DELETE" }) //Delete to backend
+      const tokenStore = useTokenStore()
+    const accessToken = tokenStore.accessToken
+      const res = await fetch(`${API_HOST}/announcements/${annID}`, { method: "DELETE" ,
+      headers: { Authorization: `Bearer ${accessToken}` },}) //Delete to backend
       if (res.status === 200) {
         announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
-      } else {
+      }else if (response.status === 401) {
+      const reqAccess = await reqAccessToken()
+      return reqAccess
+      }else {
         throw new Error(`Cannot delete`)
       }
     } catch (error) {
