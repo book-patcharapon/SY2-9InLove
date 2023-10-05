@@ -22,7 +22,14 @@ onBeforeMount(async () => {
     if (typeof checkToken === "object") {
       newAnn.value = checkToken
     } if (!newAnn.value) {
-      newAnn.value = {};
+      newAnn.value = {
+      announcementTitle: "",
+      announcementDescription: "",
+      publishDate: null,
+      closeDate: null,
+      announcementDisplay: false,
+      categoryId: 1,
+    };
     } else if (checkToken === 'Applied new token') {
       newAnn.value = await getInformationForUpdate(params.id);
     }

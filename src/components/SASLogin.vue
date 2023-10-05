@@ -20,7 +20,7 @@ onBeforeMount(async () => {
 
 const login = async (input) => {
   try {
-    const res = await fetch("http://localhost:8080/api/token", {
+    const res = await fetch(`${API_HOST}/token`, {
       method: 'POST',
       headers: { "content-type": "application/json" },
       body: JSON.stringify(input),

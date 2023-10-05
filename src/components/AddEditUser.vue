@@ -17,14 +17,14 @@ const checkuser = ref({});
 const checkpass = ref();
 const errortr =ref([]);
 
-// const changeddata = () => {
-//     if (JSON.stringify(checkuser.value) === JSON.stringify(user.value)) {
-//         edited.value = true;
-//     } else {
-//         edited.value = false;
-//     }
-//     console.log(user.value);
-// }
+const changeddata = () => {
+    if (JSON.stringify(checkuser.value) === JSON.stringify(user.value)) {
+        edited.value = true;
+    } else {
+        edited.value = false;
+    }
+    console.log(user.value);
+}
 
 // check password and re-password
 const checkpassword = () => {
@@ -44,7 +44,13 @@ onBeforeMount(async () => {
         if (typeof checkToken === "object") {
           user.value = checkToken
     }if (!user.value) {
-      user.value = {};
+        user.value = {
+            username: "",
+            password: "",
+            name: "",
+            email: "",
+            role: "announcer",
+        };
     }else if (checkToken === 'Applied new token') {
         user.value = await getUserDetailForUpdate(params.id);}
         // user.value = await getUserDetailForUpdate(params.id)
@@ -189,7 +195,7 @@ function checkPasswordStrength(password) {
                         Submit
                     </button> -->
                     <!-- :disabled="!edited" -->
-                    <button  class="ann-button"  type="submit">
+                    <button :disabled="edited" class="ann-button"  type="submit">
                         Save
                     </button>
 
