@@ -12,6 +12,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      component: SASLogin
+    },
+    {
       path: "/admin/announcement",
       name: "Announcement",
       component: Announcement,

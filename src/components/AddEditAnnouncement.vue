@@ -173,6 +173,7 @@ input {
   border: 1px solid black;
   margin: 0.5%;
   border-radius: 5px;
+  padding: 0.25rem;
 }
 
 p {
@@ -184,7 +185,7 @@ p {
 button {
   border: 2px solid black;
   background-color: lightgrey;
-  font-weight: bold;
+  font-weight: 600;
   padding: 8px;
   margin-top: 10px;
   margin-right: 5px;

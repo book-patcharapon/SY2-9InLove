@@ -39,14 +39,15 @@ const matchPassword = async (user) => {
 
       <h3 class="font-bold">Username</h3>
       <input type="text" id="title" v-model="userLogin.username" v-on:input="changeddata" class="ann-username w-full p-2"
-        placeholder="Enter your username" :maxlength="45" />
+        placeholder="Enter your username" :maxlength="45" @keydown.enter="matchPassword(userLogin)" />
+
       <!-- password -->
       <h3 class="font-bold">Password</h3>
       <input type="password" id="password" v-model="userLogin.password" class="ann-password w-full p-2"
-        placeholder="Please enter your password" :minlength="8" :maxlength="14" /><br />
+        placeholder="Please enter your password" :minlength="8" :maxlength="14" @keydown.enter="matchPassword(userLogin)" /><br />
 
       <button @click="matchPassword(userLogin)" class="ann-button">
-        Match or not
+        MATCH OR NOT
       </button>
     </div>
   </div>
@@ -72,7 +73,7 @@ button {
   height: fit-content;
   border: 2px solid black;
   background-color: lightgrey;
-  font-weight: bold;
+  font-weight: 600;
   padding: 8px;
   border-radius: 5px;
   margin-top: 10px;

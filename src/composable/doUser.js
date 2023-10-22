@@ -2,7 +2,7 @@ import router from "../router";
 // import { reqAccessToken } from './doToken.js'
 import { useTokenStore } from '../stores/token.js'
 
-const API_HOST = import.meta.env.VITE_BASE_URL ;
+const API_HOST = import.meta.env.VITE_BASE_URL;
 // const useTokenStore = useModeStore()
 
 
@@ -10,7 +10,7 @@ const getUsers = async () => {
   try {
     const tokenStore = useTokenStore()
     const accessToken = tokenStore.accessToken
-    const response = await fetch(`${API_HOST}/users`,{
+    const response = await fetch(`${API_HOST}/users`, {
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -26,7 +26,7 @@ const getUsers = async () => {
   }
 };
 
-const reqAccessToken = async() => {
+const reqAccessToken = async () => {
   try {
     const tokenStore = useTokenStore()
     const refreshToken = tokenStore.refreshToken
@@ -50,7 +50,7 @@ const reqAccessToken = async() => {
 const createUser = async (user) => {
   try {
     const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
+    const accessToken = tokenStore.accessToken
     const response = await fetch(`${API_HOST}/users`, {
       method: "POST",
       headers: { "content-type": "application/json", Authorization: `Bearer ${accessToken}` },
@@ -62,8 +62,8 @@ const accessToken = tokenStore.accessToken
       const reqAccess = await reqAccessToken()
       return reqAccess
     } else {
-        const addedUser = await response.json();
-        throw addedUser.detail
+      const addedUser = await response.json();
+      throw addedUser.detail
     }
   } catch (error) {
     throw error;
@@ -74,7 +74,7 @@ const accessToken = tokenStore.accessToken
 const updateUser = async (id, user) => {
   try {
     const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
+    const accessToken = tokenStore.accessToken
     const response = await fetch(`${API_HOST}/users/${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json", Authorization: `Bearer ${accessToken}` },
@@ -89,12 +89,12 @@ const accessToken = tokenStore.accessToken
       alert("The request page is not available");
       router.push("/admin/user");
       return updatedUser;
-    }else if (response.status === 401) {
+    } else if (response.status === 401) {
       const reqAccess = await reqAccessToken()
       return reqAccess
     } else {
-        const addedUser = await response.json();
-        throw addedUser.detail
+      const addedUser = await response.json();
+      throw addedUser.detail
     }
   } catch (error) {
     throw error;
@@ -104,8 +104,8 @@ const accessToken = tokenStore.accessToken
 const getUserDetailForUpdate = async (id) => {
   try {
     const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
-    const response = await fetch(`${API_HOST}/users/${id}`,{
+    const accessToken = tokenStore.accessToken
+    const response = await fetch(`${API_HOST}/users/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -117,7 +117,7 @@ const accessToken = tokenStore.accessToken
       alert(`The request page is not available`);
       router.push("/admin/user");
       return user;
-    } else if (res.status === 401){
+    } else if (res.status === 401) {
       const checkToken = await reqAccessToken()
       return checkToken
     } else {
@@ -131,10 +131,10 @@ const accessToken = tokenStore.accessToken
 const checkPassword = async (user) => {
   try {
     const tokenStore = useTokenStore()
-const accessToken = tokenStore.accessToken
+    const accessToken = tokenStore.accessToken
     const response = await fetch(`${API_HOST}/users/match`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json" , Authorization: `Bearer ${accessToken}`},
       body: JSON.stringify(user),
     });
     return response.status;

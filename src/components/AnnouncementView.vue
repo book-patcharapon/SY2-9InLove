@@ -34,7 +34,7 @@ onBeforeMount(async () => {
                 <p class="ann-title"><b>TITLE:</b> {{ announcementDetail.announcementTitle }}</p>
                 <p class="ann-category"><b>CATEGORY:</b> {{ announcementDetail.announcementCategory }}</p>
                 <p class="ann-description"><b>DESCRIPTION:</b> {{ announcementDetail.announcementDescription }}</p>
-                <p class="ann-publish-date"><b>PUBLISH DATEe:</b> {{ changeDateTimeFormat(announcementDetail.publishDate) }}</p>
+                <p class="ann-publish-date"><b>PUBLISH DATE:</b> {{ changeDateTimeFormat(announcementDetail.publishDate) }}</p>
                 <p class="ann-close-date"><b>ClOSE DATE:</b> {{ changeDateTimeFormat(announcementDetail.closeDate) }}</p>
                 <p class="ann-display"><b>DISPLAY:</b> {{ announcementDetail.announcementDisplay }}</p>
             </div>
@@ -59,7 +59,7 @@ onBeforeMount(async () => {
 button {
     border: 2px solid black;
     background-color: lightgrey;
-    font-weight: bold;
+    font-weight: 600;
     padding: 5px 10px;
     border-radius: 5px;
     margin-right: 5px;
@@ -74,5 +74,9 @@ button:enabled:hover {
     border: 3px solid black;
     padding: 1rem;
     border-radius: 0.5rem;
+}
+
+p {
+    margin: 1.5% 0%;
 }
 </style>

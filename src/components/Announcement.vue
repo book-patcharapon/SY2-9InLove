@@ -12,31 +12,34 @@ const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 onBeforeMount(async () => {
   // announcements.value = await getAnnouncement()
   const checkToken = await getAnnouncement();
-    if (typeof checkToken === "object") {
-      announcements.value = checkToken
-    }
-    if (!announcements.value) {
-      announcements.value = [];
-    }
-    else if (checkToken === 'Applied new token') {
-      announcements.value = await getAnnouncement();}
+  if (typeof checkToken === "object") {
+    announcements.value = checkToken
+  }
+  if (!announcements.value) {
+    announcements.value = [];
+  }
+  else if (checkToken === 'Applied new token') {
+    announcements.value = await getAnnouncement();
+  }
 })
 
 const deleteAnn = async (annID) => {
   if (confirm("Do you want to delete?")) {
     try {
       const tokenStore = useTokenStore()
-    const accessToken = tokenStore.accessToken
-      const res = await fetch(`${API_HOST}/announcements/${annID}`, { method: "DELETE" ,
-      headers: { Authorization: `Bearer ${accessToken}` },}) //Delete to backend
+      const accessToken = tokenStore.accessToken
+      const res = await fetch(`${API_HOST}/announcements/${annID}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }) //Delete to backend
       if (res.status === 200) {
         announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
-      }else if (response.status === 401) {
-      const reqAccess = await reqAccessToken()
-      return reqAccess
-      }else {
+      } else if (response.status === 401) {
+        const reqAccess = await reqAccessToken()
+        return reqAccess
+      } else {
         throw new Error(`Cannot delete`)
       }
     } catch (error) {
@@ -51,18 +54,18 @@ const deleteAnn = async (annID) => {
     <h1 class="text-4xl font-bold flex justify-center font-style:sans-serif">
       SIT Announcement System (SAS)
     </h1>
-    
+
     <div v-if="announcements" class="w-full flex justify-center">
       <div class="flex flex-col w-5/6">
         <div class="my-2">
           <p class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
           <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button float-right">
-            <button>Add Announcement</button>
+            <button>ADD ANNOUNCEMENT</button>
           </RouterLink>
         </div>
 
-        <table class="w-full text-center text-gray-400">
-          <thead class="text-xl uppercase bg-gray-700 text-gray-400 ">
+        <table class="w-full text-center">
+          <thead class="text-xl uppercase">
             <tr>
               <th>No.</th>
               <th>Title</th>
@@ -75,8 +78,7 @@ const deleteAnn = async (annID) => {
           </thead>
 
           <tbody>
-            <tr class="ann-item bg-gray-800 border-gray-700"
-              v-for="(ann, index) in announcements" :key="index">
+            <tr class="ann-item" v-for="(ann, index) in announcements" :key="index">
               <td>{{ index + 1 }}</td>
               <td class="ann-title">{{ ann.announcementTitle }}</td>
               <td class="ann-category">{{ ann.announcementCategory }}</td>
@@ -108,7 +110,7 @@ button {
   border: 2px solid black;
   background-color: lightgrey;
   color: black;
-  font-weight: bold;
+  font-weight: 600;
   padding: 2px 5px;
   border-radius: 5px;
 }
@@ -118,11 +120,17 @@ button:enabled:hover {
   color: white;
 }
 
+table {
+  border: 2px solid black;
+}
+
 th {
   padding: 0.5em;
+  background-color: lightgrey;
 }
 
 td {
   padding: 1em 0.5em;
+  border: 2px solid black;
 }
 </style>

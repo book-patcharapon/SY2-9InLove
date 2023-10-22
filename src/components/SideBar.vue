@@ -1,9 +1,16 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import router from "../router";
+import { useRoute } from "vue-router"
+
+const routes = useRoute()
+
+const isActive = (routeName) => {
+  return routes.name === routeName
+}
 
 const signout = () => {
-  localStorage.removeItem('accessToken'); 
+  localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   router.push("/login");
 }
@@ -15,21 +22,29 @@ const signout = () => {
     <h1 class="ann-app-title text-4xl font-bold flex justify-center font-style: sans-serif p-3">SAS</h1>
     <div class="linkbox">
       <hr />
-      <RouterLink :to="{ name: 'Announcement' }" class="ann-menu">
-        <button class="li">Announcement</button>
+
+      <RouterLink :to="{ name: 'Announcement' }" :class="{ 'active': isActive('Announcement') }" class="ann-menu li">
+        <button>
+          Announcement
+        </button>
       </RouterLink>
       <hr />
-      <RouterLink :to="{ name: 'User' }" class="ann-menu">
-        <button class="li">User</button>
+
+      <RouterLink :to="{ name: 'User' }" :class="{ 'active': isActive('User') }" class="ann-menu li">
+        <button>
+          User
+        </button>
       </RouterLink>
       <hr />
-      <RouterLink :to="{ name: 'MatchPassword' }" class="ann-menu">
-        <button class="li">Match Password</button>
+
+      <RouterLink :to="{ name: 'MatchPassword' }" :class="{ 'active': isActive('MatchPassword') }" class="ann-menu li">
+        <button>
+          Match Password
+        </button>
       </RouterLink>
       <hr />
     </div>
-    <button class="signout" style="position: absolute;bottom: 20px;border-top: 1px solid;width: 80%; padding-top: 10px;"
-      @click="signout">
+    <button class="signout sign-out" @click="signout">
       SIGN OUT
     </button>
   </div>
@@ -48,11 +63,44 @@ const signout = () => {
 
 .linkbox {
   text-align: center;
+  width: 100%;
 }
 
 .li {
   color: #fff;
-  padding: 8px 16px;
   text-decoration: none;
+}
+
+button {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  width: 100%;
+}
+
+.active {
+  background-color: aliceblue;
+  color: black;
+  font-weight: bold;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  opacity: 80%;
+}
+
+/* button:focus {
+  background-color: aliceblue;
+  color: black;
+  font-weight: bold;
+} */
+
+button:hover {
+  font-weight: bold;
+}
+
+.sign-out {
+  position: absolute;
+  bottom: 20px;
+  border-top: 1px solid;
+  width: 80%;
+  padding-top: 10px;
 }
 </style>
