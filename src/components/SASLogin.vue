@@ -1,8 +1,9 @@
 <script setup>
-import { useRoute } from "vue-router"
-import { ref, onBeforeMount } from "vue"
+import {useRoute} from "vue-router"
+import {ref, onBeforeMount} from "vue"
 import router from "../router";
-import { useTokenStore } from "../stores/token.js";
+import {useTokenStore} from "../stores/token.js";
+
 const API_HOST = import.meta.env.VITE_BASE_URL;
 const userLogin = ref({})
 const status = ref()
@@ -22,13 +23,13 @@ const login = async (input) => {
   try {
     const res = await fetch(`${API_HOST}/token`, {
       method: 'POST',
-      headers: { "content-type": "application/json" },
+      headers: {"content-type": "application/json"},
       body: JSON.stringify(input),
     });
     status.value = res.status;
     if (res.status == 200) {
       const response = await res.json();
-      
+
       console.log(response);
       tokenStore.setAccessToken(response.token);
       tokenStore.setRefreshToken(response.refreshToken);
@@ -36,8 +37,7 @@ const login = async (input) => {
       setTimeout(function () {
         router.push('/admin/announcement');
       }, 1500);
-    }
-     else {
+    } else {
       // alert('Error refreshing access token');
       // router.push('/login');
       throw new Error(`No `)
@@ -79,10 +79,30 @@ const submit = () => {
 //   }
 // }
 </script>
- 
+
 <template>
   <div class="w-full flex flex-col justify-center items-center">
-    <div class="w-3/6 flex flex-col mt-8">
+
+
+    <form @submit.prevent="submit()" class="w-2/6 flex flex-col bord bg-white">
+      <h1 class="font-bold">SAS Login</h1>
+      <br/>
+
+      <h3 class="font-bold">Username</h3>
+      <input type="text" id="title" v-model="username" v-on:input="changeddata" class="ann-username w-full p-2"
+             placeholder="Enter your username" :maxlength="45"/>
+
+      <!-- password -->
+      <h3 class="font-bold">Password</h3>
+      <input type="password" id="password" v-model="password" class="ann-password w-full p-2"
+             placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
+
+      <button class="ann-button">
+        LOGIN
+      </button>
+    </form>
+
+    <div v-if="status != null || status != undefined" class="w-2/6 flex flex-col mt-8">
       <div v-if="status == 200" class="ann-message green-bord">
         <h3>Login Successful</h3>
       </div>
@@ -93,26 +113,10 @@ const submit = () => {
         <h3>A user with The specified username DOES NOT exist</h3>
       </div>
     </div>
-    <form @submit.prevent="submit()" class="w-3/6 flex flex-col mt-4 bord">
-      <h1 class="font-bold">SAS Login</h1>
-      <br />
 
-      <h3 class="font-bold">Username</h3>
-      <input type="text" id="title" v-model="username" v-on:input="changeddata" class="ann-username w-full p-2"
-        placeholder="Enter your username" :maxlength="45" />
-
-      <!-- password -->
-      <h3 class="font-bold">Password</h3>
-      <input type="password" id="password" v-model="password" class="ann-password w-full p-2"
-        placeholder="Please enter your password" :minlength="8" :maxlength="14" /><br />
-
-      <button class="ann-button">
-        LOGIN
-      </button>
-    </form>
   </div>
 </template>
- 
+
 <style scoped>
 select,
 textarea,
@@ -123,7 +127,7 @@ input {
 }
 
 p {
-  font-weight: 700;
+  font-weight: bold;
   font-size: 1.5rem;
   line-height: 2rem;
 }
@@ -133,7 +137,7 @@ button {
   height: fit-content;
   border: 2px solid black;
   background-color: lightgrey;
-  font-weight: bold;
+  font-weight: 600;
   padding: 8px;
   border-radius: 5px;
   margin-top: 10px;

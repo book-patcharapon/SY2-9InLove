@@ -77,6 +77,10 @@ button {
   width: 100%;
 }
 
+button:hover {
+  font-weight: bold;
+}
+
 .active {
   background-color: aliceblue;
   color: black;
@@ -91,10 +95,6 @@ button {
   color: black;
   font-weight: bold;
 } */
-
-button:hover {
-  font-weight: bold;
-}
 
 .sign-out {
   position: absolute;

@@ -4,6 +4,7 @@ import { getAnnouncement } from "../composable/doAnnouncement.js";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
 import { useTokenStore } from '../stores/token.js'
 import { reqAccessToken } from "../composable/doUser"
+
 const API_HOST = import.meta.env.VITE_BASE_URL;
 const announcements = ref([]);
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -33,7 +34,7 @@ const deleteAnn = async (annID) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       }) //Delete to backend
       if (res.status === 200) {
-        announcements.value = announcements.value.filter((ann) => ann.id !== annID); //Delete to frontend
+        announcements.value = announcements.value.filter((ann) => ann.id !== annID); // Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
       } else if (response.status === 401) {
