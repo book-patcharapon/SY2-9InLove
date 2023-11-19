@@ -60,13 +60,11 @@ const deleteAnnouncement = async (annID) => {
 </script>
 
 <template>
-  <div class="w-full h-screen flex flex-col">
+  <div class="w-full h-screen flex flex-col items-center">
 
     <div v-if="announcements" class="w-full flex flex-col justify-center items-center">
-      <h1 class="font-bold flex justify-center font-style:sans-serif">
-        SIT Announcement System (SAS)
-      </h1>
-
+<!--      flex justify-center font-style:sans-serif-->
+      <h1 class="font-bold">SIT Announcement System (SAS)</h1>
 
       <div class="w-5/6 my-2">
         <h3 class="font-bold float-left">Choose category: </h3>
@@ -83,7 +81,7 @@ const deleteAnnouncement = async (annID) => {
         </RouterLink>
       </div>
 
-      <table class="w-5/6 text-center my-2">
+      <table class="w-5/6 my-2">
         <thead class="text-xl uppercase">
         <tr>
           <th>No.</th>
@@ -119,18 +117,31 @@ const deleteAnnouncement = async (annID) => {
         </tbody>
       </table>
 
-      <div class="buttom">
+      <div class="below">
         <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
       </div>
     </div>
 
-    <div v-else>
+    <div v-else class="vertical-center">
       <h1>NO ANNOUNCEMENT</h1>
     </div>
   </div>
 </template>
 
 <style scoped>
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.below {
+  position: fixed;
+  bottom: 0;
+}
+
 button {
   border: 2px solid black;
   background-color: lightgrey;
@@ -153,13 +164,9 @@ select {
   border-radius: 5px;
 }
 
-.buttom {
-  position: fixed;
-  bottom: 0;
-}
-
 table {
   border: 2px solid black;
+  text-align: center;
 }
 
 th {
