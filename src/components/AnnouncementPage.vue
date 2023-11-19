@@ -158,7 +158,6 @@ const changeCategory = async () => {
   else (disablePrev.value = false)
   if (Page.value === announcementActivepage.value.totalPages - 1) { disableNext.value = true }
   else (disableNext.value = false)
-  
 }
 </script>
  

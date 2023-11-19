@@ -11,7 +11,7 @@ const getAnnouncement = async () => {
         const accessToken = tokenStore.accessToken
         const res = await fetch(`${API_HOST}`, {
             method: "GET",
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: {Authorization: `Bearer ${accessToken}`},
         })
 
         if (res.ok) {
@@ -22,6 +22,26 @@ const getAnnouncement = async () => {
             const reqAccess = await reqAccessToken()
             return reqAccess
 
+        } else {
+            throw new Error(`No Announcement`)
+        }
+    } catch (error) {
+        console.error(`ERROR: ${error}`)
+    }
+}
+
+const getAnnouncementCategory = async (categoryId) => {
+    try {
+        const tokenStore = useTokenStore()
+        const accessToken = tokenStore.accessToken
+        const res = await fetch(`${API_HOST}?category=${categoryId}`, {
+            method: "GET",
+            headers: {Authorization: `Bearer ${accessToken}`}
+        })
+
+        if (res.ok) {
+            const announcements = await res.json()
+            return announcements
         } else {
             throw new Error(`No Announcement`)
         }
@@ -243,6 +263,7 @@ const getAnnouncementClose = async (page, categoryId) => {
 
 export {
     getAnnouncement,
+    getAnnouncementCategory,
     getAnnouncementDetail,
     getAnnouncementDetailForUpdate,
     createAnnouncement,

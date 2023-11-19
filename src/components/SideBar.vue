@@ -27,7 +27,7 @@ const signout = () => {
     <div class="linkbox">
       <hr/>
 
-      <RouterLink :to="{ name: 'AnnouncementViewer' }" :class="{ 'active': isActive('AnnouncementViewer') }" class="ann-menu li">
+      <RouterLink :to="{ name: 'AnnouncementViewer' }" :class="{ 'active': isActive('AnnouncementViewer') }"  class="ann-menu li">
         <button>
           Announcement (Viewer)
         </button>
