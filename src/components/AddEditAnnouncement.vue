@@ -1,12 +1,12 @@
 <script setup>
-import { useRoute } from "vue-router";
-import { ref, onBeforeMount, watch } from "vue";
-import { createAnnouncement, updateAnnouncement, getInformationForUpdate } from "../composable/doAnnouncement.js";
+import {useRoute} from "vue-router";
+import {ref, onBeforeMount, watch} from "vue";
+import {createAnnouncement, updateAnnouncement, getAnnouncementDetailForUpdate} from "../composable/doAnnouncement.js";
 import router from "../router";
 // import { updateAnnouncement } from "../composable/editAnnouncement.js";
 // import { getInformationForUpdate } from "../composable/getAnnouncement.js";
 
-const { params } = useRoute();
+const {params} = useRoute();
 const newAnn = ref({});
 const pubDate = ref();
 const pubTime = ref();
@@ -18,40 +18,48 @@ const haveInfo = ref(false)
 onBeforeMount(async () => {
   if (params.id) {
     // Edit mode
-    const checkToken = await getInformationForUpdate(params.id);
+    const checkToken = await getAnnouncementDetailForUpdate(params.id);
+
     if (typeof checkToken === "object") {
       newAnn.value = checkToken
-    } if (!newAnn.value) {
-      newAnn.value = {
-      announcementTitle: "",
-      announcementDescription: "",
-      publishDate: null,
-      closeDate: null,
-      announcementDisplay: false,
-      categoryId: 1,
-    };
-    } else if (checkToken === 'Applied new token') {
-      newAnn.value = await getInformationForUpdate(params.id);
     }
+
+    if (!newAnn.value) {
+      newAnn.value = {
+        announcementTitle: "",
+        announcementDescription: "",
+        publishDate: null,
+        closeDate: null,
+        announcementDisplay: false,
+        categoryId: 1,
+      };
+    } else if (checkToken === 'Applied new token') {
+      newAnn.value = await getAnnouncementDetailForUpdate(params.id);
+    }
+
     if (newAnn.value) {
       haveInfo.value = true
     }
+
     if (newAnn.value.publishDate || newAnn.value.closeDate) {
       [pubDate.value, pubTime.value] = changeUTCtoLocalDatetime(newAnn.value.publishDate);
       [cloDate.value, cloTime.value] = changeUTCtoLocalDatetime(newAnn.value.closeDate);
     }
+
     if (newAnn.value.announcementDisplay === "Y") {
       newAnn.value.announcementDisplay = true;
     } else {
       newAnn.value.announcementDisplay = false;
     }
+
     watch(
-      [newAnn, pubDate, pubTime, cloDate, cloTime],
-      async () => {
-        edited.value = true;
-      },
-      { deep: true }
+        [newAnn, pubDate, pubTime, cloDate, cloTime],
+        async () => {
+          edited.value = true;
+        },
+        {deep: true}
     )
+
   } else {
     // Add mode
     haveInfo.value = true
@@ -120,7 +128,7 @@ const addEditNewAnnouncement = (newAnn) => {
       <div class="middle">
         <p class="font-bold text-2xl">TITLE</p>
         <input type="text" id="title" v-model="newAnn.announcementTitle" class="ann-title w-full"
-          placeholder="Enter a title" :maxlength="200" /><br />
+               placeholder="Enter a title" :maxlength="200"/><br/>
 
         <p>CATEGORY</p>
         <select v-model="newAnn.categoryId" class="ann-category">
@@ -128,23 +136,23 @@ const addEditNewAnnouncement = (newAnn) => {
           <option id="2" :value=2>ทุนการศึกษา</option>
           <option id="3" :value=3>หางาน</option>
           <option id="4" :value=4>ฝึกงาน</option>
-        </select><br />
+        </select><br/>
 
         <p>DESCRIPTION</p>
         <textarea v-model="newAnn.announcementDescription" class="ann-description w-full h-36" name="description"
-          :maxlength="10000" placeholder="Enter description"></textarea>
+                  :maxlength="10000" placeholder="Enter description"></textarea>
 
         <p>PUBLISH DATE</p>
-        <input v-model="pubDate" type="date" class="ann-publish-date" />
-        <input v-model="pubTime" type="time" class="ann-publish-time" /><br />
+        <input v-model="pubDate" type="date" class="ann-publish-date"/>
+        <input v-model="pubTime" type="time" class="ann-publish-time"/><br/>
 
         <p>CLOSE DATE</p>
-        <input v-model="cloDate" type="date" class="ann-close-date" />
-        <input v-model="cloTime" type="time" class="ann-close-time" /><br />
+        <input v-model="cloDate" type="date" class="ann-close-date"/>
+        <input v-model="cloTime" type="time" class="ann-close-time"/><br/>
 
         <p>DISPLAY</p>
-        <input v-model="newAnn.announcementDisplay" type="checkbox" name="Display" id="Display" class="ann-display" />
-        <label for="Display">Check to show this announcement</label><br />
+        <input v-model="newAnn.announcementDisplay" type="checkbox" name="Display" id="Display" class="ann-display"/>
+        <label for="Display">Check to show this announcement</label><br/>
 
         <button @click="addEditNewAnnouncement(newAnn)" v-if="!params.id" class="ann-button">
           SUBMIT

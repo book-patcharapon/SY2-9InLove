@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia';
-import { useLocalStorage } from '@vueuse/core';
+import {defineStore} from 'pinia';
+import {useLocalStorage} from '@vueuse/core';
 
 export const useTokenStore = defineStore('token', () => {
-    const accessToken = useLocalStorage('accessToken','');
-    const refreshToken = useLocalStorage('refreshToken','');
+    const accessToken = useLocalStorage('accessToken', '');
+    const refreshToken = useLocalStorage('refreshToken', '');
 
     const setAccessToken = (token) => {
         accessToken.value = token;
@@ -14,4 +14,4 @@ export const useTokenStore = defineStore('token', () => {
     };
 
     return {accessToken, refreshToken, setAccessToken, setRefreshToken}
-  })
+})

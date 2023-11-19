@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router"
 import Announcement from "../components/Announcement.vue"
-import AnnouncementView from "../components/AnnouncementView.vue"
+import AnnouncementViewer from "@/components/AnnouncementViewer.vue";
+import AnnouncementDetail from "../components/AnnouncementDetail.vue"
 import AddEditAnnouncement from "../components/AddEditAnnouncement.vue"
-import UserAnnouncement from "../components/UserAnnouncement.vue"
-import UserViewAnnouncement from "../components/UserViewAnnouncement.vue"
+import AnnouncementPage from "../components/AnnouncementPage.vue"
+import AnnouncementDetailPage from "../components/AnnouncementDetailPage.vue"
 import User from "../components/User.vue"
 import AddEditUser from "../components/AddEditUser.vue"
 import MatchPassword from "../components/MatchPassword.vue"
@@ -22,9 +23,14 @@ const router = createRouter({
             component: Announcement,
         },
         {
+            path: "/admin/announcementView",
+            name: "AnnouncementViewer",
+            component: AnnouncementViewer
+        },
+        {
             path: "/admin/announcement/:id",
-            name: "AnnouncementView",
-            component: AnnouncementView,
+            name: "AnnouncementDetail",
+            component: AnnouncementDetail,
         },
         {
             path: "/admin/announcement/add",
@@ -38,13 +44,13 @@ const router = createRouter({
         },
         {
             path: "/announcement",
-            name: "UserAnnouncement",
-            component: UserAnnouncement,
+            name: "AnnouncementPage",
+            component: AnnouncementPage,
         },
         {
             path: '/announcement/:id',
-            name: 'UserViewAnnouncement',
-            component: UserViewAnnouncement,
+            name: 'AnnouncementDetailPage',
+            component: AnnouncementDetailPage,
         },
         {
             path: '/admin/user',

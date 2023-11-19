@@ -56,6 +56,15 @@ const submit = () => {
   login(userLogin.value);
 };
 
+const clearToken = () => {
+  // localStorage.setItem('accessToken', '');
+  // localStorage.setItem('refreshToken', '');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+
+  router.push('/admin/announcement')
+}
+
 // const refreshAccessToken = async () => {
 //   try {
 //     const refreshToken = localStorage.getItem('refreshToken')
@@ -84,23 +93,39 @@ const submit = () => {
   <div class="w-full flex flex-col justify-center items-center">
 
 
-    <form @submit.prevent="submit()" class="w-2/6 flex flex-col bord bg-white">
-      <h1 class="font-bold">SAS Login</h1>
-      <br/>
+    <div class="w-2/6 flex flex-col bord bg-white">
+      <form @submit.prevent="submit()" >
+        <h1 class="font-bold">SAS Login</h1>
+        <br/>
 
-      <h3 class="font-bold">Username</h3>
-      <input type="text" id="title" v-model="username" v-on:input="changeddata" class="ann-username w-full p-2"
-             placeholder="Enter your username" :maxlength="45"/>
+        <h3 class="font-bold">Username</h3>
+        <input type="text" id="title" v-model="username" v-on:input="changeddata" class="ann-username w-full"
+               placeholder="Enter your username" :maxlength="45"/>
 
-      <!-- password -->
-      <h3 class="font-bold">Password</h3>
-      <input type="password" id="password" v-model="password" class="ann-password w-full p-2"
-             placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
+        <!-- password -->
+        <h3 class="font-bold">Password</h3>
+        <input type="password" id="password" v-model="password" class="ann-password w-full"
+               placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
 
-      <button class="ann-button">
-        LOGIN
-      </button>
-    </form>
+
+
+        <div class="w-full flex flex-col justify-center items-center justify-center mt-2">
+          <button id="login" type="submit" class="ann-button">
+            LOGIN
+          </button>
+
+          <h3 class="font-bold mt-2 mb-2">
+            OR
+          </h3>
+
+          <button id="guest" type="button" @click="clearToken()">
+<!--            <RouterLink :to="{ name: 'Announcement' }">-->
+              GUEST MODE
+<!--            </RouterLink>-->
+          </button>
+        </div>
+      </form>
+    </div>
 
     <div v-if="status != null || status != undefined" class="w-2/6 flex flex-col mt-8">
       <div v-if="status == 200" class="ann-message green-bord">
@@ -124,6 +149,7 @@ input {
   border: 1px solid black;
   margin: 0.5%;
   border-radius: 5px;
+  padding: 0.5rem;
 }
 
 p {
@@ -140,8 +166,6 @@ button {
   font-weight: 600;
   padding: 8px;
   border-radius: 5px;
-  margin-top: 10px;
-  margin-right: 5px;
 }
 
 button:enabled:hover {

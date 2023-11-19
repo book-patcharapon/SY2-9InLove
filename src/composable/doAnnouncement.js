@@ -11,14 +11,17 @@ const getAnnouncement = async () => {
         const accessToken = tokenStore.accessToken
         const res = await fetch(`${API_HOST}`, {
             method: "GET",
-            headers: {Authorization: `Bearer ${accessToken}`},
+            headers: { Authorization: `Bearer ${accessToken}` },
         })
+
         if (res.ok) {
             const allAnnouncement = await res.json()
             return allAnnouncement
+
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             throw new Error(`No Announcement`)
         }
@@ -27,7 +30,7 @@ const getAnnouncement = async () => {
     }
 }
 
-const getInformation = async (id) => {
+const getAnnouncementDetail = async (id) => {
     try {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
@@ -38,14 +41,17 @@ const getInformation = async (id) => {
         if (res.ok) {
             const announcement = await res.json()
             return announcement
+
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
             alert(`The request page is not available`)
             router.push("/admin/announcement")
             return announcement
+
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             throw new Error(`No Announcement`)
         }
@@ -54,7 +60,7 @@ const getInformation = async (id) => {
     }
 }
 
-const getInformationForUpdate = async (id) => {
+const getAnnouncementDetailForUpdate = async (id) => {
     try {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
@@ -65,14 +71,17 @@ const getInformationForUpdate = async (id) => {
         if (res.ok) {
             const announcement = await res.json()
             return announcement
+
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
             alert(`The request page is not available`)
             router.push("/admin/announcement")
             return announcement
+
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             throw new Error(`No Announcement`)
         }
@@ -94,12 +103,15 @@ const createAnnouncement = async (newAnnouncement) => {
             const addedAccount = await res.json() //keep info that added from backend
             router.push("/admin/announcement")
             return addedAccount
+
         } else if (res.status === 500) {
             alert(`There is an error`)
             router.push("/admin/announcement")
+
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             throw new Error('Cannot add')
         }
@@ -108,11 +120,11 @@ const createAnnouncement = async (newAnnouncement) => {
     }
 }
 
-const updateAnnouncement = async (id, announcement) => {
+const updateAnnouncement = async (announcementId, announcement) => {
     try {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
-        const res = await fetch(`${API_HOST}/${id}`, {
+        const res = await fetch(`${API_HOST}/${announcementId}`, {
             method: "PUT",
             headers: {"content-type": "application/json", Authorization: `Bearer ${accessToken}`},
             body: JSON.stringify(announcement),
@@ -121,14 +133,17 @@ const updateAnnouncement = async (id, announcement) => {
             const updatedAnnouncement = await res.json()
             router.push("/admin/announcement")
             return updatedAnnouncement
+
         } else if (res.status === 404) {
             const updatedAnnouncement = await res.json()
             alert('The request page is not available')
             router.push("/admin/announcement")
             return updatedAnnouncement
+
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             throw new Error("Can not edit")
         }
@@ -168,11 +183,13 @@ const annUserId = async (id) => {
         if (res.ok) {
             const annDetail = await res.json()
             return annDetail
+
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
             alert(`The request page is not available`)
             router.push("/announcement")
             return announcement
+
         } else if (response.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
@@ -193,6 +210,7 @@ const getAnnouncementActive = async (page, categoryId) => {
         if (res.ok) {
             const announcement = await res.json()
             return announcement
+
         } else if (response.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
@@ -213,6 +231,7 @@ const getAnnouncementClose = async (page, categoryId) => {
         if (res.ok) {
             const announcement = await res.json()
             return announcement;
+
         } else if (response.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
@@ -224,8 +243,8 @@ const getAnnouncementClose = async (page, categoryId) => {
 
 export {
     getAnnouncement,
-    getInformation,
-    getInformationForUpdate,
+    getAnnouncementDetail,
+    getAnnouncementDetailForUpdate,
     createAnnouncement,
     updateAnnouncement,
     annUserId,

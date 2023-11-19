@@ -84,14 +84,17 @@ const updateUser = async (id, user) => {
             const updatedUser = await response.json();
             router.push("/admin/user");
             return updatedUser;
+
         } else if (response.status === 404) {
             const updatedUser = await response.json();
             alert("The request page is not available");
             router.push("/admin/user");
             return updatedUser;
+
         } else if (response.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
+
         } else {
             const addedUser = await response.json();
             throw addedUser.detail
@@ -112,14 +115,17 @@ const getUserDetailForUpdate = async (id) => {
         if (response.ok) {
             const user = await response.json();
             return user;
+
         } else if (response.status === 400 || response.status === 404) {
             const user = await response.json();
             alert(`The request page is not available`);
             router.push("/admin/user");
             return user;
+
         } else if (res.status === 401) {
             const checkToken = await reqAccessToken()
             return checkToken
+
         } else {
             throw new Error(`No user`);
         }

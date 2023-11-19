@@ -130,7 +130,7 @@ const activetext = (acc) => {
 }
 
 const AnnDetail = (viewId) => {
-  router.push({ name: 'UserViewAnnouncement', params: { id: viewId } })
+  router.push({ name: 'AnnouncementDetailPage', params: { id: viewId } })
 }
 
 onBeforeMount(async () => {
@@ -171,7 +171,7 @@ const changeCategory = async () => {
     <div class="w-full flex justify-center">
       <div class="w-4/6 flex flex-col">
         <div class="mt-1">
-          <h1 class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
+          <h1 class="float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
           <select @change="changeCategory()" v-model="categoryId" class="ann-category-filter">
             <option id="0" :value=0>ทั้งหมด</option>
             <option id="1" :value=1>ทั่วไป</option>
@@ -289,5 +289,13 @@ select {
   border: 2px solid black;
   margin: 0.5%;
   border-radius: 5px;
+}
+
+h1 {
+  font-size: 34px;
+}
+
+h3 {
+  font-size: 24px;
 }
 </style>

@@ -32,7 +32,7 @@ const deleteUser = async (userId) => {
         headers: {Authorization: `Bearer ${accessToken}`},
       }) //Delete to backend
       if (res.status === 200) {
-        users.value = users.value.filter((usr) => usr.id !== userId); //Delete to frontend
+        users.value = users.value.filter((usr) => usr.id !== userId); // Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
       } else if (response.status === 401) {

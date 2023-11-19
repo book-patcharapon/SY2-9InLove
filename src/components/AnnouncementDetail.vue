@@ -2,14 +2,14 @@
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { changeDateTimeFormat } from '../composable/changeDateTimeFormat.js'
-import { getInformation } from '../composable/doAnnouncement.js'
+import { getAnnouncementDetail } from '../composable/doAnnouncement.js'
 
 const haveInfo = ref()
 const announcementDetail = ref([])
 const { params } = useRoute()
 
 onBeforeMount(async () => {
-    const checkToken = await getInformation(params.id);
+    const checkToken = await getAnnouncementDetail(params.id);
     if (typeof checkToken === "object") {
         announcementDetail.value = checkToken
     }
@@ -17,7 +17,7 @@ onBeforeMount(async () => {
         announcementDetail.value = [];
     }
     else if (checkToken === 'Applied new token') {
-        announcementDetail.value = await getInformation(params.id);
+        announcementDetail.value = await getAnnouncementDetail(params.id);
     }
     // announcementDetail.value = await getInformation(params.id)
     if (announcementDetail) {

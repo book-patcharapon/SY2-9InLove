@@ -52,14 +52,14 @@ const deleteAnn = async (annID) => {
 
 <template>
   <div class="w-full flex flex-col">
-    <h1 class="text-4xl font-bold flex justify-center font-style:sans-serif">
+    <h1 class="font-bold flex justify-center font-style:sans-serif">
       SIT Announcement System (SAS)
     </h1>
 
     <div v-if="announcements" class="w-full flex justify-center">
       <div class="flex flex-col w-5/6">
         <div class="my-2">
-          <p class="text-xl float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
+          <h3 class="float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h3>
           <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button float-right">
             <button>ADD ANNOUNCEMENT</button>
           </RouterLink>
@@ -87,7 +87,7 @@ const deleteAnn = async (annID) => {
               <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
               <td class="ann-display">{{ ann.announcementDisplay }}</td>
               <td>
-                <RouterLink :to="{ name: 'AnnouncementView', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">
+                <RouterLink :to="{ name: 'AnnouncementDetail', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">
                   <button>VIEW</button>
                 </RouterLink>
                 <button class="ann-button" @click="deleteAnn(ann.id)">
@@ -133,5 +133,13 @@ th {
 td {
   padding: 1em 0.5em;
   border: 2px solid black;
+}
+
+h1 {
+  font-size: 34px;
+}
+
+h3 {
+  font-size: 24px;
 }
 </style>

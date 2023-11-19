@@ -1,7 +1,8 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import {RouterLink} from "vue-router";
 import router from "../router";
-import { useRoute } from "vue-router"
+import {useRoute} from "vue-router"
+import Announcement from "@/components/Announcement.vue";
 
 const routes = useRoute()
 
@@ -10,39 +11,49 @@ const isActive = (routeName) => {
 }
 
 const signout = () => {
+  // localStorage.setItem('accessToken', '');
+  // localStorage.setItem('refreshToken', '');
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
+
   router.push("/login");
 }
 
 </script>
- 
+
 <template>
   <div class="left-navbar w-1/6">
     <h1 class="ann-app-title text-4xl font-bold flex justify-center font-style: sans-serif p-3">SAS</h1>
     <div class="linkbox">
-      <hr />
+      <hr/>
+
+      <RouterLink :to="{ name: 'AnnouncementViewer' }" :class="{ 'active': isActive('AnnouncementViewer') }" class="ann-menu li">
+        <button>
+          Announcement (Viewer)
+        </button>
+      </RouterLink>
+      <hr/>
 
       <RouterLink :to="{ name: 'Announcement' }" :class="{ 'active': isActive('Announcement') }" class="ann-menu li">
         <button>
           Announcement
         </button>
       </RouterLink>
-      <hr />
+      <hr/>
 
       <RouterLink :to="{ name: 'User' }" :class="{ 'active': isActive('User') }" class="ann-menu li">
         <button>
           User
         </button>
       </RouterLink>
-      <hr />
+      <hr/>
 
       <RouterLink :to="{ name: 'MatchPassword' }" :class="{ 'active': isActive('MatchPassword') }" class="ann-menu li">
         <button>
           Match Password
         </button>
       </RouterLink>
-      <hr />
+      <hr/>
     </div>
     <button class="signout sign-out" @click="signout">
       SIGN OUT

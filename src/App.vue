@@ -6,7 +6,7 @@ import { ref, onBeforeMount, onBeforeUpdate, onUpdated, onMounted } from "vue"
 const routes = useRoute()
 
 const isRoute = (x) => {
-  console.log(routes.path) // '/login'
+  // console.log(routes.path) // '/login'
   return routes.path === x
 }
 

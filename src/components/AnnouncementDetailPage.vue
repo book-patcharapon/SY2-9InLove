@@ -1,3 +1,4 @@
+<!--<script setup xmlns:border-style="http://www.w3.org/1999/xhtml" xmlns:border-style="http://www.w3.org/1999/xhtml">-->
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { changeDateTimeFormat } from "../composable/changeDateTimeFormat.js";
@@ -26,7 +27,8 @@ onBeforeMount(async () => {
     </div>
 
     <div v-else>
-      <h2 border-style: double>Announcement Detail :</h2>
+<!--      <h2 border-style: double>Announcement Detail :</h2>-->
+      <h2>Announcement Detail :</h2>
       <div class="ann-item">
         <div class="head">
           <h1 class="ann-title">
@@ -47,7 +49,7 @@ onBeforeMount(async () => {
         <hr style="border: 0.1px solid lightgray" />
         
         <div class="butClass">
-          <RouterLink :to="{ name: 'UserAnnouncement' }">
+          <RouterLink :to="{ name: 'AnnouncementPage' }">
             <button class="ann-button mt-2 p-2">Back</button>
           </RouterLink>
         </div>
