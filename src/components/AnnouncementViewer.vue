@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onBeforeMount, onMounted } from "vue";
-import { getAnnouncement } from "@/composable/doAnnouncement";
-import { changeDateTimeFormat } from "@/composable/changeDateTimeFormat";
+import {ref, onBeforeMount, onMounted} from "vue";
+import {getAnnouncement} from "@/composable/doAnnouncement";
+import {changeDateTimeFormat} from "@/composable/changeDateTimeFormat";
 
 const announcements = ref([])
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -14,38 +14,41 @@ onMounted(async () => {
 
 <template>
   <div class="w-full h-screen flex flex-col items-center">
-    <h1 class="font-bold">SIT Announcement System (SAS)</h1>
-
     <div v-if="announcements" class="w-full flex flex-col justify-center items-center">
-      <table class="w-5/6 text-center">
-        <thead class="text-xl uppercase">
-        <tr>
-          <th>No.</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Publish Date</th>
-          <th>Close Date</th>
-          <th>Action</th>
-        </tr>
-        </thead>
+      <h1 class="font-bold">SIT Announcement System (SAS)</h1>
 
-        <tbody>
-        <tr class="ann-item" v-for="(ann, index) in announcements" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td class="ann-title">{{ ann.announcementTitle }}</td>
-          <td class="ann-category">{{ ann.announcementCategory }}</td>
-          <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
-          <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
-          <td>
-            <RouterLink :to="{ name: 'AnnouncementDetail', params: { id: ann.id } }" class="ann-button mr-3 rounded-sm">
-              <button>VIEW</button>
-            </RouterLink>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="w-full flex flex-col justify-center items-center">
+        <table class="w-5/6 text-center">
+          <thead class="text-xl uppercase">
+          <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Publish Date</th>
+            <th>Close Date</th>
+            <th>Action</th>
+          </tr>
+          </thead>
 
-      <div class="buttom w-full flex flex-col justify-center items-center">
+          <tbody>
+          <tr class="ann-item" v-for="(ann, index) in announcements" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td class="ann-title">{{ ann.announcementTitle }}</td>
+            <td class="ann-category">{{ ann.announcementCategory }}</td>
+            <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
+            <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
+            <td>
+              <RouterLink :to="{ name: 'AnnouncementDetail', params: { id: ann.id } }"
+                          class="ann-button mr-3 rounded-sm">
+                <button>VIEW</button>
+              </RouterLink>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="buttom">
         <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
       </div>
     </div>
@@ -93,7 +96,7 @@ td {
 }
 
 h1 {
- font-size: 34px;
+  font-size: 34px;
 }
 
 h3 {

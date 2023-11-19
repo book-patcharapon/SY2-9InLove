@@ -23,7 +23,7 @@ const router = createRouter({
             component: Announcement,
         },
         {
-            path: "/admin/announcementView",
+            path: "/admin/announcementViewer",
             name: "AnnouncementViewer",
             component: AnnouncementViewer
         },

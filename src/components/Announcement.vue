@@ -51,15 +51,16 @@ const deleteAnn = async (annID) => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col">
-    <h1 class="font-bold flex justify-center font-style:sans-serif">
-      SIT Announcement System (SAS)
-    </h1>
+  <div class="w-full h-screen flex flex-col">
 
-    <div v-if="announcements" class="w-full flex justify-center">
+    <div v-if="announcements" class="w-full flex flex-col justify-center items-center">
+      <h1 class="font-bold flex justify-center font-style:sans-serif">
+        SIT Announcement System (SAS)
+      </h1>
+
       <div class="flex flex-col w-5/6">
         <div class="my-2">
-          <h3 class="float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h3>
+          <h3 class="float-left">Category</h3>
           <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button float-right">
             <button>ADD ANNOUNCEMENT</button>
           </RouterLink>
@@ -98,6 +99,10 @@ const deleteAnn = async (annID) => {
           </tbody>
         </table>
       </div>
+
+      <div class="buttom">
+        <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
+      </div>
     </div>
 
     <div v-else>
@@ -119,6 +124,11 @@ button {
 button:enabled:hover {
   background-color: black;
   color: white;
+}
+
+.buttom {
+  position: fixed;
+  bottom: 0;
 }
 
 table {

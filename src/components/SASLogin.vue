@@ -35,7 +35,7 @@ const login = async (input) => {
       tokenStore.setRefreshToken(response.refreshToken);
 
       setTimeout(function () {
-        router.push('/admin/announcement');
+        router.push('/admin/announcementViewer');
       }, 1500);
     } else {
       // alert('Error refreshing access token');
@@ -57,12 +57,10 @@ const submit = () => {
 };
 
 const clearToken = () => {
-  // localStorage.setItem('accessToken', '');
-  // localStorage.setItem('refreshToken', '');
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 
-  router.push('/admin/announcement')
+  router.push('/admin/announcementView')
 }
 
 // const refreshAccessToken = async () => {
@@ -94,7 +92,7 @@ const clearToken = () => {
 
 
     <div class="w-2/6 flex flex-col bord bg-white">
-      <form @submit.prevent="submit()" >
+      <form @submit.prevent="submit()">
         <h1 class="font-bold">SAS Login</h1>
         <br/>
 
@@ -108,7 +106,6 @@ const clearToken = () => {
                placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
 
 
-
         <div class="w-full flex flex-col justify-center items-center justify-center mt-2">
           <button id="login" type="submit" class="ann-button">
             LOGIN
@@ -118,10 +115,10 @@ const clearToken = () => {
             OR
           </h3>
 
-          <button id="guest" type="button" @click="clearToken()">
-<!--            <RouterLink :to="{ name: 'Announcement' }">-->
+          <button id="guest" type="button">
+            <RouterLink :to="{ name: 'AnnouncementViewer' }">
               GUEST MODE
-<!--            </RouterLink>-->
+            </RouterLink>
           </button>
         </div>
       </form>
