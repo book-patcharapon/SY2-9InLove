@@ -34,7 +34,7 @@ const changeCategory = async (categoryId) => {
         </select>
       </div>
 
-      <table class="w-5/6 my-2">
+      <table v-if="announcements.length != 0" class="w-5/6 my-2">
         <thead class="text-xl uppercase">
         <tr>
           <th>No.</th>
@@ -46,7 +46,7 @@ const changeCategory = async (categoryId) => {
         </tr>
         </thead>
 
-        <tbody>
+        <tbody >
         <tr class="ann-item" v-for="(ann, index) in announcements" :key="index">
           <td>{{ index + 1 }}</td>
           <td class="ann-title">{{ ann.announcementTitle }}</td>
@@ -61,6 +61,8 @@ const changeCategory = async (categoryId) => {
         </tr>
         </tbody>
       </table>
+
+      <h1 v-else>No Announcement</h1>
 
       <div class="below">
         <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>

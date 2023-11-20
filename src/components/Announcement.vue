@@ -81,7 +81,7 @@ const deleteAnnouncement = async (annID) => {
         </RouterLink>
       </div>
 
-      <table class="w-5/6 my-2">
+      <table v-if="announcements.length != 0" class="w-5/6 my-2">
         <thead class="text-xl uppercase">
         <tr>
           <th>No.</th>
@@ -116,6 +116,8 @@ const deleteAnnouncement = async (annID) => {
         </tr>
         </tbody>
       </table>
+
+      <h1 v-else>No Announcement</h1>
 
       <div class="below">
         <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
