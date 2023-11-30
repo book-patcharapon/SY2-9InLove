@@ -1,8 +1,10 @@
 <script setup>
 import {useRoute} from "vue-router"
-import {ref, onBeforeMount} from "vue"
+import {ref, onBeforeMount, onUpdated} from "vue"
 import router from "../router";
 import {useTokenStore} from "../stores/token.js";
+import SideBar from "@/App.vue";
+import {getUserByUsername} from "@/composable/doUser";
 
 const API_HOST = import.meta.env.VITE_BASE_URL;
 const userLogin = ref({})
@@ -11,6 +13,8 @@ const tokenStore = useTokenStore();
 const accessToken = ref(tokenStore.accessToken);
 const username = ref("");
 const password = ref("");
+const user = ref()
+const role = ref()
 
 onBeforeMount(async () => {
   userLogin.value = {
@@ -18,6 +22,11 @@ onBeforeMount(async () => {
     password: password.value,
   }
 })
+
+// onUpdated(async () => {
+//   user.value = getUserByUsername(username)
+//   role.value = user.value.role
+// })
 
 const login = async (input) => {
   try {
@@ -30,7 +39,6 @@ const login = async (input) => {
     if (res.status == 200) {
       const response = await res.json();
 
-      console.log(response);
       tokenStore.setAccessToken(response.token);
       tokenStore.setRefreshToken(response.refreshToken);
 
@@ -38,9 +46,7 @@ const login = async (input) => {
         router.push('/admin/announcementViewer');
       }, 1500);
     } else {
-      // alert('Error refreshing access token');
-      // router.push('/login');
-      throw new Error(`No `)
+      throw new Error(`There is error`)
     }
   } catch (error) {
     console.error(`ERROR: ${error}`)
@@ -52,15 +58,8 @@ const submit = () => {
     username: username.value,
     password: password.value,
   };
-  console.log(userLogin.value);
+  // console.log(userLogin.value);
   login(userLogin.value);
-};
-
-const clearToken = () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-
-  router.push('/admin/announcementView')
 }
 
 // const refreshAccessToken = async () => {
@@ -90,7 +89,6 @@ const clearToken = () => {
 <template>
   <div class="w-full flex flex-col justify-center items-center">
 
-
     <div class="w-2/6 flex flex-col bord bg-white">
       <form @submit.prevent="submit()">
         <h1 class="font-bold">SAS Login</h1>
@@ -105,8 +103,8 @@ const clearToken = () => {
         <input type="password" id="password" v-model="password" class="ann-password w-full"
                placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
 
-
         <div class="w-full flex flex-col justify-center items-center justify-center mt-2">
+
           <button id="login" type="submit" class="ann-button">
             LOGIN
           </button>

@@ -149,6 +149,25 @@ const checkPassword = async (user) => {
     }
 };
 
+const getUserByUsername = async (username) => {
+    try {
+        const tokenStore = useTokenStore()
+        const accessToken = tokenStore.accessToken
+        const response = await fetch(`${API_HOST}/users/username?username=${username}`, {
+            method: "GET",
+            headers: {"content-type": "application/json", Authorization: `Bearer ${accessToken}`}
+        })
+        if (response.ok) {
+            const user = response.json()
+            return user
+        } else {
+            throw new Error("There is error")
+        }
+    } catch (error) {
+        console.error(`Error: ${error}`)
+    }
+}
+
 export {
     getUsers,
     createUser,
@@ -156,4 +175,5 @@ export {
     getUserDetailForUpdate,
     checkPassword,
     reqAccessToken,
+    getUserByUsername
 };

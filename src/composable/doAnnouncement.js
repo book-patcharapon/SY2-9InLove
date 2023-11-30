@@ -30,7 +30,57 @@ const getAnnouncement = async () => {
     }
 }
 
-const getAnnouncementCategory = async (categoryId) => {
+// const getAnnouncement = async () => {
+//     try {
+//         const res = await fetch(`${API_HOST}`, {
+//             method: "GET"
+//         })
+
+//         if (res.ok) {
+//             const announcements = await res.json()
+//             return announcements
+//         } else {
+//             throw new Error()
+//         }
+//     } catch (error) {
+//         console.error(`ERROR: ${error}`)
+//     }
+// }
+
+// Display yes = Guest mode = No token
+const getAnnouncementDisplayYes = async () => {
+    try {
+        const res = await fetch(`${API_HOST}`, {
+            method: "GET",
+        })
+        if (res.ok) {
+            const announcements = await res.json()
+            return announcements
+        } else {
+            throw new Error()
+        }
+    } catch (error) {
+        console.error(`ERROR: ${error}`)
+    }
+}
+
+const getAnnouncementDisplayYesAndFilterCategory = async (categoryId) => {
+    try {
+        const res = await fetch(`${API_HOST}?category=${categoryId}`, {
+            method: "GET"
+        })
+        if (res.ok) {
+            const announcements = await res.json()
+            return announcements
+        } else {
+            throw new Error()
+        }
+    } catch (error) {
+        console.error(`ERROR: ${error}`)
+    }
+}
+
+const getAnnouncementFilterCategory = async (categoryId) => {
     try {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
@@ -59,8 +109,8 @@ const getAnnouncementDetail = async (id) => {
             headers: {Authorization: `Bearer ${accessToken}`},
         })
         if (res.ok) {
-            const announcement = await res.json()
-            return announcement
+            const announcements = await res.json()
+            return announcements
 
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
@@ -263,7 +313,9 @@ const getAnnouncementClose = async (page, categoryId) => {
 
 export {
     getAnnouncement,
-    getAnnouncementCategory,
+    getAnnouncementDisplayYes,
+    getAnnouncementDisplayYesAndFilterCategory,
+    getAnnouncementFilterCategory,
     getAnnouncementDetail,
     getAnnouncementDetailForUpdate,
     createAnnouncement,

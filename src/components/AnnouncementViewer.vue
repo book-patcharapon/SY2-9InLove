@@ -1,6 +1,11 @@
 <script setup>
 import {ref, onBeforeMount, onMounted} from "vue";
-import {getAnnouncement, getAnnouncementCategory} from "@/composable/doAnnouncement";
+import {
+  getAnnouncement,
+  getAnnouncementFilterCategory,
+  getAnnouncementDisplayYes,
+  getAnnouncementDisplayYesAndFilterCategory
+} from "@/composable/doAnnouncement";
 import {changeDateTimeFormat} from "@/composable/changeDateTimeFormat";
 
 const announcements = ref([])
@@ -8,11 +13,11 @@ const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const categoryId = ref(0)
 
 onMounted(async () => {
-  announcements.value = await getAnnouncement()
+  announcements.value = await getAnnouncementDisplayYes()
 })
 
 const changeCategory = async (categoryId) => {
-  announcements.value = await getAnnouncementCategory(categoryId)
+  announcements.value = await getAnnouncementDisplayYesAndFilterCategory(categoryId)
 }
 
 </script>

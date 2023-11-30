@@ -4,24 +4,35 @@ import {
   getAnnouncement,
   getAnnouncementActive,
   getAnnouncementClose,
-  getAnnouncementCategory
+  getAnnouncementFilterCategory
 } from "../composable/doAnnouncement.js";
 import {changeDateTimeFormat} from "../composable/changeDateTimeFormat.js";
 import {useTokenStore} from '../stores/token.js'
-import {reqAccessToken} from "../composable/doUser"
+import {getUserByUsername, reqAccessToken} from "../composable/doUser"
+import {jwtDecode} from "jwt-decode";
 
 const API_HOST = import.meta.env.VITE_BASE_URL;
 const announcements = ref([]);
 const time = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const categoryId = ref(0)
-
+const tokenStore = useTokenStore()
+const {accessToken} = useTokenStore()
+const username = ref()
+const user = ref()
 
 onBeforeMount(async () => {
   // announcements.value = await getAnnouncement()
+  if (accessToken) {
+    username.value = await jwtDecode(accessToken)
+    user.value = await getUserByUsername(username.value.sub)
+  }
+
   const checkToken = await getAnnouncement();
+
   if (typeof checkToken === "object") {
     announcements.value = checkToken
   }
+
   if (!announcements.value) {
     announcements.value = [];
   } else if (checkToken === 'Applied new token') {
@@ -30,7 +41,7 @@ onBeforeMount(async () => {
 })
 
 const changeCategory = async (categoryId) => {
-  announcements.value = await getAnnouncementCategory(categoryId)
+  announcements.value = await getAnnouncementFilterCategory(categoryId)
 }
 
 const deleteAnnouncement = async (annID) => {
@@ -41,12 +52,12 @@ const deleteAnnouncement = async (annID) => {
       const res = await fetch(`${API_HOST}/announcements/${annID}`, {
         method: "DELETE",
         headers: {Authorization: `Bearer ${accessToken}`},
-      }) //Delete to backend
+      })
       if (res.status === 200) {
         announcements.value = announcements.value.filter((ann) => ann.id !== annID); // Delete to frontend
       } else if (res.status === 400) {
         alert('There is no this announcement')
-      } else if (response.status === 401) {
+      } else if (res.status === 401) {
         const reqAccess = await reqAccessToken()
         return reqAccess
       } else {
@@ -90,7 +101,7 @@ const deleteAnnouncement = async (annID) => {
           <th>Publish Date</th>
           <th>Close Date</th>
           <th>Display</th>
-          <th>Owner</th>
+          <th v-if="user && user.role === 'admin'">Owner</th>
           <th>Action</th>
         </tr>
         </thead>
@@ -103,7 +114,7 @@ const deleteAnnouncement = async (annID) => {
           <td class="ann-publish-date">{{ changeDateTimeFormat(ann.publishDate) }}</td>
           <td class="ann-close-date">{{ changeDateTimeFormat(ann.closeDate) }}</td>
           <td class="ann-display">{{ ann.announcementDisplay }}</td>
-          <td class="ann-owner">{{ ann.announcementOwner }}</td>
+          <td class="ann-owner" v-if="user && user.role === 'admin'">{{ ann.announcementOwner }}</td>
           <td>
             <RouterLink :to="{ name: 'AnnouncementDetail', params: { id: ann.id } }"
                         class="ann-button mr-3 rounded-sm">
