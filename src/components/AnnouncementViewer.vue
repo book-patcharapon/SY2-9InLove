@@ -29,14 +29,20 @@ const changeCategory = async (categoryId) => {
       <h1 class="font-bold">SIT Announcement System (SAS)</h1>
 
       <div class="w-5/6 my-2">
-        <h3 class="font-bold float-left">Choose category: </h3>
-        <select @change="changeCategory(categoryId)" v-model="categoryId">
-          <option id="0" :value=0>ทั้งหมด</option>
-          <option id="1" :value=1>ทั่วไป</option>
-          <option id="2" :value=2>ทุนการศึกษา</option>
-          <option id="3" :value=3>หางาน</option>
-          <option id="4" :value=4>ฝึกงาน</option>
-        </select>
+        <div>
+          <h3><b>Date/Time Shown in Timezone:</b> {{ time }}</h3>
+        </div>
+        <div>
+          <h3 class="font-bold float-left">Choose category: </h3>
+          <select @change="changeCategory(categoryId)" v-model="categoryId">
+            <option id="0" :value=0>ทั้งหมด</option>
+            <option id="1" :value=1>ทั่วไป</option>
+            <option id="2" :value=2>ทุนการศึกษา</option>
+            <option id="3" :value=3>หางาน</option>
+            <option id="4" :value=4>ฝึกงาน</option>
+          </select>
+        </div>
+
       </div>
 
       <table v-if="announcements.length != 0" class="w-5/6 my-2">
@@ -68,10 +74,6 @@ const changeCategory = async (categoryId) => {
       </table>
 
       <h1 v-else>No Announcement</h1>
-
-      <div class="below">
-        <p><b>Date/Time Shown in Timezone:</b> {{ time }}</p>
-      </div>
     </div>
 
     <div v-else class="vertical-center">

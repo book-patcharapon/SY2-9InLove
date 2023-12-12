@@ -42,7 +42,6 @@ onMounted(async () => {
   <div class="left-navbar w-1/6">
     <h1 class="ann-app-title text-4xl font-bold flex justify-center font-style: sans-serif p-3">SAS</h1>
     <div class="link-box">
-      <hr/>
 
       <div v-if="username" class="space">
         <p>{{ username.sub }}</p>

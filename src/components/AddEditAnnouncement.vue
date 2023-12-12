@@ -118,6 +118,10 @@ const addEditNewAnnouncement = (newAnn) => {
     alert(`Please enter title and description`)
   }
 }
+
+const back = () => {
+  window.history.back()
+}
 </script>
 
 <template>
@@ -162,7 +166,7 @@ const addEditNewAnnouncement = (newAnn) => {
           EDIT
         </button>
 
-        <button @click="$router.push('/admin/announcement')" class="ann-button">
+        <button @click="back" class="ann-button">
           CANCEL
         </button>
       </div>
