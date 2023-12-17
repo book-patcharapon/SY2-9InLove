@@ -14,11 +14,6 @@ const { accessToken } = useTokenStore()
 
 onBeforeMount(async () => {
   const checkToken = await getAnnouncementDetail(params.id);
-
-  if (checkToken == 403) {
-    alert("You do not have permission to access this page.")
-    router.push("/announcement");
-  }
   if (typeof checkToken === "object") {
     announcementDetail.value = checkToken
   }

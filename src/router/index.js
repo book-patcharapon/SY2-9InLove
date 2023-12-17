@@ -163,6 +163,46 @@ const router = createRouter({
                       next('/announcement')
                     }
                   }
+                },
+                {
+                    path: "/admin/announcement/:id",
+                    name: "AdminAnnouncementDetail",
+                    component: AnnouncementDetail,
+                    beforeEnter: (to, form, next) => {
+                    if (localStorage.getItem("accessToken")=='') {
+                        alert("please login")
+                        next('/login')
+                    }
+                    const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                    if(decodeToken.role === 'admin'){
+                      next()
+                    }else if(decodeToken.role === 'announcer'){
+                      alert("You do not have permission to access this page.")
+                      next('/announcement')
+                    }else{
+                      next('/announcement')
+                    }
+                  }
+                },
+                {
+                    path: "/admin/announcement/:id/edit",
+                    name: "UpdateAnnouncement",
+                    component: AddEditAnnouncement,
+                    beforeEnter: (to, form, next) => {
+                      if (localStorage.getItem("accessToken")=='') {
+                          alert("please login")
+                          next('/login')
+                      }
+                      const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                      if(decodeToken.role === 'admin'){
+                        next()
+                      }else if(decodeToken.role === 'announcer'){
+                        alert("You do not have permission to access this page.")
+                        next('/announcement')
+                      }else{
+                        next('/announcement')
+                      }
+                    }
                 }
             ]
         }
