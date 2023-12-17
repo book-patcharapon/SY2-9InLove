@@ -154,6 +154,8 @@ const getAnnouncementDetailForUpdate = async (id) => {
             const reqAccess = await reqAccessToken()
             return reqAccess
 
+        }else if (res.status === 403) {
+            return res.status;
         } else {
             throw new Error(`No Announcement`)
         }

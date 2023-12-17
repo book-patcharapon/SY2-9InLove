@@ -165,9 +165,9 @@ const router = createRouter({
                   }
                 },
                 {
-                    path: "/admin/announcement/:id",
-                    name: "AdminAnnouncementDetail",
-                    component: AnnouncementDetail,
+                  path: "/admin/announcement",
+                  name: "Announcement",
+                  component: Announcement,
                     beforeEnter: (to, form, next) => {
                     if (localStorage.getItem("accessToken")=='') {
                         alert("please login")
@@ -177,16 +177,15 @@ const router = createRouter({
                     if(decodeToken.role === 'admin'){
                       next()
                     }else if(decodeToken.role === 'announcer'){
-                      alert("You do not have permission to access this page.")
-                      next('/announcement')
+                      next()
                     }else{
                       next('/announcement')
                     }
                   }
                 },
                 {
-                    path: "/admin/announcement/:id/edit",
-                    name: "UpdateAnnouncement",
+                    path: "/admin/announcement/add",
+                    name: "AddAnnouncement",
                     component: AddEditAnnouncement,
                     beforeEnter: (to, form, next) => {
                       if (localStorage.getItem("accessToken")=='') {
@@ -197,8 +196,7 @@ const router = createRouter({
                       if(decodeToken.role === 'admin'){
                         next()
                       }else if(decodeToken.role === 'announcer'){
-                        alert("You do not have permission to access this page.")
-                        next('/announcement')
+                        next()
                       }else{
                         next('/announcement')
                       }

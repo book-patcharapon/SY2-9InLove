@@ -19,7 +19,10 @@ onBeforeMount(async () => {
   if (params.id) {
     // Edit mode
     const checkToken = await getAnnouncementDetailForUpdate(params.id);
-
+    if (checkToken == 403) {
+      alert("please login or You do not have permission to access this page.")
+      router.push('/announcement')
+    }
     if (typeof checkToken === "object") {
       newAnn.value = checkToken
     }

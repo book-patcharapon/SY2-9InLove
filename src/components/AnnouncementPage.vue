@@ -169,18 +169,26 @@ const changeCategory = async () => {
 
     <div class="w-full flex justify-center">
       <div class="w-4/6 flex flex-col">
-        <div class="mt-1">
-          <h1 class="float-left"><b>Date/Time Shown in Timezone:</b> {{ time }}</h1>
-          <select @change="changeCategory()" v-model="categoryId" class="ann-category-filter">
-            <option id="0" :value=0>ทั้งหมด</option>
-            <option id="1" :value=1>ทั่วไป</option>
-            <option id="2" :value=2>ทุนการศึกษา</option>
-            <option id="3" :value=3>หางาน</option>
-            <option id="4" :value=4>ฝึกงาน</option>
-          </select>
-          <button @click="activebutton = !activebutton; Page = 0; PageClose = 0" class="ann-button float-right mb-2 mr-1">
-            {{ activetext(activebutton) }}
-          </button>
+
+        <div class="w-full flex flex-col mt-1">
+          <h3><b>Date/Time Shown in Timezone:</b> {{ time }}</h3>
+
+          <div class="w-full mb-2">
+              <h3 class="float-left font-bold">Choose category: </h3>
+              <select @change="changeCategory()" v-model="categoryId" class="ann-category-filter">
+                <option id="0" :value=0>ทั้งหมด</option>
+                <option id="1" :value=1>ทั่วไป</option>
+                <option id="2" :value=2>ทุนการศึกษา</option>
+                <option id="3" :value=3>หางาน</option>
+                <option id="4" :value=4>ฝึกงาน</option>
+              </select>
+            
+            <div class="float-right">
+              <button @click="activebutton = !activebutton; Page = 0; PageClose = 0" class="ann-button">
+                {{ activetext(activebutton) }}
+              </button>
+            </div>
+          </div>
         </div>
 
         <table v-if="activebutton === true && announcementClosepage.totalElements != 0" class="w-full text-center">
