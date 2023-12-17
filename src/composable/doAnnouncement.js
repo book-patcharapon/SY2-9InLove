@@ -278,16 +278,14 @@ const getAnnouncementActive = async (page, categoryId) => {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
         const res = await fetch(`${API_HOST}/pages?page=${page}&mode=active&category=${categoryId}`, {
-            method: "GET",
-            headers: {Authorization: `Bearer ${accessToken}`},
+            method: "GET"
         })
         if (res.ok) {
             const announcement = await res.json()
             return announcement
 
-        } else if (response.status === 401) {
-            const reqAccess = await reqAccessToken()
-            return reqAccess
+        }else {
+            throw new Error()
         }
     } catch (error) {
         console.error(`ERROR: ${error}`)
@@ -299,16 +297,14 @@ const getAnnouncementClose = async (page, categoryId) => {
         const tokenStore = useTokenStore()
         const accessToken = tokenStore.accessToken
         const res = await fetch(`${API_HOST}/pages?page=${page}&mode=close&category=${categoryId}`, {
-            method: "GET",
-            headers: {Authorization: `Bearer ${accessToken}`},
+            method: "GET"
         })
         if (res.ok) {
             const announcement = await res.json()
             return announcement;
 
-        } else if (response.status === 401) {
-            const reqAccess = await reqAccessToken()
-            return reqAccess
+        }else {
+            throw new Error()
         }
     } catch (error) {
         console.error(`ERROR: ${error}`)
