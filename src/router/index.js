@@ -9,6 +9,10 @@ import User from "../components/User.vue"
 import AddEditUser from "../components/AddEditUser.vue"
 import MatchPassword from "../components/MatchPassword.vue"
 import SASLogin from "../components/SASLogin.vue"
+// import AdminPage from "../components/AdminPage.vue"
+
+// import { accessToken } from "../stores/useTokenStore";
+import { jwtDecode } from "jwt-decode";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +33,12 @@ const router = createRouter({
         },
         {
             path: "/admin/announcement/:id",
-            name: "AnnouncementDetail",
+            name: "AdminAnnouncementDetail",
+            component: AnnouncementDetail,
+        },
+        {
+            path: '/announcement/:id',
+            name: 'AnnouncementDetail',
             component: AnnouncementDetail,
         },
         {
@@ -46,11 +55,6 @@ const router = createRouter({
             path: "/announcement",
             name: "AnnouncementPage",
             component: AnnouncementPage,
-        },
-        {
-            path: '/announcement/:id',
-            name: 'AnnouncementDetailPage',
-            component: AnnouncementDetailPage,
         },
         {
             path: '/admin/user',
@@ -76,8 +80,93 @@ const router = createRouter({
             path: '/login',
             name: 'SASLogin',
             component: SASLogin,
+        },
+        {
+            path: "/",
+            children: [
+              {
+                path: "/admin/user",
+                name:"User",
+                component: User,
+                beforeEnter: (to, form, next) => {
+                    if (localStorage.getItem("accessToken")=='') {
+                        alert("please login")
+                        next('/login')
+                    }
+                    const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                    if(decodeToken.role === 'admin'){
+                      next()
+                    }else if(decodeToken.role === 'announcer'){
+                      alert("You do not have permission to access this page.")
+                      next('/announcement')
+                    }else{
+                      next('/announcement')
+                    }
+                  }
+              },
+              {
+                path: "/admin/user/add",
+                name:"AddUser",
+                component: AddEditUser,
+                beforeEnter: (to, form, next) => {
+                    if (localStorage.getItem("accessToken")=='') {
+                        alert("please login")
+                        next('/login')
+                    }
+                    const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                    if(decodeToken.role === 'admin'){
+                      next()
+                    }else if(decodeToken.role === 'announcer'){
+                      alert("You do not have permission to access this page.")
+                      next('/announcement')
+                    }else{
+                      next('/announcement')
+                    }
+                  }
+              },
+              {
+                path: "/admin/user/match",
+                name:"MatchPassword",
+                component: MatchPassword,
+                beforeEnter: (to, form, next) => {
+                    if (localStorage.getItem("accessToken")=='') {
+                        alert("please login")
+                        next('/login')
+                    }
+                    const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                    if(decodeToken.role === 'admin'){
+                      next()
+                    }else if(decodeToken.role === 'announcer'){
+                      alert("You do not have permission to access this page.")
+                      next('/announcement')
+                    }else{
+                      next('/announcement')
+                    }
+                  }
+              },
+              {
+                path: "/admin/user/:id/edit",
+                name:"EditUser",
+                component: AddEditUser,
+                beforeEnter: (to, form, next) => {
+                    if (localStorage.getItem("accessToken")=='') {
+                        alert("please login")
+                        next('/login')
+                    }
+                    const decodeToken = jwtDecode(localStorage.getItem("accessToken"));
+                    if(decodeToken.role === 'admin'){
+                      next()
+                    }else if(decodeToken.role === 'announcer'){
+                      alert("You do not have permission to access this page.")
+                      next('/announcement')
+                    }else{
+                      next('/announcement')
+                    }
+                  }
+                }
+            ]
         }
-    ],
+    ]
 })
 
 export default router

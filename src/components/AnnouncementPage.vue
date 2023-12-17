@@ -130,7 +130,7 @@ const activetext = (acc) => {
 }
 
 const AnnDetail = (viewId) => {
-  router.push({ name: 'AnnouncementDetailPage', params: { id: viewId } })
+  router.push({ name: 'AnnouncementDetail', params: { id: viewId } })
 }
 
 onBeforeMount(async () => {
@@ -183,15 +183,15 @@ const changeCategory = async () => {
           </button>
         </div>
 
-        <table v-if="activebutton === true && announcementClosepage.totalElements != 0" class="w-full text-center text-gray-500 dark:text-gray-400">
-          <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table v-if="activebutton === true && announcementClosepage.totalElements != 0" class="w-full text-center">
+          <tr class="tableHead">
             <th class="trHead">No.</th>
             <th class="trHead">Title</th>
             <th class="trHead">Close Date</th>
             <th class="trHead">Category</th>
           </tr>
           <tr v-for="(ann, index) in announcementClosepage.content" :key="index"
-            class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            class="ann-item ">
             <td>{{ index + 1 + (announcementClosepage.size * announcementClosepage.page) }}</td>
             <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
               <p>{{ ann.announcementTitle }}</p>
@@ -202,14 +202,14 @@ const changeCategory = async () => {
         </table>
         <h1 v-if="activebutton === true && announcementClosepage.totalElements == 0" class="w-full flex justify-center">No Announcement</h1>
 
-        <table v-if="activebutton === false && announcementActivepage.totalElements != 0" class="w-full text-center text-gray-500 dark:text-gray-400">
-          <tr class="tableHead text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table v-if="activebutton === false && announcementActivepage.totalElements != 0" class="w-full text-center">
+          <tr class="tableHead ">
             <th class="trHead">No.</th>
             <th class="trHead">Title</th>
             <th class="trHead">Category</th>
           </tr>
           <tr v-for="(ann, index) in announcementActivepage.content" :key="index"
-            class="ann-item bg-white border-b dark:bg-gray-800 dark:border-gray-700 p-10">
+            class="ann-item  p-10">
             <td>{{ index + 1 + (announcementActivepage.size * announcementActivepage.page) }}</td>
             <td class="ann-title" id="titleClick" @click="AnnDetail(ann.id)">
               <p>{{ ann.announcementTitle }}</p>
@@ -278,10 +278,18 @@ button:enabled:hover {
   color: white;
   font-weight: bold;
 }
+table {
+  border: 2px solid black;
+  text-align: center;
+}
 
+th {
+  padding: 0.5em;
+  background-color: lightgrey;
+}
 td {
-  padding: 20px;
-  font-size: 18px;
+  padding: 1em 0.5em;
+  border: 2px solid black;
 }
 
 select {

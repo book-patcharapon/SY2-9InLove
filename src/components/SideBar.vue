@@ -48,8 +48,8 @@ onMounted(async () => {
       </div>
       <hr/>
 
-      <RouterLink :to="{ name: 'AnnouncementViewer' }" class="ann-menu li">
-        <button :class="{ 'active': isActive('AnnouncementViewer') }">
+      <RouterLink :to="{ name: 'AnnouncementPage' }" class="ann-menu li">
+        <button :class="{ 'active': isActive('AnnouncementPage') }">
           Announcement (Viewer)
         </button>
         <hr/>

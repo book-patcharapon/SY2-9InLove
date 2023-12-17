@@ -123,7 +123,7 @@ const deleteAnnouncement = async (annID) => {
           <td class="ann-display">{{ ann.announcementDisplay }}</td>
           <td class="ann-owner" v-if="user && user.role === 'admin'">{{ ann.announcementOwner }}</td>
           <td>
-            <RouterLink :to="{ name: 'AnnouncementDetail', params: { id: ann.id } }"
+            <RouterLink :to="{ name: 'AdminAnnouncementDetail', params: { id: ann.id } }"
                         class="ann-button mr-3 rounded-sm">
               <button>VIEW</button>
             </RouterLink>

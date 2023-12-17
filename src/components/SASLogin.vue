@@ -43,7 +43,7 @@ const login = async (input) => {
       tokenStore.setRefreshToken(response.refreshToken);
 
       setTimeout(function () {
-        router.push('/admin/announcementViewer');
+        router.push('/announcement');
       }, 1500);
     } else {
       throw new Error(`There is error`)
@@ -103,7 +103,7 @@ const submit = () => {
         <input type="password" id="password" v-model="password" class="ann-password w-full"
                placeholder="Please enter your password" :minlength="8" :maxlength="14"/><br/>
 
-        <div class="w-full flex flex-col justify-center items-center justify-center mt-2">
+        <div class="w-full flex flex-col justify-center items-center  mt-2">
 
           <button id="login" type="submit" class="ann-button">
             LOGIN
@@ -114,7 +114,7 @@ const submit = () => {
           </h3>
 
           <button id="guest" type="button">
-            <RouterLink :to="{ name: 'AnnouncementViewer' }">
+            <RouterLink :to="{ name: 'AnnouncementPage' }">
               GUEST MODE
             </RouterLink>
           </button>

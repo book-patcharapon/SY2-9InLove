@@ -115,13 +115,15 @@ const getAnnouncementDetail = async (id) => {
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
             alert(`The request page is not available`)
-            router.push("/admin/announcement")
+            router.push("/announcement")
             return announcement
 
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
             return reqAccess
 
+        }else if (res.status === 403) {
+            return res.status;
         } else {
             throw new Error(`No Announcement`)
         }
@@ -145,7 +147,7 @@ const getAnnouncementDetailForUpdate = async (id) => {
         } else if (res.status === 400 || res.status === 404) {
             const announcement = await res.json()
             alert(`The request page is not available`)
-            router.push("/admin/announcement")
+            router.push("/announcement")
             return announcement
 
         } else if (res.status === 401) {
@@ -171,12 +173,12 @@ const createAnnouncement = async (newAnnouncement) => {
         })
         if (res.status === 200) {
             const addedAccount = await res.json() //keep info that added from backend
-            router.push("/admin/announcement")
+            router.push("/announcement")
             return addedAccount
 
         } else if (res.status === 500) {
             alert(`There is an error`)
-            router.push("/admin/announcement")
+            router.push("/announcement")
 
         } else if (res.status === 401) {
             const reqAccess = await reqAccessToken()
@@ -201,13 +203,13 @@ const updateAnnouncement = async (announcementId, announcement) => {
         })
         if (res.status === 200) {
             const updatedAnnouncement = await res.json()
-            router.push("/admin/announcement")
+            router.push("/announcement")
             return updatedAnnouncement
 
         } else if (res.status === 404) {
             const updatedAnnouncement = await res.json()
             alert('The request page is not available')
-            router.push("/admin/announcement")
+            router.push("/announcement")
             return updatedAnnouncement
 
         } else if (res.status === 401) {

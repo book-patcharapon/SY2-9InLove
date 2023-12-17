@@ -160,8 +160,12 @@ const getUserByUsername = async (username) => {
         if (response.ok) {
             const user = response.json()
             return user
-        } else {
-            throw new Error("There is error")
+        }else if (response.status === 401) {
+            const reqAccess = await reqAccessToken()
+            return reqAccess
+         } else if (response.status === 403){
+            alert('please login')
+            router.push('/login')
         }
     } catch (error) {
         console.error(`Error: ${error}`)

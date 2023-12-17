@@ -1,18 +1,24 @@
 <script setup>
-import {ref, onBeforeMount} from 'vue'
-import {useRoute} from 'vue-router'
-import {changeDateTimeFormat} from '../composable/changeDateTimeFormat.js'
-import {getAnnouncementDetail} from '../composable/doAnnouncement.js'
-import {useTokenStore} from "@/stores/token";
+import { ref, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
+import { changeDateTimeFormat } from '../composable/changeDateTimeFormat.js'
+import { getAnnouncementDetail } from '../composable/doAnnouncement.js'
+import { useTokenStore } from "@/stores/token";
 import router from "../router";
 
 const haveInfo = ref()
 const announcementDetail = ref([])
-const {params} = useRoute()
-const {accessToken} = useTokenStore()
+const route = useRoute()
+const { params } = useRoute()
+const { accessToken } = useTokenStore()
 
 onBeforeMount(async () => {
   const checkToken = await getAnnouncementDetail(params.id);
+
+  if (checkToken == 403) {
+    alert("You do not have permission to access this page.")
+    router.push("/announcement");
+  }
   if (typeof checkToken === "object") {
     announcementDetail.value = checkToken
   }
@@ -36,7 +42,31 @@ const back = () => {
 
 <template>
   <div class="w-full flex justify-center">
-    <div v-if="haveInfo" class="flex flex-col p-4 w-3/6">
+    <div v-if="/^\/announcement\/\d+$/.test(route.path) && haveInfo" class="flex flex-col p-4 w-3/6">
+      <h1 class="text-4xl p-4 font-bold">Announcement Detail:</h1>
+      <div class="content text-xl">
+        <p class="ann-title"><b>TITLE:</b> {{ announcementDetail.announcementTitle }}</p>
+        <p class="ann-category"><b>CATEGORY:</b> {{ announcementDetail.announcementCategory }}</p>
+        <!-- <p class="ann-publish-date"><b>PUBLISH DATE:</b> {{ changeDateTimeFormat(announcementDetail.publishDate) }}</p> -->
+        <p class="ann-close-date"><b>ClOSE DATE:</b> {{ changeDateTimeFormat(announcementDetail.closeDate) }}</p>
+        <!-- <p class="ann-display"><b>DISPLAY:</b> {{ announcementDetail.announcementDisplay }}</p> -->
+        <p class="ann-description"><b>DESCRIPTION:</b> {{ announcementDetail.announcementDescription }}</p>
+      
+      </div>
+      <div class="flex my-2">
+        <!--        <RouterLink :to="{ name: 'Announcement' }" class="ann-button">-->
+        <!--          <button>BACK</button>-->
+        <!--        </RouterLink>-->
+        <button @click="back">
+          BACK
+        </button>
+
+        <!-- <RouterLink :to="{ name: 'UpdateAnnouncement', params: { id: params.id } }" v-if="accessToken" class="ann-button">
+          <button>EDIT</button>
+        </RouterLink> -->
+      </div>
+    </div>
+    <div v-if="route.path.includes('/admin/announcement/')&& haveInfo" class="flex flex-col p-4 w-3/6">
       <h1 class="text-4xl p-4 font-bold">Announcement Detail:</h1>
       <div class="content text-xl">
         <p class="ann-title"><b>TITLE:</b> {{ announcementDetail.announcementTitle }}</p>
@@ -47,21 +77,19 @@ const back = () => {
         <p class="ann-display"><b>DISPLAY:</b> {{ announcementDetail.announcementDisplay }}</p>
       </div>
       <div class="flex my-2">
-<!--        <RouterLink :to="{ name: 'Announcement' }" class="ann-button">-->
-<!--          <button>BACK</button>-->
-<!--        </RouterLink>-->
+        <!--        <RouterLink :to="{ name: 'Announcement' }" class="ann-button">-->
+        <!--          <button>BACK</button>-->
+        <!--        </RouterLink>-->
         <button @click="back">
           BACK
         </button>
 
-        <RouterLink :to="{ name: 'UpdateAnnouncement', params: { id: params.id } }" v-if="accessToken"
-                    class="ann-button">
+        <RouterLink :to="{ name: 'UpdateAnnouncement', params: { id: params.id } }" v-if="accessToken" class="ann-button">
           <button>EDIT</button>
         </RouterLink>
       </div>
     </div>
-
-    <div v-else>
+    <div v-if="haveInfo != true">
       <h1>The request page is not available</h1>
     </div>
   </div>

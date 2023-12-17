@@ -31,6 +31,9 @@ const matchPassword = async (user) => {
       <div v-if="status == 404" class="ann-message red-bord">
         <h3>The specified username DOES NOT exist</h3>
       </div>
+      <div v-if="status == 400" class="ann-message red-bord">
+        <h3>please enter user and password</h3>
+      </div>
     </div>
 
     <div class="w-3/6 flex flex-col mt-4 bord">

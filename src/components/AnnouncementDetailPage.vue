@@ -14,6 +14,10 @@ const checkMode = ref(modeStore.ActiveCloseBut);
 
 onBeforeMount(async () => {
   AnnDetail.value = await annUserId(params.id)
+  if (AnnDetail.value == 403) {
+    alert("You do not have permission to access this page.")
+    router.push("/announcement");
+  }
   if (AnnDetail) {
     haveInfo.value = true
   }
@@ -30,7 +34,7 @@ onBeforeMount(async () => {
 <!--      <h2 border-style: double>Announcement Detail :</h2>-->
       <h2>Announcement Detail :</h2>
       <div class="ann-item">
-        <div class="head">
+        <div class="content">
           <h1 class="ann-title">
             {{ AnnDetail.announcementTitle }}<br />
             <span class="ann-category">{{ AnnDetail.announcementCategory }}</span><br>
@@ -59,13 +63,27 @@ onBeforeMount(async () => {
 </template>
  
 <style scoped>
-.ann-button {
-  background-color: gray;
+button {
+  border: 2px solid black;
+  background-color: lightgrey;
+  font-weight: 600;
+  padding: 5px 10px;
   border-radius: 5px;
+  margin-right: 5px;
 }
 
-.big {
-  display: block;
-  justify-content: center;
+button:enabled:hover {
+  background-color: black;
+  color: white;
+}
+
+.content {
+  border: 3px solid black;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+p {
+  margin: 1.5% 0%;
 }
 </style>
